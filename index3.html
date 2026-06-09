@@ -135,36 +135,48 @@
         .btn-glow {
             position: relative;
             overflow: hidden;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-top-color: rgba(255,255,255,0.35);
+            box-shadow: 0 10px 30px rgba(249,115,22,0.35), inset 0 1px 2px rgba(255,255,255,0.3);
             transition: all 0.4s cubic-bezier(0.2,0.8,0.2,1);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             cursor: none;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         .btn-glow::before {
             content: '';
             position: absolute; inset: 0;
-            background: linear-gradient(45deg, rgba(99,102,241,0.8), rgba(168,85,247,0.8), rgba(34,211,238,0.8));
-            opacity: 0; transition: opacity 0.4s ease;
-            z-index: -1;
+            background: linear-gradient(45deg, rgba(255,255,255,0), rgba(255,255,255,0.25), rgba(255,255,255,0));
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+            z-index: 1;
         }
-        .btn-glow:hover::before { opacity: 1; }
+        .btn-glow:hover::before { transform: translateX(100%); }
         .btn-glow:hover {
-            transform: translateY(-2px);
-            border-color: rgba(255,255,255,0.3);
-            box-shadow: 0 10px 40px rgba(99,102,241,0.5);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(249,115,22,0.5), inset 0 1px 2px rgba(255,255,255,0.4);
+            border-color: rgba(255,255,255,0.4);
         }
 
         .btn-outline {
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-top-color: rgba(255,255,255,0.3);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.1);
             transition: all 0.4s ease;
+            backdrop-filter: blur(24px) saturate(200%);
+            -webkit-backdrop-filter: blur(24px) saturate(200%);
             cursor: none;
+            color: rgba(255,255,255,0.9);
         }
         .btn-outline:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.12);
+            border-color: rgba(255,255,255,0.4);
+            color: #fff;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.3);
             transform: translateY(-2px);
         }
 
@@ -305,15 +317,7 @@
         <div class="w-[800px] h-[800px] rounded-full opacity-30 blur-[120px]" style="background: radial-gradient(circle at center, #f97316, transparent 60%);"></div>
     </div>
     
-    <!-- structural-grid-lines idêntico -->
-    <div class="fixed inset-0 pointer-events-none z-0 flex items-center justify-center p-6 md:p-12 lg:p-24 opacity-20">
-        <div class="relative w-full max-w-7xl h-full border border-white/10">
-            <div class="absolute inset-y-0 left-[25%] border-l border-white/10"></div>
-            <div class="absolute inset-y-0 right-[25%] border-l border-white/10"></div>
-            <div class="absolute inset-x-0 top-[30%] border-t border-white/10"></div>
-            <div class="absolute inset-x-0 bottom-[30%] border-t border-white/10"></div>
-        </div>
-    </div>
+    <!-- structural-grid-lines removido a pedido -->
 
     <!-- watermark adaptado -->
     <div class="fixed inset-0 flex items-center justify-center pointer-events-none z-0">
@@ -324,8 +328,7 @@
     <header class="fixed md:top-8 z-50 flex pointer-events-auto pr-4 pl-4 top-4 right-0 left-0 justify-center">
         <nav class="flex items-center w-full md:w-auto max-w-4xl justify-between md:justify-center bg-[#18181B]/80 border-white/5 border rounded-full py-2 pr-2 pl-4 md:pl-6 shadow-2xl shadow-black/50 backdrop-blur-xl transition-all">
             <div class="flex items-center gap-2 pr-2 md:pr-6 md:border-r border-white/10 py-1 cursor-none hover:text-white transition-colors">
-                <iconify-icon class="text-[#6366F1] text-lg" icon="solar:crown-star-linear" stroke-width="1.5"></iconify-icon>
-                <span class="uppercase block text-xs font-normal text-white tracking-widest font-sans">STUDIO</span>
+                <img src="assets/logo%203.png" alt="Logo" class="h-10 w-auto" />
             </div>
             <div class="hidden md:flex gap-6 px-6 items-center">
                 <button class="hover:text-white cursor-none transition-colors text-xs text-zinc-500 tracking-widest font-mono">Projetos</button>
@@ -333,7 +336,7 @@
                 <button class="hover:text-white cursor-none transition-colors text-xs text-zinc-500 tracking-widest font-mono">Sobre</button>
             </div>
             <div class="hidden md:flex items-center gap-4 pl-6 border-l border-white/10">
-                <button class="hover:bg-indigo-400 cursor-none transition-colors text-xs font-medium text-white tracking-tight bg-[#6366F1] rounded-full pt-1.5 pr-4 pb-1.5 pl-4 shadow-[0_0_12px_rgba(99,102,241,0.4)]">Iniciar Projeto</button>
+                <button class="hover:bg-orange-400 cursor-none transition-colors text-xs font-medium text-white tracking-tight bg-orange-500 rounded-full pt-1.5 pr-4 pb-1.5 pl-4 shadow-[0_0_12px_rgba(249,115,22,0.4)]">Iniciar Projeto</button>
             </div>
         </nav>
     </header>
@@ -346,23 +349,10 @@
         <div class="relative h-[91vh] w-[96vw] overflow-hidden rounded-[1.4rem] border border-white/10 bg-black shadow-2xl sm:rounded-[2rem] md:h-[89vh] md:w-[95vw]" id="filmStage" style="box-shadow: rgba(0, 0, 0, 0.48) 0px 2rem 8rem, rgba(255, 255, 255, 0.08) 0px 0px 0px 0.0625rem inset;">
             <canvas aria-hidden="true" class="absolute inset-0 h-full w-full opacity-90" id="webglLayer"></canvas>
             <img alt="" class="absolute inset-0 h-full w-full scale-125 object-cover opacity-0 blur-xl" id="abstractBase" src="sonic-link.aura.build/assets/6a7bb45fc2ab1366_fa51902b-c2a4-4c33-a96e-a8f1ef.jpg"/>
-            <div aria-hidden="true" class="absolute inset-0" style="background: radial-gradient(circle at 50% 56%, rgba(99,102,241,.15), transparent 18%), radial-gradient(circle at 63% 45%, rgba(168,85,247,.25), transparent 25%), linear-gradient(to bottom, rgba(0,0,0,.2), rgba(0,0,0,.12) 38%, rgba(0,0,0,.76));"></div>
+            <div aria-hidden="true" class="absolute inset-0" style="background: radial-gradient(circle at 50% 56%, rgba(249,115,22,.15), transparent 18%), radial-gradient(circle at 63% 45%, rgba(249,115,22,.25), transparent 25%), linear-gradient(to bottom, rgba(0,0,0,.2), rgba(0,0,0,.12) 38%, rgba(0,0,0,.76));"></div>
             <div aria-hidden="true" class="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black via-black/70 to-transparent"></div>
             <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-black via-black/75 to-transparent"></div>
-            <div aria-hidden="true" class="absolute inset-4 rounded-[1rem] border border-white/[.08] sm:inset-5 md:inset-7" style="box-shadow: inset 0 0 0 .0625rem rgba(255,255,255,.035);"></div>
-            <div aria-hidden="true" class="absolute left-4 top-4 h-8 w-8 border-l border-t border-indigo-200/60 border-t-indigo-200/60 sm:left-5 sm:top-5 md:left-7 md:top-7"></div>
-            <div aria-hidden="true" class="absolute right-4 top-4 h-8 w-8 border-r border-t border-purple-200/50 border-t-purple-200/50 sm:right-5 sm:top-5 md:right-7 md:top-7"></div>
-            <div aria-hidden="true" class="absolute bottom-4 left-4 h-8 w-8 border-b border-l border-b-indigo-200/40 border-l-indigo-200/40 sm:bottom-5 sm:left-5 md:bottom-7 md:left-7"></div>
-            <div aria-hidden="true" class="absolute bottom-4 right-4 h-8 w-8 border-b border-r border-b-purple-200/40 border-r-purple-200/40 sm:bottom-5 sm:right-5 md:bottom-7 md:right-7"></div>
-            <div aria-hidden="true" class="absolute left-[8%] top-0 h-full w-px bg-white/[.07]">
-            <span class="absolute -left-1 top-[13%] h-2 w-2 bg-white/30"></span>
-            <span class="absolute -left-1 bottom-[16%] h-2 w-2 bg-indigo-200/40"></span>
-            </div>
-            <div aria-hidden="true" class="absolute right-[8%] top-0 h-full w-px bg-white/[.07]">
-            <span class="absolute -left-1 top-[24%] h-2 w-2 bg-purple-200/40"></span>
-            <span class="absolute -left-1 bottom-[22%] h-2 w-2 bg-white/25"></span>
-            </div>
-            <div aria-hidden="true" class="absolute left-0 top-[50%] h-px w-full bg-white/[.055]"></div>
+            <!-- linhas de grade finas e transparentes removidas a pedido -->
             
             <!-- (PRELOADER 1) TEXTO 1 DA TIMELINE GSAP -->
             <div class="absolute inset-x-4 top-[4%] z-10 text-center opacity-0 sm:top-[3%]" id="introWord">
@@ -384,26 +374,43 @@
             </div>
             
             <!-- (HERO FINAL) TEXTO DE RESOLUÇÃO FINAL GSAP -->
-            <div class="absolute left-1/2 top-1/2 z-50 w-[92%] -translate-x-1/2 -translate-y-1/2 text-center opacity-0 flex flex-col items-center" id="resolveTitle">
-                <p class="tracking-tight text-white text-[clamp(3.5rem,10vw,8.5rem)] leading-[.85]" style="font-family: 'Barlow Condensed', Impact, sans-serif; font-weight: 700;">Design & Estratégia</p>
-                <p class="mx-auto mt-4 max-w-2xl text-xs sm:text-sm font-sans font-normal uppercase tracking-[.25rem] text-indigo-200/80 leading-relaxed">
+            <div class="absolute left-1/2 top-1/2 z-50 w-full px-2 md:px-4 -translate-x-1/2 -translate-y-1/2 text-center opacity-0 flex flex-col items-center" id="resolveTitle">
+                <p class="tracking-tighter text-white text-[clamp(2.5rem,7vw,6.5rem)] leading-[1.1] font-sans font-extrabold" style="text-shadow: 0 15px 50px rgba(0,0,0,0.9), 0 4px 15px rgba(0,0,0,0.8);">Design com Estratégia</p>
+                <p class="mx-auto mt-4 w-full max-w-4xl text-[10px] sm:text-sm font-sans font-normal uppercase tracking-[.25rem] text-white/90 leading-relaxed" style="text-shadow: 0 4px 15px rgba(0,0,0,0.9);">
                     Transformando ideias em experiências digitais que vendem.
                 </p>
                 <!-- Os CTAs exigidos pela agência (escondidos até o fade-in) -->
-                <div class="mt-8 flex items-center justify-center gap-4">
-                    <button class="btn-glow px-8 py-4 rounded-full text-sm font-semibold tracking-wide text-white flex items-center gap-2">
-                        Ver Projetos
-                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-6">
+                    <!-- Botão 1 Animado (Borda Giratória Conic-Gradient) -->
+                    <button class="group isolate inline-flex cursor-pointer overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_50px_10px_rgba(249,115,22,0.45)] bg-gradient-to-b from-white/20 via-white/0 to-white/5 rounded-full relative shadow-[0_0_25px_rgba(249,115,22,0.3),0_8px_40px_rgba(249,115,22,0.15)]">
+                        <div class="absolute inset-0 overflow-hidden rounded-full">
+                            <div class="absolute inset-[-100%] w-[300%] h-[300%] left-[-100%] top-[-100%] animate-[spin_3s_linear_infinite]" style="background: conic-gradient(from 0deg, transparent 0deg, transparent 80deg, rgba(253,186,116,0.9) 180deg, transparent 280deg, transparent 360deg);"></div>
+                        </div>
+                        <div class="absolute inset-[1px] rounded-full backdrop-blur-xl z-0 bg-neutral-950/90"></div>
+                        <div class="z-10 flex gap-3 overflow-hidden text-sm font-medium text-white w-full rounded-full py-3.5 pl-7 pr-5 relative items-center justify-center">
+                            <span class="whitespace-nowrap relative z-10 font-semibold tracking-wide text-base text-white/95 group-hover:text-white transition-colors">Ver Projetos</span>
+                            <span class="inline-flex items-center justify-center z-10 bg-white/10 w-7 h-7 rounded-full ml-1 relative group-hover:translate-x-1 transition-transform text-white/80 group-hover:text-white">
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </span>
+                        </div>
                     </button>
-                    <button class="btn-outline px-8 py-4 rounded-full text-sm font-semibold tracking-wide text-white">
-                        Falar Comigo
+
+                    <!-- Botão 2 Animado (Borda Giratória Conic-Gradient Sutil) -->
+                    <button class="group isolate inline-flex cursor-pointer overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_50px_10px_rgba(255,255,255,0.2)] bg-gradient-to-b from-white/10 via-white/0 to-white/5 rounded-full relative shadow-[0_0_25px_rgba(255,255,255,0.1),0_8px_40px_rgba(0,0,0,0.4)]">
+                        <div class="absolute inset-0 overflow-hidden rounded-full">
+                            <div class="absolute inset-[-100%] w-[300%] h-[300%] left-[-100%] top-[-100%] animate-[spin_4s_linear_infinite]" style="background: conic-gradient(from 0deg, transparent 0deg, transparent 120deg, rgba(255,255,255,0.5) 180deg, transparent 240deg, transparent 360deg);"></div>
+                        </div>
+                        <div class="absolute inset-[1px] rounded-full backdrop-blur-xl z-0 bg-[#0a0a0a]/90"></div>
+                        <div class="z-10 flex gap-3 overflow-hidden text-sm font-medium text-white rounded-full py-3.5 px-8 relative items-center">
+                            <span class="whitespace-nowrap relative z-10 font-semibold tracking-wide text-base text-white/90 group-hover:text-white transition-colors">Falar Comigo</span>
+                        </div>
                     </button>
                 </div>
             </div>
 
             <!-- MOCKUP MOBILE (CENTRAL) -->
             <div class="absolute left-1/2 top-[34%] z-30 h-[49vh] min-h-[20rem] w-[min(25rem,58vw)] -translate-x-1/2 opacity-0 sm:top-[31%] md:w-[min(27rem,30vw)]" id="phoneWrap" style="perspective: 80rem;">
-                <div class="relative mx-auto h-full w-full overflow-hidden rounded-[2.25rem] border border-white/15 bg-[#050505] shadow-2xl" id="phone" style="box-shadow: rgba(99, 102, 241, 0.45) 0px 0px 0px 0.45rem, rgba(0, 0, 0, 0.68) 0px 2rem 5rem, rgba(168, 85, 247, 0.28) 0px 0px 3rem;">
+                <div class="relative mx-auto h-full w-full overflow-hidden rounded-[2.25rem] border border-white/15 bg-[#050505] shadow-2xl" id="phone" style="box-shadow: rgba(249, 115, 22, 0.45) 0px 0px 0px 0.45rem, rgba(0, 0, 0, 0.68) 0px 2rem 5rem, rgba(249, 115, 22, 0.28) 0px 0px 3rem;">
                     <div class="absolute inset-x-[18%] top-0 z-20 h-6 rounded-b-2xl bg-[#050505]"></div>
                     <div class="absolute inset-0 bg-[#050505]"></div>
                     <div aria-hidden="true" class="absolute inset-0 opacity-35" style="background: radial-gradient(circle at 82% 12%, rgba(168,85,247,.3), transparent 16%), radial-gradient(circle at 12% 72%, rgba(99,102,241,.2), transparent 22%);"></div>
@@ -418,21 +425,21 @@
                         </div>
                         <div class="mt-6 flex items-start justify-between">
                             <h2 class="tracking-tight text-white text-4xl leading-none sm:text-5xl" style="font-family: 'Barlow Condensed', Impact, sans-serif; font-weight: 700;">Resultados</h2>
-                            <div class="grid h-9 w-9 place-items-center rounded-full bg-indigo-400 text-sm font-bold text-white">S</div>
+                            <div class="grid h-9 w-9 place-items-center rounded-full bg-orange-500 text-sm font-bold text-white">S</div>
                         </div>
                         <div class="mt-7 flex gap-2 overflow-hidden">
-                            <span class="rounded-full bg-indigo-500 px-4 py-2 text-xs font-medium text-white shadow-[0_0_10px_rgba(99,102,241,0.5)]">UI/UX</span>
+                            <span class="rounded-full bg-orange-500 px-4 py-2 text-xs font-medium text-white shadow-[0_0_10px_rgba(249,115,22,0.5)]">UI/UX</span>
                             <span class="rounded-full bg-white/10 px-4 py-2 text-xs font-medium text-white/70">Estratégia</span>
                             <span class="rounded-full bg-white/10 px-4 py-2 text-xs font-medium text-white/70">Performance</span>
                         </div>
                         <p class="mt-5 text-xl font-medium tracking-tight text-white sm:text-2xl" style="font-family: 'Barlow Condensed', Impact, sans-serif;">Nossos Serviços</p>
                         <div class="mt-3 grid grid-cols-2 gap-3">
                             <div class="h-24 rounded-2xl border border-white/10 bg-white/[.04] p-3 backdrop-blur-md">
-                                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:1.5rem;height:1.5rem;color:rgba(168,85,247,.9)" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:1.5rem;height:1.5rem;color:rgba(249,115,22,.9)" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                                 <p class="mt-5 text-xs font-medium uppercase tracking-widest text-white/60">Alta Conversão</p>
                             </div>
                             <div class="h-24 rounded-2xl border border-white/10 bg-white/[.04] p-3 backdrop-blur-md">
-                                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:1.5rem;height:1.5rem;color:rgba(34,211,238,.9)" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:1.5rem;height:1.5rem;color:rgba(249,115,22,.9)" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
                                 <p class="mt-5 text-xs font-medium uppercase tracking-widest text-white/60">Sistemas Web</p>
                             </div>
                         </div>
@@ -442,9 +449,9 @@
                                 <img alt="Logo Cliente" class="h-10 w-10 rounded-full object-cover grayscale" src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&q=80"/>
                                 <div>
                                     <p class="text-sm font-medium text-white">Stripe Redesign</p>
-                                    <p class="text-xs text-indigo-400">Entrega de Autoridade</p>
+                                    <p class="text-xs text-orange-400">Entrega de Autoridade</p>
                                 </div>
-                                <svg class="ml-auto" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:1.5rem;height:1.5rem;color:rgba(168,85,247,.8)" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg>
+                                <svg class="ml-auto" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:1.5rem;height:1.5rem;color:rgba(249,115,22,.8)" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg>
                             </div>
                         </div>
                     </div>
@@ -477,12 +484,15 @@
 
             <div aria-hidden="true" class="bg-white opacity-0 z-[70] absolute top-0 right-0 bottom-0 left-0" id="flash"></div>
             
-            <div class="absolute bottom-6 left-1/2 z-[80] flex -translate-x-1/2 items-center gap-3 rounded-full border border-white/10 bg-black/35 px-4 py-2 opacity-0 backdrop-blur-md" id="metaRail">
-                <span class="h-1.5 w-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
-                <span class="text-xs font-mono uppercase tracking-[.22rem] text-white/60">Experiência Digital · Portfólio</span>
+            <div class="absolute bottom-6 left-1/2 z-[80] flex -translate-x-1/2 items-center gap-4 rounded-full border border-orange-500/20 bg-[#050505]/60 px-6 py-2.5 opacity-0 backdrop-blur-xl shadow-[0_4px_30px_rgba(249,115,22,0.15)] ring-1 ring-white/5 group transition-all hover:scale-105 hover:border-orange-500/40" id="metaRail">
+                <div class="relative flex h-2.5 w-2.5 items-center justify-center">
+                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange-400 opacity-75"></span>
+                    <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.8)]"></span>
+                </div>
+                <span class="text-[10px] sm:text-xs font-mono uppercase tracking-[.3em] bg-clip-text text-transparent bg-gradient-to-r from-white via-orange-100 to-orange-400 font-semibold">Experiência Digital <span class="text-orange-500/50 mx-1">✦</span> Portfólio</span>
             </div>
             
-            <div class="absolute left-7 top-7 z-[80] hidden items-center gap-2 text-xs font-medium uppercase tracking-[.28rem] text-white/45 sm:flex" id="sequenceLabel">
+            <div class="hidden" style="display: none !important;" id="sequenceLabel">
                 <span class="h-px w-8 bg-white/25"></span>
                 <span>Resolvendo</span>
             </div>

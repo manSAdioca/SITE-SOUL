@@ -51,10 +51,14 @@ function initPulsewave() {
         float wave1 = sin((p.x * 2.2) + time * 1.15) * 0.18 + sin((p.x * 4.5) - time * 0.72) * 0.055;
         float wave2 = sin((p.x * 2.05) - time * 0.92 + 1.8) * 0.2 + sin((p.x * 5.0) + time * 0.68) * 0.045;
         float wave3 = sin((p.x * 2.8) + time * 1.55 + 3.2) * 0.13;
+        float wave4 = sin((p.x * 3.1) - time * 1.2) * 0.22 + sin((p.x * 1.5) + time * 0.5) * 0.08;
+        float wave5 = sin((p.x * 1.8) + time * 0.8 + 4.5) * 0.15 + sin((p.x * 3.5) - time * 1.1) * 0.06;
 
         float ribbonA = line(p, wave1 - 0.18, 0.035) + line(p, wave1 - 0.24, 0.014);
         float ribbonB = line(p, wave2 + 0.08, 0.032) + line(p, wave2 + 0.16, 0.013);
         float ribbonC = line(p, wave3 - 0.42, 0.042);
+        float ribbonD = line(p, wave4 + 0.35, 0.025) + line(p, wave4 + 0.45, 0.012);
+        float ribbonE = line(p, wave5 - 0.1, 0.03) + line(p, wave5 - 0.02, 0.018);
 
         float centerGlow = 1.0 - smoothstep(0.0, 1.25, length(vec2(p.x * 0.75, p.y + 0.06)));
         float sweep = smoothstep(-1.2, 0.45, p.x + sin(time * 0.4) * 0.25) * smoothstep(1.25, -0.2, p.x);
@@ -67,9 +71,11 @@ function initPulsewave() {
         color += orange1 * ribbonA * (0.85 + sweep * 0.55);
         color += orange2 * ribbonB * 1.15;
         color += orange3 * ribbonC * 0.42;
+        color += orange1 * ribbonD * 0.7;
+        color += orange2 * ribbonE * 0.85;
         color += vec3(0.976, 0.451, 0.086) * centerGlow * 0.12;
 
-        float alpha = clamp((ribbonA + ribbonB + ribbonC) * 0.75 + centerGlow * 0.14, 0.0, 0.92);
+        float alpha = clamp((ribbonA + ribbonB + ribbonC + ribbonD + ribbonE) * 0.75 + centerGlow * 0.14, 0.0, 0.92);
         gl_FragColor = vec4(color, alpha);
       }
     `;
@@ -152,7 +158,7 @@ function initPulsewave() {
     gsap.set(abstractBase, { opacity: 0, scale: 1.35 });
     gsap.set(resolveTitle, { scale: 1.35, filter: "blur(1rem)" });
 
-    const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.2, defaults: { ease: "power3.out" } });
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
     tl.to(stage, { scale: 1, duration: 1.4, ease: "power2.out" }, 0)
       .to(metaRail, { opacity: 1, y: -4, duration: 0.9 }, 0.2)
@@ -194,11 +200,7 @@ function initPulsewave() {
       .to([phoneWrap, cards], { opacity: 0, scale: 0.7, y: 160, filter: "blur(1rem)", duration: 0.85, ease: "power3.in" }, 14.2)
       .to(resolveTitle, { opacity: 1, scale: 1, filter: "blur(0rem)", duration: 1.05, ease: "expo.out" }, 14.65)
       .to(resolveTitle, { scale: 1.04, duration: 2.7, ease: "sine.inOut" }, 15.8)
-      .to(metaRail, { opacity: 0.55, duration: 1.2 }, 15.8)
-      .to(resolveTitle, { opacity: 0, scale: 1.28, filter: "blur(.8rem)", duration: 0.9, ease: "power3.in" }, 19.0)
-      .to(abstractBase, { opacity: 0, duration: 0.8 }, 19.0)
-      .to(metaRail, { opacity: 0, duration: 0.5 }, 19.2)
-      .to(stage, { scale: 0.985, duration: 0.9, ease: "power2.inOut" }, 19.1);
+      .to(metaRail, { opacity: 0.55, duration: 1.2 }, 15.8);
   }
 }
 initPulsewave();
