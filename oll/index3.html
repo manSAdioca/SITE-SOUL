@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="5000" name="preview-ready-after-ms"/>
+    <title>Portfólio Premium | Experiência Digital</title>
+
+    <!-- fonts: Inter + Barlow Condensed + Oswald -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Oswald:wght@500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+    <link href="sonic-link.aura.build/assets/86d6b05f58559b7d_css2.css" rel="stylesheet"/>
+    
+    <!-- css: tokens de tema exatos do sonic-link -->
+    <link rel="stylesheet" href="sonic-link.aura.build/assets/css/base.css"/>
+    
+    <!-- tailwind runtime idêntico -->
+    <script src="sonic-link.aura.build/assets/176e894661aa9cdc_3.4.17"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        oswald: ['Oswald', 'sans-serif'],
+                        barlow: ['Barlow Condensed', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            primary: '#6366F1',
+                            secondary: '#fb923c',
+                            accent: '#22d3ee',
+                            lime: '#bef264',
+                            purple: '#a855f7'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- icons idênticos -->
+    <script src="sonic-link.aura.build/assets/851bed7af266f96a_iconify-icon.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body { background-color: #000; color: #fff; cursor: none; }
+        
+        /* Preloader Preto Absoluto */
+        #black-preloader {
+            position: fixed; inset: 0; z-index: 999990;
+            background: #020202;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .preloader-text-wrapper {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(2rem, 6vw, 5rem);
+            font-weight: 700;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .text-dim { color: rgba(255,255,255,0.05); }
+        .text-bright {
+            position: absolute; inset: 0; color: #fff;
+            clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+            text-shadow: 0 0 20px rgba(255,255,255,0.4);
+        }
+        .sweep-light {
+            position: absolute; top: 0; left: -100%;
+            width: 30%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99,102,241,0.8), transparent);
+            transform: skewX(-20deg);
+            filter: blur(8px);
+            mix-blend-mode: screen;
+        }
+
+        /* Botões Premium (CTA) adaptados com glassmorphism e glow dinâmico */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s cubic-bezier(0.2,0.8,0.2,1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            cursor: none;
+        }
+        .btn-glow::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(45deg, rgba(99,102,241,0.8), rgba(168,85,247,0.8), rgba(34,211,238,0.8));
+            opacity: 0; transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+        .btn-glow:hover::before { opacity: 1; }
+        .btn-glow:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255,255,255,0.3);
+            box-shadow: 0 10px 40px rgba(99,102,241,0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.4s ease;
+            cursor: none;
+        }
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Cursor Customizado acompanhando a exigência */
+        .cursor-dot {
+            position: fixed; top: 0; left: 0; width: 6px; height: 6px;
+            background: #fff; border-radius: 50%; pointer-events: none; z-index: 1000000;
+            transform: translate(-50%, -50%);
+        }
+        .cursor-halo {
+            position: fixed; top: 0; left: 0; width: 40px; height: 40px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 60%);
+            border-radius: 50%; pointer-events: none; z-index: 999999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
+        }
+        body:hover .cursor-halo { width: 60px; height: 60px; }
+        
+        /* Evitar cliques na animação de entrada que cortem o filme */
+        #resolveTitle { pointer-events: none; }
+        #resolveTitle button { pointer-events: auto; }
+    </style>
+</head>
+<body class="min-h-screen overflow-hidden antialiased selection:bg-[#6366F1]/30 selection:text-white text-zinc-400 relative">
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-halo" id="cursor-halo"></div>
+
+    <!-- PRELOADER PURO (TELA PRETA ABSOLUTA) -->
+    <div id="black-preloader">
+        <div class="preloader-text-wrapper">
+            <span class="text-dim">O FUTURO DIGITAL</span>
+            <span class="text-bright">O FUTURO DIGITAL</span>
+            <div class="sweep-light"></div>
+        </div>
+    </div>
+
+    <!-- prism-background idêntico (WebGL renderiza aqui) -->
+    <div class="fixed inset-0 z-[-1] pointer-events-none w-full h-full opacity-60 mix-blend-screen" id="prism-container"></div>
+    
+    <!-- atmospheric-layers idêntico -->
+    <div class="fixed inset-0 z-0 pointer-events-none opacity-[0.08]" style="background-image: radial-gradient(circle at 1px 1px, #ffffff 1px, transparent 0); background-size: 32px 32px;"></div>
+    <div class="fixed inset-0 z-0 flex items-center justify-center pointer-events-none">
+        <div class="w-[800px] h-[800px] rounded-full opacity-30 blur-[120px]" style="background: radial-gradient(circle at center, #6366F1, transparent 60%);"></div>
+    </div>
+    
+    <!-- structural-grid-lines idêntico -->
+    <div class="fixed inset-0 pointer-events-none z-0 flex items-center justify-center p-6 md:p-12 lg:p-24 opacity-20">
+        <div class="relative w-full max-w-7xl h-full border border-white/10">
+            <div class="absolute inset-y-0 left-[25%] border-l border-white/10"></div>
+            <div class="absolute inset-y-0 right-[25%] border-l border-white/10"></div>
+            <div class="absolute inset-x-0 top-[30%] border-t border-white/10"></div>
+            <div class="absolute inset-x-0 bottom-[30%] border-t border-white/10"></div>
+        </div>
+    </div>
+
+    <!-- watermark adaptado -->
+    <div class="fixed inset-0 flex items-center justify-center pointer-events-none z-0">
+        <h1 class="text-7xl md:text-9xl tracking-tighter text-white font-light uppercase opacity-[0.02] select-none mix-blend-overlay">AGÊNCIA DIGITAL</h1>
+    </div>
+
+    <!-- navigation adaptado para Portfólio -->
+    <header class="fixed md:top-8 z-50 flex pointer-events-auto pr-4 pl-4 top-4 right-0 left-0 justify-center">
+        <nav class="flex items-center w-full md:w-auto max-w-4xl justify-between md:justify-center bg-[#18181B]/80 border-white/5 border rounded-full py-2 pr-2 pl-4 md:pl-6 shadow-2xl shadow-black/50 backdrop-blur-xl transition-all">
+            <div class="flex items-center gap-2 pr-2 md:pr-6 md:border-r border-white/10 py-1 cursor-none hover:text-white transition-colors">
+                <iconify-icon class="text-[#6366F1] text-lg" icon="solar:crown-star-linear" stroke-width="1.5"></iconify-icon>
+                <span class="uppercase block text-xs font-normal text-white tracking-widest font-sans">STUDIO</span>
+            </div>
+            <div class="hidden md:flex gap-6 px-6 items-center">
+                <button class="hover:text-white cursor-none transition-colors text-xs text-zinc-500 tracking-widest font-mono">Projetos</button>
+                <button class="hover:text-white cursor-none transition-colors text-xs text-zinc-500 tracking-widest font-mono">Serviços</button>
+                <button class="hover:text-white cursor-none transition-colors text-xs text-zinc-500 tracking-widest font-mono">Sobre</button>
+            </div>
+            <div class="hidden md:flex items-center gap-4 pl-6 border-l border-white/10">
+                <button class="hover:bg-indigo-400 cursor-none transition-colors text-xs font-medium text-white tracking-tight bg-[#6366F1] rounded-full pt-1.5 pr-4 pb-1.5 pl-4 shadow-[0_0_12px_rgba(99,102,241,0.4)]">Iniciar Projeto</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- hero-pulsewave-intro -> ADAPTADA PARA PORTFÓLIO (MESMA ESTRUTURA GSAP E HTML) -->
+    <section aria-label="Filme cinematográfico de introdução Portfólio" class="flex overflow-hidden antialiased selection:bg-indigo-400 selection:text-white text-white w-full h-screen relative items-center justify-center" style="font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+        <div aria-hidden="true" class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle, rgba(255, 255, 255, 0.45) 0px, rgba(255, 255, 255, 0.45) 0.055rem, transparent 0.075rem); background-size: 0.7rem 0.7rem; mask-image: linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.15) 19%, rgba(0, 0, 0, 0.12) 81%, rgba(0, 0, 0, 0.85));"></div>
+        <div aria-hidden="true" class="opacity-20 absolute top-0 right-0 bottom-0 left-0"></div>
+        
+        <div class="relative h-[91vh] w-[96vw] overflow-hidden rounded-[1.4rem] border border-white/10 bg-black shadow-2xl sm:rounded-[2rem] md:h-[89vh] md:w-[95vw]" id="filmStage" style="box-shadow: rgba(0, 0, 0, 0.48) 0px 2rem 8rem, rgba(255, 255, 255, 0.08) 0px 0px 0px 0.0625rem inset;">
+            <canvas aria-hidden="true" class="absolute inset-0 h-full w-full opacity-90" id="webglLayer"></canvas>
+            <img alt="" class="absolute inset-0 h-full w-full scale-125 object-cover opacity-0 blur-xl" id="abstractBase" src="sonic-link.aura.build/assets/6a7bb45fc2ab1366_fa51902b-c2a4-4c33-a96e-a8f1ef.jpg"/>
+            <div aria-hidden="true" class="absolute inset-0" style="background: radial-gradient(circle at 50% 56%, rgba(99,102,241,.15), transparent 18%), radial-gradient(circle at 63% 45%, rgba(168,85,247,.25), transparent 25%), linear-gradient(to bottom, rgba(0,0,0,.2), rgba(0,0,0,.12) 38%, rgba(0,0,0,.76));"></div>
+            <div aria-hidden="true" class="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black via-black/70 to-transparent"></div>
+            <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-black via-black/75 to-transparent"></div>
+            <div aria-hidden="true" class="absolute inset-4 rounded-[1rem] border border-white/[.08] sm:inset-5 md:inset-7" style="box-shadow: inset 0 0 0 .0625rem rgba(255,255,255,.035);"></div>
+            <div aria-hidden="true" class="absolute left-4 top-4 h-8 w-8 border-l border-t border-indigo-200/60 border-t-indigo-200/60 sm:left-5 sm:top-5 md:left-7 md:top-7"></div>
+            <div aria-hidden="true" class="absolute right-4 top-4 h-8 w-8 border-r border-t border-purple-200/50 border-t-purple-200/50 sm:right-5 sm:top-5 md:right-7 md:top-7"></div>
+            <div aria-hidden="true" class="absolute bottom-4 left-4 h-8 w-8 border-b border-l border-b-indigo-200/40 border-l-indigo-200/40 sm:bottom-5 sm:left-5 md:bottom-7 md:left-7"></div>
+            <div aria-hidden="true" class="absolute bottom-4 right-4 h-8 w-8 border-b border-r border-b-purple-200/40 border-r-purple-200/40 sm:bottom-5 sm:right-5 md:bottom-7 md:right-7"></div>
+            <div aria-hidden="true" class="absolute left-[8%] top-0 h-full w-px bg-white/[.07]">
+            <span class="absolute -left-1 top-[13%] h-2 w-2 bg-white/30"></span>
+            <span class="absolute -left-1 bottom-[16%] h-2 w-2 bg-indigo-200/40"></span>
+            </div>
+            <div aria-hidden="true" class="absolute right-[8%] top-0 h-full w-px bg-white/[.07]">
+            <span class="absolute -left-1 top-[24%] h-2 w-2 bg-purple-200/40"></span>
+            <span class="absolute -left-1 bottom-[22%] h-2 w-2 bg-white/25"></span>
+            </div>
+            <div aria-hidden="true" class="absolute left-0 top-[50%] h-px w-full bg-white/[.055]"></div>
+            
+            <!-- (PRELOADER 1) TEXTO 1 DA TIMELINE GSAP -->
+            <div class="absolute inset-x-4 top-[4%] z-10 text-center opacity-0 sm:top-[3%]" id="introWord">
+                <p class="tracking-tight text-white/20 text-[clamp(4.5rem,15vw,11rem)] leading-none" style="font-family: 'Barlow Condensed', Impact, sans-serif; font-weight: 600;">Bem-vindo ao</p>
+            </div>
+            
+            <!-- (PRELOADER 2) TEXTO 2 DA TIMELINE GSAP -->
+            <div class="absolute left-1/2 top-[17%] z-20 flex w-[92%] -translate-x-1/2 items-center justify-center gap-[clamp(.45rem,2vw,2rem)] text-center opacity-0 sm:top-[18%] md:top-[17%]" id="mainTitle">
+                <!-- Mantivemos as 4 chunks originais para garantir que a timeline funcione idêntica! -->
+                <span class="titleChunk inline-block tracking-tight text-white text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>Futuro</span>
+                <span class="titleChunk inline-block tracking-tight text-white text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>Digital.</span>
+                <span class="titleChunk hidden tracking-tight text-white text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>-</span>
+                <span class="titleChunk hidden tracking-tight text-white text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>-</span>
+            </div>
+            
+            <!-- (PRELOADER 3) TEXTO 3 DA TIMELINE GSAP -->
+            <div class="absolute left-1/2 top-[14%] z-20 w-[92%] -translate-x-1/2 text-center opacity-0" id="altTitle">
+                <p class="tracking-tight text-white text-[clamp(4.5rem,14vw,12rem)] leading-[.76]" style="font-family: 'Barlow Condensed', Impact, sans-serif; font-weight: 700;">Alto Impacto</p>
+            </div>
+            
+            <!-- (HERO FINAL) TEXTO DE RESOLUÇÃO FINAL GSAP -->
+            <div class="absolute left-1/2 top-1/2 z-50 w-[92%] -translate-x-1/2 -translate-y-1/2 text-center opacity-0 flex flex-col items-center" id="resolveTitle">
+                <p class="tracking-tight text-white text-[clamp(3.5rem,10vw,8.5rem)] leading-[.85]" style="font-family: 'Barlow Condensed', Impact, sans-serif; font-weight: 700;">Design & Estratégia</p>
+                <p class="mx-auto mt-4 max-w-2xl text-xs sm:text-sm font-sans font-normal uppercase tracking-[.25rem] text-indigo-200/80 leading-relaxed">
+                    Transformando ideias em experiências digitais que vendem.
+                </p>
+                <!-- Os CTAs exigidos pela agência (escondidos até o fade-in) -->
+                <div class="mt-8 flex items-center justify-center gap-4">
+                    <button class="btn-glow px-8 py-4 rounded-full text-sm font-semibold tracking-wide text-white flex items-center gap-2">
+                        Ver Projetos
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                    <button class="btn-outline px-8 py-4 rounded-full text-sm font-semibold tracking-wide text-white">
+                        Falar Comigo
+                    </button>
+                </div>
+            </div>
+
+            <!-- MOCKUP MOBILE (CENTRAL) -->
+            <div class="absolute left-1/2 top-[34%] z-30 h-[49vh] min-h-[20rem] w-[min(25rem,58vw)] -translate-x-1/2 opacity-0 sm:top-[31%] md:w-[min(27rem,30vw)]" id="phoneWrap" style="perspective: 80rem;">
+                <div class="relative mx-auto h-full w-full overflow-hidden rounded-[2.25rem] border border-white/15 bg-[#050505] shadow-2xl" id="phone" style="box-shadow: rgba(99, 102, 241, 0.45) 0px 0px 0px 0.45rem, rgba(0, 0, 0, 0.68) 0px 2rem 5rem, rgba(168, 85, 247, 0.28) 0px 0px 3rem;">
+                    <div class="absolute inset-x-[18%] top-0 z-20 h-6 rounded-b-2xl bg-[#050505]"></div>
+                    <div class="absolute inset-0 bg-[#050505]"></div>
+                    <div aria-hidden="true" class="absolute inset-0 opacity-35" style="background: radial-gradient(circle at 82% 12%, rgba(168,85,247,.3), transparent 16%), radial-gradient(circle at 12% 72%, rgba(99,102,241,.2), transparent 22%);"></div>
+                    <div class="relative z-10 flex h-full flex-col p-5 sm:p-6">
+                        <div class="flex items-center justify-between text-xs font-medium text-white/80">
+                            <span>9:41</span>
+                            <div class="flex items-center gap-1">
+                                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:.95rem;height:.95rem" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg>
+                                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:.95rem;height:.95rem" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><rect height="8" rx="2" width="20" x="2" y="14"/><path d="M6.01 18H6"/><path d="M10.01 18H10"/><path d="M15 10v4"/><path d="M17.84 7.17a4 4 0 0 0-5.66 0"/><path d="M20.66 4.34a8 8 0 0 0-11.31 0"/></svg>
+                                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:.95rem;height:.95rem" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M15 7h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"/><path d="M6 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h1"/><path d="m11 7-3 5h4l-3 5"/><line x1="22" x2="22" y1="11" y2="13"/></svg>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex items-start justify-between">
+                            <h2 class="tracking-tight text-white text-4xl leading-none sm:text-5xl" style="font-family: 'Barlow Condensed', Impact, sans-serif; font-weight: 700;">Resultados</h2>
+                            <div class="grid h-9 w-9 place-items-center rounded-full bg-indigo-400 text-sm font-bold text-white">S</div>
+                        </div>
+                        <div class="mt-7 flex gap-2 overflow-hidden">
+                            <span class="rounded-full bg-indigo-500 px-4 py-2 text-xs font-medium text-white shadow-[0_0_10px_rgba(99,102,241,0.5)]">UI/UX</span>
+                            <span class="rounded-full bg-white/10 px-4 py-2 text-xs font-medium text-white/70">Estratégia</span>
+                            <span class="rounded-full bg-white/10 px-4 py-2 text-xs font-medium text-white/70">Performance</span>
+                        </div>
+                        <p class="mt-5 text-xl font-medium tracking-tight text-white sm:text-2xl" style="font-family: 'Barlow Condensed', Impact, sans-serif;">Nossos Serviços</p>
+                        <div class="mt-3 grid grid-cols-2 gap-3">
+                            <div class="h-24 rounded-2xl border border-white/10 bg-white/[.04] p-3 backdrop-blur-md">
+                                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:1.5rem;height:1.5rem;color:rgba(168,85,247,.9)" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                <p class="mt-5 text-xs font-medium uppercase tracking-widest text-white/60">Alta Conversão</p>
+                            </div>
+                            <div class="h-24 rounded-2xl border border-white/10 bg-white/[.04] p-3 backdrop-blur-md">
+                                <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:1.5rem;height:1.5rem;color:rgba(34,211,238,.9)" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                <p class="mt-5 text-xs font-medium uppercase tracking-widest text-white/60">Sistemas Web</p>
+                            </div>
+                        </div>
+                        <div class="mt-auto rounded-3xl border border-white/10 bg-white/[.05] p-4 backdrop-blur-md">
+                            <p class="text-xs font-medium uppercase tracking-widest text-white/40">Case Premium</p>
+                            <div class="mt-3 flex items-center gap-3">
+                                <img alt="Logo Cliente" class="h-10 w-10 rounded-full object-cover grayscale" src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&q=80"/>
+                                <div>
+                                    <p class="text-sm font-medium text-white">Stripe Redesign</p>
+                                    <p class="text-xs text-indigo-400">Entrega de Autoridade</p>
+                                </div>
+                                <svg class="ml-auto" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:1.5rem;height:1.5rem;color:rgba(168,85,247,.8)" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="m9 18 6-6-6-6"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROVAS SOCIAIS (Imagens Unsplash integradas ao cardsLayer do Sonic) -->
+            <div aria-label="Portfólio de Projetos" class="absolute inset-0 z-40 pointer-events-none" id="cardsLayer">
+                <figure class="mediaCard absolute left-[8%] top-[55%] h-[21vh] w-[20rem] max-w-[36vw] overflow-hidden rounded-xl border border-white/10 opacity-0 shadow-2xl sm:left-[11%] sm:top-[55%]" style="box-shadow: rgba(0, 0, 0, 0.62) 0px 1.5rem 4rem, rgba(99, 102, 241, 0.2) 0px 0px 2rem;">
+                    <img alt="Aethereal" class="h-full w-full object-cover" src="assets/projetos/aethereal.png"/>
+                    <div class="absolute inset-0 bg-indigo-600/20 mix-blend-screen"></div>
+                </figure>
+                <figure class="mediaCard absolute left-[29%] top-[50%] h-[14vh] w-[17rem] max-w-[31vw] overflow-hidden rounded-xl border border-white/10 opacity-0 shadow-2xl" style="box-shadow: rgba(0, 0, 0, 0.55) 0px 1.5rem 4rem;">
+                    <img alt="Finex" class="h-full w-full object-cover" src="assets/projetos/finex.png"/>
+                    <div class="absolute inset-0 bg-purple-400/20 mix-blend-screen"></div>
+                </figure>
+                <figure class="mediaCard absolute left-1/2 top-[59%] h-[22vh] w-[30rem] max-w-[45vw] -translate-x-1/2 overflow-hidden rounded-xl border border-white/10 opacity-0 shadow-2xl" style="box-shadow: rgba(0, 0, 0, 0.62) 0px 1.5rem 4rem, rgba(34, 211, 238, 0.18) 0px 0px 2.5rem;">
+                    <img alt="Aetheris" class="h-full w-full object-cover" src="assets/projetos/aetheris.png"/>
+                    <div class="absolute inset-0 bg-cyan-300/15 mix-blend-screen"></div>
+                </figure>
+                <figure class="mediaCard absolute right-[23%] top-[48%] h-[16vh] w-[17rem] max-w-[30vw] overflow-hidden rounded-xl border border-white/10 opacity-0 shadow-2xl" style="box-shadow: rgba(0, 0, 0, 0.55) 0px 1.5rem 4rem;">
+                    <img alt="Blade" class="h-full w-full object-cover" src="assets/projetos/blade.png"/>
+                    <div class="absolute inset-0 bg-orange-300/15 mix-blend-screen"></div>
+                </figure>
+                <figure class="mediaCard absolute right-[8%] top-[51%] h-[23vh] w-[21rem] max-w-[37vw] overflow-hidden rounded-xl border border-white/10 opacity-0 shadow-2xl sm:right-[11%]" style="box-shadow: rgba(0, 0, 0, 0.62) 0px 1.5rem 4rem, rgba(99, 102, 241, 0.18) 0px 0px 2rem;">
+                    <img alt="Elienai" class="h-full w-full object-cover" src="assets/projetos/elienai.png"/>
+                    <div class="absolute inset-0 bg-indigo-400/20 mix-blend-screen"></div>
+                </figure>
+            </div>
+
+            <div aria-hidden="true" class="bg-white opacity-0 z-[70] absolute top-0 right-0 bottom-0 left-0" id="flash"></div>
+            
+            <div class="absolute bottom-6 left-1/2 z-[80] flex -translate-x-1/2 items-center gap-3 rounded-full border border-white/10 bg-black/35 px-4 py-2 opacity-0 backdrop-blur-md" id="metaRail">
+                <span class="h-1.5 w-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
+                <span class="text-xs font-mono uppercase tracking-[.22rem] text-white/60">Experiência Digital · Portfólio</span>
+            </div>
+            
+            <div class="absolute left-7 top-7 z-[80] hidden items-center gap-2 text-xs font-medium uppercase tracking-[.28rem] text-white/45 sm:flex" id="sequenceLabel">
+                <span class="h-px w-8 bg-white/25"></span>
+                <span>Resolvendo</span>
+            </div>
+        </div>
+
+        <!-- DEPENDÊNCIAS ORIGINAIS GSAP -->
+        <script src="sonic-link.aura.build/assets/28033e449a31ebcc_gsap.min.js"></script>
+
+        <!-- SCRIPT DO PRELOADER PURO -> INJETA A TIMELINE DO HERO APENAS NO FINAL -->
+        <script>
+            lucide.createIcons();
+            const cursorDot = document.getElementById('cursor-dot');
+            const cursorHalo = document.getElementById('cursor-halo');
+
+            // Tracking do cursor
+            window.addEventListener("mousemove", (e) => {
+                cursorDot.style.left = e.clientX + "px";
+                cursorDot.style.top = e.clientY + "px";
+                cursorHalo.style.left = e.clientX + "px";
+                cursorHalo.style.top = e.clientY + "px";
+            });
+
+            // Animação da Tela Preta (Preloader)
+            const pTl = gsap.timeline();
+            pTl.to(".sweep-light", { left: "200%", duration: 1.8, ease: "power2.inOut", delay: 0.2 })
+               .to(".text-bright", { clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 1.8, ease: "power3.inOut" }, "-=1.8")
+               .to(".preloader-text-wrapper", { opacity: 0, filter: "blur(15px)", scale: 1.1, duration: 0.8, ease: "power2.in", delay: 0.5 })
+               .to("#black-preloader", {
+                   opacity: 0, 
+                   duration: 1.2, 
+                   ease: "power2.inOut",
+                   onComplete: () => {
+                       // Remove a div preta da frente
+                       document.getElementById("black-preloader").remove();
+                       
+                       // SÓ AGORA INICIA A TIMELINE ORIGINAL DO SONIC-LINK
+                       // Carregando dinamicamente o script da hero
+                       const script = document.createElement("script");
+                       script.src = "sonic-link.aura.build/assets/js/pulsewave-intro.js";
+                       document.body.appendChild(script);
+                   }
+               }, "-=0.2");
+        </script>
+    </section>
+</body>
+</html>

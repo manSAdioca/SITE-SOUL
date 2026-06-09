@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Design System 2.0 - Fusion Aura</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+    <!-- Tailwind CDN para garantir as classes utilitárias completas -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        oswald: ['Oswald', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            cyan: '#22d3ee',
+                            purple: '#a855f7',
+                            indigo: '#6366F1',
+                            orange: '#f97316',
+                            emerald: '#10b981'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'beam-1': 'beam-1 3s infinite linear',
+                        'beam-2': 'beam-2 4s infinite linear',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        'beam-1': {
+                            '0%': { transform: 'translateY(-100%)', opacity: '0' },
+                            '50%': { opacity: '1' },
+                            '100%': { transform: 'translateY(1000%)', opacity: '0' }
+                        },
+                        'beam-2': {
+                            '0%': { transform: 'translateY(-100%)', opacity: '0' },
+                            '50%': { opacity: '1' },
+                            '100%': { transform: 'translateY(1000%)', opacity: '0' }
+                        },
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Icons -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Estilos Customizados para Design System -->
+    <style>
+        .glass-panel {
+            background: rgba(24, 24, 27, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+        
+        .glow-cyan { text-shadow: 0 0 20px rgba(34, 211, 238, 0.6); }
+        .glow-indigo { text-shadow: 0 0 20px rgba(99, 102, 241, 0.6); }
+        .glow-orange { text-shadow: 0 0 20px rgba(249, 115, 22, 0.6); }
+
+        .flashlight-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .flashlight-card::before {
+            content: '';
+            position: absolute;
+            top: var(--mouse-y, 0);
+            left: var(--mouse-x, 0);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle closest-side, rgba(255,255,255,0.06), transparent);
+            transform: translate(-50%, -50%);
+            transition: width 0.2s ease, height 0.2s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .staggered-reveal span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: revealUp 0.8s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        
+        .staggered-reveal span:nth-child(1) { animation-delay: 0.1s; }
+        .staggered-reveal span:nth-child(2) { animation-delay: 0.2s; }
+        .staggered-reveal span:nth-child(3) { animation-delay: 0.3s; }
+        .staggered-reveal span:nth-child(5) { animation-delay: 0.4s; }
+
+        @keyframes revealUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .shimmer-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+        
+        /* Grid background animation */
+        .bg-grid-animated {
+            background-size: 50px 50px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            animation: panGrid 30s linear infinite;
+        }
+        
+        @keyframes panGrid {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
+        }
+        
+        /* Scroll reveal class */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-[#050505] text-zinc-300 font-sans antialiased overflow-x-hidden selection:bg-brand-indigo/30 selection:text-white">
+
+    <!-- Background Layers -->
+    <div class="fixed inset-0 z-[-1] pointer-events-none bg-grid-animated"></div>
+    <div class="fixed inset-0 z-[-2] pointer-events-none opacity-[0.08]" style="background-image: radial-gradient(circle at 1px 1px, #ffffff 1px, transparent 0); background-size: 32px 32px;"></div>
+    <div class="fixed inset-0 z-[-2] flex items-center justify-center pointer-events-none">
+        <div class="w-[800px] h-[800px] rounded-full opacity-20 blur-[120px]" style="background: radial-gradient(circle at center, #6366F1, transparent 60%);"></div>
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] rounded-full opacity-10 blur-[120px]" style="background: radial-gradient(circle at center, #22d3ee, transparent 60%);"></div>
+        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full opacity-10 blur-[120px]" style="background: radial-gradient(circle at center, #a855f7, transparent 60%);"></div>
+    </div>
+
+    <!-- Navigation Navbar -->
+    <nav class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+        <div class="flex items-center justify-between w-full max-w-6xl glass-panel rounded-full px-6 py-3 border border-white/10 shadow-2xl">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-brand-indigo to-brand-cyan flex items-center justify-center shadow-[0_0_15px_rgba(34,211,238,0.5)]">
+                    <i data-lucide="infinity" class="w-5 h-5 text-white"></i>
+                </div>
+                <span class="font-bold text-white tracking-widest uppercase text-sm">Aura Fusion</span>
+            </div>
+            <div class="hidden md:flex gap-8 items-center text-xs font-mono tracking-widest text-zinc-400">
+                <a href="#hero" class="hover:text-white transition-colors">HERO</a>
+                <a href="#typography" class="hover:text-white transition-colors">TIPOGRAFIA</a>
+                <a href="#colors" class="hover:text-white transition-colors">CORES</a>
+                <a href="#components" class="hover:text-white transition-colors">UI ELEMENTS</a>
+            </div>
+            <button class="shimmer-btn bg-white text-black px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                Baixar Kit
+            </button>
+        </div>
+    </nav>
+
+    <main class="relative z-10 flex flex-col">
+
+        <!-- 1. HERO DEMONSTRATION -->
+        <section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+            <!-- Animated Beams -->
+            <div class="absolute inset-0 z-0 pointer-events-none">
+                <div class="absolute top-0 left-[20%] w-[1px] h-[60vh] bg-gradient-to-b from-transparent via-brand-indigo to-transparent animate-beam-1"></div>
+                <div class="absolute top-0 right-[30%] w-[1px] h-[40vh] bg-gradient-to-b from-transparent via-brand-cyan to-transparent animate-beam-2" style="animation-delay: 1.5s;"></div>
+                <div class="absolute top-0 left-[60%] w-[1px] h-[50vh] bg-gradient-to-b from-transparent via-brand-purple to-transparent animate-beam-1" style="animation-delay: 0.7s;"></div>
+            </div>
+
+            <div class="relative z-10 max-w-7xl w-full mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="flex flex-col gap-8">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 w-fit backdrop-blur-md shadow-lg">
+                        <span class="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
+                        <span class="text-xs font-mono tracking-widest uppercase text-zinc-300">Aura Design System 3.0</span>
+                    </div>
+                    
+                    <h1 class="text-6xl md:text-8xl font-bold tracking-tighter text-white leading-[1.05] staggered-reveal">
+                        <span>Crie</span> <span>o</span> <span>Futuro</span><br/>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-indigo via-brand-purple to-brand-cyan glow-indigo pb-2 inline-block">Visualmente.</span>
+                    </h1>
+                    
+                    <p class="text-lg text-zinc-400 max-w-lg leading-relaxed font-light reveal-on-scroll" style="animation-delay: 0.5s;">
+                        Um ecossistema visual dinâmico projetado para interfaces de próxima geração. Combina a precisão do código com a fluidez de animações avançadas.
+                    </p>
+                    
+                    <div class="flex gap-4 mt-4 reveal-on-scroll" style="animation-delay: 0.6s;">
+                        <button class="group relative isolate overflow-hidden bg-brand-indigo hover:bg-indigo-500 transition-all text-white px-8 py-4 rounded-full font-medium text-sm shadow-[0_0_30px_rgba(99,102,241,0.5)] hover:shadow-[0_0_50px_rgba(99,102,241,0.8)] hover:-translate-y-1">
+                            <span class="relative z-10 flex items-center gap-2">Explorar Componentes <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i></span>
+                        </button>
+                        <button class="glass-panel text-white px-8 py-4 rounded-full font-medium text-sm hover:bg-white/10 transition-all border border-white/20">
+                            Documentação
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="relative perspective-1000 hidden lg:block animate-float">
+                    <div class="relative w-full aspect-square transform -rotate-y-12 rotate-x-12 hover:rotate-0 transition-transform duration-700 ease-out">
+                        
+                        <!-- 3D Abstract UI Element -->
+                        <div class="absolute inset-4 bg-gradient-to-br from-brand-indigo/10 to-brand-cyan/10 rounded-full border border-white/20 glass-panel shadow-[0_0_80px_rgba(34,211,238,0.2)] flex items-center justify-center overflow-hidden">
+                            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay opacity-40"></div>
+                            
+                            <!-- Inner spinning elements -->
+                            <div class="absolute w-64 h-64 rounded-full border border-white/10 flex items-center justify-center">
+                                <div class="w-full h-full rounded-full border-2 border-transparent border-t-brand-cyan animate-[spin_4s_linear_infinite]"></div>
+                            </div>
+                            <div class="absolute w-48 h-48 rounded-full border border-white/10 flex items-center justify-center">
+                                <div class="w-full h-full rounded-full border-2 border-transparent border-b-brand-purple animate-[spin_3s_linear_infinite_reverse]"></div>
+                            </div>
+                            
+                            <div class="bg-black/50 backdrop-blur-md rounded-2xl p-6 border border-white/10 flex flex-col items-center gap-4 z-10 shadow-2xl">
+                                <iconify-icon icon="solar:soundwave-bold" class="text-5xl text-brand-cyan"></iconify-icon>
+                                <div class="w-32 h-2 bg-zinc-800 rounded-full overflow-hidden">
+                                    <div class="w-2/3 h-full bg-gradient-to-r from-brand-indigo to-brand-cyan"></div>
+                                </div>
+                                <span class="font-mono text-[10px] text-zinc-400 tracking-widest uppercase">Syncing...</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating Glass Cards -->
+                        <div class="absolute top-10 -right-4 glass-panel p-4 rounded-2xl animate-bounce shadow-2xl" style="animation-duration: 4s;">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-brand-cyan/20 flex items-center justify-center border border-brand-cyan/50">
+                                    <i data-lucide="zap" class="text-brand-cyan w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <p class="text-white text-sm font-bold uppercase tracking-wider">Performance</p>
+                                    <p class="text-brand-cyan text-[10px] font-mono mt-1">14ms Latency</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="absolute bottom-16 -left-8 glass-panel p-5 rounded-2xl animate-bounce shadow-2xl" style="animation-duration: 5s; animation-delay: 1s;">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-brand-purple/20 flex items-center justify-center border border-brand-purple/50">
+                                    <iconify-icon icon="solar:cpu-linear" class="text-brand-purple text-2xl"></iconify-icon>
+                                </div>
+                                <div>
+                                    <p class="text-white text-sm font-bold uppercase tracking-wider">Engine</p>
+                                    <p class="text-brand-purple text-[10px] font-mono mt-1">Neural Audio</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. TIPOGRAFIA -->
+        <section id="typography" class="py-32 border-t border-white/10 relative">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="mb-20 reveal-on-scroll">
+                    <span class="text-brand-cyan text-sm font-mono tracking-widest uppercase mb-3 block">01 — Core Elements</span>
+                    <h2 class="text-5xl md:text-6xl font-bold text-white tracking-tighter">Tipografia</h2>
+                    <p class="text-zinc-400 mt-6 max-w-2xl text-lg">A hierarquia visual é construída sobre três famílias de fontes distintas para garantir legibilidade, expressividade e caráter técnico.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
+                    <div class="glass-panel p-10 rounded-3xl reveal-on-scroll border border-white/5 hover:border-white/20 transition-colors">
+                        <div class="text-xs text-zinc-500 font-mono mb-6 uppercase tracking-wider">Primary / Display</div>
+                        <h3 class="text-6xl font-oswald text-white mb-4">Oswald</h3>
+                        <p class="text-zinc-400 text-sm mb-8">Usada em grandes títulos e chamadas de impacto (h1, h2).</p>
+                        <div class="font-oswald text-3xl text-white space-y-4">
+                            <p class="font-light">Aa Bb Cc - Light</p>
+                            <p class="font-normal">Aa Bb Cc - Regular</p>
+                            <p class="font-bold">Aa Bb Cc - Bold</p>
+                        </div>
+                    </div>
+                    <div class="glass-panel p-10 rounded-3xl reveal-on-scroll border border-white/5 hover:border-white/20 transition-colors" style="animation-delay: 0.1s">
+                        <div class="text-xs text-zinc-500 font-mono mb-6 uppercase tracking-wider">Fallback / Body</div>
+                        <h3 class="text-6xl font-sans text-white mb-4 tracking-tight">Inter</h3>
+                        <p class="text-zinc-400 text-sm mb-8">Fonte principal para leitura longa, corpo de texto e UI.</p>
+                        <div class="font-sans text-3xl text-white space-y-4">
+                            <p class="font-light">Aa Bb Cc - Light</p>
+                            <p class="font-normal">Aa Bb Cc - Regular</p>
+                            <p class="font-bold">Aa Bb Cc - Bold</p>
+                        </div>
+                    </div>
+                    <div class="glass-panel p-10 rounded-3xl reveal-on-scroll border border-white/5 hover:border-white/20 transition-colors" style="animation-delay: 0.2s">
+                        <div class="text-xs text-zinc-500 font-mono mb-6 uppercase tracking-wider">Monospace / Utility</div>
+                        <h3 class="text-5xl font-mono text-white mb-4 tracking-tighter">JetBrains Mono</h3>
+                        <p class="text-zinc-400 text-sm mb-8">Usada para dados numéricos, código e micro-labels.</p>
+                        <div class="font-mono text-2xl text-white space-y-4">
+                            <p class="font-normal">Aa Bb 01 - Regular</p>
+                            <p class="font-medium">Aa Bb 01 - Medium</p>
+                            <p class="font-bold">Aa Bb 01 - Bold</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel rounded-3xl overflow-hidden border border-white/10 reveal-on-scroll shadow-2xl">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-black/40 text-xs uppercase font-mono tracking-widest text-zinc-500 border-b border-white/10">
+                                <th class="p-6 font-medium">Role</th>
+                                <th class="p-6 font-medium">Font Family</th>
+                                <th class="p-6 font-medium hidden md:table-cell">Weight</th>
+                                <th class="p-6 font-medium hidden md:table-cell">Size / Line Height</th>
+                                <th class="p-6 font-medium">Preview</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-white text-sm">
+                            <tr class="border-b border-white/5 hover:bg-white/[0.03] transition-colors">
+                                <td class="p-6 text-brand-cyan font-mono text-xs">h1</td>
+                                <td class="p-6 font-mono text-xs text-zinc-400">Oswald</td>
+                                <td class="p-6 font-mono text-xs text-zinc-400 hidden md:table-cell">Bold (700)</td>
+                                <td class="p-6 font-mono text-xs text-zinc-400 hidden md:table-cell">96px / 1.1</td>
+                                <td class="p-6"><span class="text-5xl font-oswald font-bold tracking-tight">Título Hero</span></td>
+                            </tr>
+                            <tr class="border-b border-white/5 hover:bg-white/[0.03] transition-colors">
+                                <td class="p-6 text-brand-cyan font-mono text-xs">h2</td>
+                                <td class="p-6 font-mono text-xs text-zinc-400">Oswald</td>
+                                <td class="p-6 font-mono text-xs text-zinc-400 hidden md:table-cell">Medium (500)</td>
+                                <td class="p-6 font-mono text-xs text-zinc-400 hidden md:table-cell">60px / 1.1</td>
+                                <td class="p-6"><span class="text-4xl font-oswald font-medium tracking-tight">Título Seção</span></td>
+                            </tr>
+                            <tr class="border-b border-white/5 hover:bg-white/[0.03] transition-colors">
+                                <td class="p-6 text-brand-cyan font-mono text-xs">h3</td>
+                                <td class="p-6 font-mono text-xs text-zinc-400">Inter</td>
+                                <td class="p-6 font-mono text-xs text-zinc-400 hidden md:table-cell">Semibold (600)</td>
+                                <td class="p-6 font-mono text-xs text-zinc-400 hidden md:table-cell">30px / 1.2</td>
+                                <td class="p-6"><span class="text-3xl font-sans font-semibold tracking-tight">Título Card</span></td>
+                            </tr>
+                            <tr class="border-b border-white/5 hover:bg-white/[0.03] transition-colors">
+                                <td class="p-6 text-brand-cyan font-mono text-xs">body-lg</td>
+                                <td class="p-6 font-mono text-xs text-zinc-400">Inter</td>
+                                <td class="p-6 font-mono text-xs text-zinc-400 hidden md:table-cell">Regular (400)</td>
+                                <td class="p-6 font-mono text-xs text-zinc-400 hidden md:table-cell">18px / 1.6</td>
+                                <td class="p-6"><span class="text-lg font-sans text-zinc-300">Texto longo e incrivelmente legível.</span></td>
+                            </tr>
+                            <tr class="border-b border-white/5 hover:bg-white/[0.03] transition-colors">
+                                <td class="p-6 text-brand-cyan font-mono text-xs">body-sm</td>
+                                <td class="p-6 font-mono text-xs text-zinc-400">Inter</td>
+                                <td class="p-6 font-mono text-xs text-zinc-400 hidden md:table-cell">Regular (400)</td>
+                                <td class="p-6 font-mono text-xs text-zinc-400 hidden md:table-cell">14px / 1.5</td>
+                                <td class="p-6"><span class="text-sm font-sans text-zinc-400">Textos auxiliares menores e discretos.</span></td>
+                            </tr>
+                            <tr class="hover:bg-white/[0.03] transition-colors">
+                                <td class="p-6 text-brand-cyan font-mono text-xs">label</td>
+                                <td class="p-6 font-mono text-xs text-zinc-400">JetBrains Mono</td>
+                                <td class="p-6 font-mono text-xs text-zinc-400 hidden md:table-cell">Medium (500)</td>
+                                <td class="p-6 font-mono text-xs text-zinc-400 hidden md:table-cell">12px / 1.4 / 2px l-s</td>
+                                <td class="p-6"><span class="text-xs font-mono font-medium uppercase tracking-[2px] text-brand-indigo">LABEL TÉCNICO</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. SISTEMA DE CORES -->
+        <section id="colors" class="py-32 border-t border-white/10 relative">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="mb-20 reveal-on-scroll">
+                    <span class="text-brand-purple text-sm font-mono tracking-widest uppercase mb-3 block">02 — The Palette</span>
+                    <h2 class="text-5xl md:text-6xl font-bold text-white tracking-tighter">Sistema de Cores</h2>
+                    <p class="text-zinc-400 mt-6 max-w-2xl text-lg">Paleta vibrante e profunda sobre fundos escuros. Foco absoluto no contraste (AAA) para criar estética futurista e intuitiva.</p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-6 reveal-on-scroll">
+                    <!-- Cyan -->
+                    <div class="flex flex-col gap-4 group cursor-pointer">
+                        <div class="h-40 rounded-3xl bg-brand-cyan shadow-[0_0_20px_rgba(34,211,238,0.3)] border border-white/20 group-hover:scale-105 group-hover:shadow-[0_0_40px_rgba(34,211,238,0.5)] transition-all duration-500"></div>
+                        <div class="px-2">
+                            <p class="text-white font-bold text-base">Cyan</p>
+                            <p class="text-zinc-400 font-mono text-xs my-1">#22D3EE</p>
+                            <p class="text-zinc-500 font-sans text-xs">Primary Action / Glow</p>
+                        </div>
+                    </div>
+                    <!-- Indigo -->
+                    <div class="flex flex-col gap-4 group cursor-pointer">
+                        <div class="h-40 rounded-3xl bg-brand-indigo shadow-[0_0_20px_rgba(99,102,241,0.3)] border border-white/20 group-hover:scale-105 group-hover:shadow-[0_0_40px_rgba(99,102,241,0.5)] transition-all duration-500"></div>
+                        <div class="px-2">
+                            <p class="text-white font-bold text-base">Indigo</p>
+                            <p class="text-zinc-400 font-mono text-xs my-1">#6366F1</p>
+                            <p class="text-zinc-500 font-sans text-xs">Brand / Active State</p>
+                        </div>
+                    </div>
+                    <!-- Purple -->
+                    <div class="flex flex-col gap-4 group cursor-pointer">
+                        <div class="h-40 rounded-3xl bg-brand-purple shadow-[0_0_20px_rgba(168,85,247,0.3)] border border-white/20 group-hover:scale-105 group-hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] transition-all duration-500"></div>
+                        <div class="px-2">
+                            <p class="text-white font-bold text-base">Purple</p>
+                            <p class="text-zinc-400 font-mono text-xs my-1">#A855F7</p>
+                            <p class="text-zinc-500 font-sans text-xs">Accent / Gradients</p>
+                        </div>
+                    </div>
+                    <!-- Orange -->
+                    <div class="flex flex-col gap-4 group cursor-pointer">
+                        <div class="h-40 rounded-3xl bg-brand-orange shadow-[0_0_20px_rgba(249,115,22,0.3)] border border-white/20 group-hover:scale-105 group-hover:shadow-[0_0_40px_rgba(249,115,22,0.5)] transition-all duration-500"></div>
+                        <div class="px-2">
+                            <p class="text-white font-bold text-base">Orange</p>
+                            <p class="text-zinc-400 font-mono text-xs my-1">#F97316</p>
+                            <p class="text-zinc-500 font-sans text-xs">Warning / Highlights</p>
+                        </div>
+                    </div>
+                    <!-- Emerald -->
+                    <div class="flex flex-col gap-4 group cursor-pointer">
+                        <div class="h-40 rounded-3xl bg-brand-emerald shadow-[0_0_20px_rgba(16,185,129,0.3)] border border-white/20 group-hover:scale-105 group-hover:shadow-[0_0_40px_rgba(16,185,129,0.5)] transition-all duration-500"></div>
+                        <div class="px-2">
+                            <p class="text-white font-bold text-base">Emerald</p>
+                            <p class="text-zinc-400 font-mono text-xs my-1">#10B981</p>
+                            <p class="text-zinc-500 font-sans text-xs">Success / Online</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gradients -->
+                <div class="mt-24 reveal-on-scroll">
+                    <h3 class="text-2xl font-semibold text-white mb-8 tracking-tight border-b border-white/10 pb-4">Gradientes Oficiais</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="h-48 rounded-3xl bg-gradient-to-r from-brand-indigo via-brand-purple to-brand-cyan flex flex-col justify-end p-6 border border-white/10 shadow-lg relative overflow-hidden group">
+                            <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <span class="text-white font-mono text-xs bg-black/60 px-4 py-2 rounded-full backdrop-blur-md w-fit">Aurora Blend</span>
+                        </div>
+                        <div class="h-48 rounded-3xl bg-gradient-to-tr from-[#020202] via-[#111111] to-[#1a1a1a] flex flex-col justify-end p-6 border border-white/5 shadow-inner relative overflow-hidden group">
+                            <div class="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+                            <span class="text-white font-mono text-xs bg-black/60 px-4 py-2 rounded-full backdrop-blur-md w-fit relative z-10 border border-white/10">Dark Metal + Noise</span>
+                        </div>
+                        <div class="h-48 rounded-3xl bg-gradient-to-br from-brand-orange to-[#ef4444] flex flex-col justify-end p-6 border border-white/10 shadow-lg relative overflow-hidden group">
+                            <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <span class="text-white font-mono text-xs bg-black/60 px-4 py-2 rounded-full backdrop-blur-md w-fit">Heatwave</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. COMPONENTES UI -->
+        <section id="components" class="py-32 border-t border-white/10 relative">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="mb-20 reveal-on-scroll">
+                    <span class="text-brand-indigo text-sm font-mono tracking-widest uppercase mb-3 block">03 — Building Blocks</span>
+                    <h2 class="text-5xl md:text-6xl font-bold text-white tracking-tighter">Componentes UI</h2>
+                    <p class="text-zinc-400 mt-6 max-w-2xl text-lg">Ricos em micro-animações, estados de hover elegantes e feedback visual cristalino. Elementos pensados para impressionar.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    
+                    <!-- Left Column: Buttons, Badges & Inputs -->
+                    <div class="space-y-12">
+                        <!-- Botões -->
+                        <div class="glass-panel p-10 rounded-3xl reveal-on-scroll">
+                            <h3 class="text-xl font-semibold text-white mb-8 border-b border-white/10 pb-4">Botões</h3>
+                            <div class="flex flex-wrap gap-6 items-center">
+                                <!-- Primário -->
+                                <button class="bg-brand-indigo hover:bg-indigo-500 text-white px-8 py-3.5 rounded-full text-sm font-semibold transition-all shadow-[0_0_20px_rgba(99,102,241,0.4)] hover:shadow-[0_0_30px_rgba(99,102,241,0.7)] hover:-translate-y-1 flex items-center gap-2 group">
+                                    Começar Agora <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                                </button>
+                                
+                                <!-- Secundário -->
+                                <button class="bg-white/5 hover:bg-white/10 border border-white/10 text-white px-8 py-3.5 rounded-full text-sm font-medium transition-all hover:border-white/30 flex items-center gap-2">
+                                    Documentação
+                                </button>
+
+                                <!-- IA Glow Button -->
+                                <button class="group relative isolate overflow-hidden p-[1px] rounded-full mt-2">
+                                    <span class="absolute inset-[-2000%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#A855F7_0%,transparent_50%,#22D3EE_100%)]"></span>
+                                    <div class="relative bg-zinc-950 px-8 py-3 rounded-full text-sm font-medium text-white transition-all group-hover:bg-zinc-900 flex items-center gap-2 backdrop-blur-xl">
+                                        <i data-lucide="sparkles" class="w-4 h-4 text-brand-purple"></i> Gerar com IA
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Badges & Tags -->
+                        <div class="glass-panel p-10 rounded-3xl reveal-on-scroll" style="animation-delay: 0.1s">
+                            <h3 class="text-xl font-semibold text-white mb-8 border-b border-white/10 pb-4">Badges & Tags</h3>
+                            <div class="flex flex-wrap gap-5 mb-10">
+                                <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-emerald/10 border border-brand-emerald/20 text-brand-emerald text-xs font-mono uppercase tracking-widest shadow-[0_0_15px_rgba(16,185,129,0.15)]">
+                                    <span class="w-2 h-2 rounded-full bg-brand-emerald animate-pulse"></span> Online
+                                </span>
+                                <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-indigo/10 border border-brand-indigo/20 text-brand-indigo text-xs font-mono uppercase tracking-widest">
+                                    Versão 2.0
+                                </span>
+                                <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-800 border border-zinc-700 text-zinc-300 text-xs font-mono uppercase tracking-widest hover:bg-zinc-700 transition-colors cursor-pointer">
+                                    #Design
+                                </span>
+                            </div>
+
+                            <h3 class="text-xl font-semibold text-white mb-8 border-b border-white/10 pb-4">Inputs Dinâmicos</h3>
+                            <div class="relative group mt-4">
+                                <!-- Glow Effect na borda -->
+                                <div class="absolute -inset-0.5 bg-gradient-to-r from-brand-indigo to-brand-cyan rounded-2xl blur opacity-20 group-focus-within:opacity-100 transition duration-500"></div>
+                                <div class="relative flex items-center bg-[#0a0a0a] border border-white/10 rounded-2xl px-5 py-4">
+                                    <i data-lucide="search" class="w-5 h-5 text-zinc-500 mr-4 group-focus-within:text-brand-cyan transition-colors"></i>
+                                    <input type="text" placeholder="Buscar no sistema sônico..." class="bg-transparent border-none outline-none text-white w-full placeholder-zinc-600 text-base font-sans"/>
+                                    <div class="ml-4 px-2 py-1 rounded bg-white/5 border border-white/10 text-zinc-500 text-[10px] font-mono">⌘K</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Cards & Modals -->
+                    <div class="space-y-12">
+                        <!-- Complex Card -->
+                        <div class="flashlight-card group glass-panel p-10 rounded-3xl transition-transform hover:-translate-y-2 duration-500 cursor-pointer reveal-on-scroll">
+                            <div class="relative z-10">
+                                <div class="flex justify-between items-start mb-10">
+                                    <div class="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/30 flex items-center justify-center shadow-[inset_0_0_20px_rgba(34,211,238,0.2)]">
+                                        <iconify-icon icon="solar:server-square-linear" class="text-3xl text-brand-cyan"></iconify-icon>
+                                    </div>
+                                    <span class="px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-[10px] font-mono tracking-widest text-zinc-400 uppercase">Status.Active</span>
+                                </div>
+                                <h4 class="text-3xl font-semibold text-white tracking-tight mb-4 group-hover:text-brand-cyan transition-colors">Infraestrutura Global</h4>
+                                <p class="text-base text-zinc-400 leading-relaxed mb-8">
+                                    Roteamento otimizado com latência ultra baixa, distribuído em mais de 50 zonas de disponibilidade em tempo real para máxima sincronia.
+                                </p>
+                                
+                                <div class="bg-black/50 p-5 rounded-2xl border border-white/5 mb-2">
+                                    <div class="flex justify-between mb-3 text-sm font-mono text-zinc-400">
+                                        <span>Carga do Sistema</span>
+                                        <span class="text-white">85%</span>
+                                    </div>
+                                    <div class="w-full bg-zinc-900 h-2 rounded-full overflow-hidden">
+                                        <div class="bg-gradient-to-r from-brand-indigo to-brand-cyan h-full w-[85%] rounded-full shadow-[0_0_15px_rgba(34,211,238,0.8)] relative">
+                                            <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal / Dropdown Snippet -->
+                        <div class="glass-panel p-2 rounded-3xl border border-white/10 relative overflow-hidden reveal-on-scroll shadow-2xl" style="animation-delay: 0.1s">
+                            <div class="absolute inset-0 bg-gradient-to-b from-brand-purple/10 to-transparent pointer-events-none"></div>
+                            
+                            <div class="bg-[#0f0f11]/90 backdrop-blur-md rounded-[1.25rem] p-8 relative z-10 border border-white/5">
+                                <div class="flex items-center justify-between mb-6 pb-6 border-b border-white/5">
+                                    <h4 class="text-xl text-white font-medium tracking-tight">Preferências Sônicas</h4>
+                                    <button class="text-zinc-500 hover:text-white transition-colors bg-white/5 p-2 rounded-full hover:bg-white/10">
+                                        <i data-lucide="x" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="space-y-6">
+                                    <div class="flex items-center justify-between group">
+                                        <div>
+                                            <span class="text-base text-white block mb-1">Roteamento Inteligente</span>
+                                            <span class="text-xs text-zinc-500 font-light">Encontra a rota de menor ping.</span>
+                                        </div>
+                                        <div class="w-12 h-6 bg-brand-emerald rounded-full relative cursor-pointer shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-colors">
+                                            <div class="absolute top-[2px] right-[2px] w-5 h-5 bg-white rounded-full transition-transform"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between group">
+                                        <div>
+                                            <span class="text-base text-white block mb-1">Modo Furtivo (Stealth)</span>
+                                            <span class="text-xs text-zinc-500 font-light">Mascarar pacotes via HTTPS.</span>
+                                        </div>
+                                        <div class="w-12 h-6 bg-zinc-800 border border-zinc-700 rounded-full relative cursor-pointer hover:border-zinc-600 transition-colors">
+                                            <div class="absolute top-[1px] left-[1px] w-5 h-5 bg-zinc-400 rounded-full transition-transform"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-8 pt-6 border-t border-white/5 flex justify-end gap-4">
+                                    <button class="px-5 py-2.5 text-sm font-medium text-zinc-400 hover:text-white transition-colors">Cancelar</button>
+                                    <button class="px-6 py-2.5 text-sm font-semibold bg-white text-black rounded-xl hover:bg-zinc-200 transition-colors shadow-lg hover:shadow-white/20">Salvar Mudanças</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 5. ANIMAÇÕES & ÍCONES -->
+        <section id="animations" class="py-32 border-t border-white/10 relative pb-40">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="mb-20 reveal-on-scroll">
+                    <span class="text-brand-orange text-sm font-mono tracking-widest uppercase mb-3 block">04 — Motion & Symbols</span>
+                    <h2 class="text-5xl md:text-6xl font-bold text-white tracking-tighter">Animações & Ícones</h2>
+                    <p class="text-zinc-400 mt-6 max-w-2xl text-lg">O sistema ganha vida através de micro-interações fluidas e iconografia consistente via bibliotecas modernas como Lucide e Iconify.</p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 text-center">
+                    <div class="glass-panel p-10 rounded-3xl flex flex-col items-center justify-center gap-6 hover:-translate-y-2 transition-transform duration-500 reveal-on-scroll">
+                        <div class="w-16 h-16 rounded-full bg-brand-cyan/10 flex items-center justify-center border border-brand-cyan/30">
+                            <i data-lucide="activity" class="w-8 h-8 text-brand-cyan animate-pulse"></i>
+                        </div>
+                        <span class="text-sm font-mono tracking-widest text-zinc-400 uppercase">Pulse</span>
+                    </div>
+                    
+                    <div class="glass-panel p-10 rounded-3xl flex flex-col items-center justify-center gap-6 hover:-translate-y-2 transition-transform duration-500 reveal-on-scroll" style="animation-delay: 0.1s">
+                        <div class="w-16 h-16 rounded-full bg-brand-indigo/10 flex items-center justify-center border border-brand-indigo/30">
+                            <i data-lucide="loader-2" class="w-8 h-8 text-brand-indigo animate-spin"></i>
+                        </div>
+                        <span class="text-sm font-mono tracking-widest text-zinc-400 uppercase">Spin</span>
+                    </div>
+                    
+                    <div class="glass-panel p-10 rounded-3xl flex flex-col items-center justify-center gap-6 transition-transform duration-500 group hover:-translate-y-2 reveal-on-scroll" style="animation-delay: 0.2s">
+                        <div class="w-16 h-16 rounded-full bg-brand-purple/10 flex items-center justify-center border border-brand-purple/30">
+                            <i data-lucide="arrow-up-right" class="w-8 h-8 text-brand-purple transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"></i>
+                        </div>
+                        <span class="text-sm font-mono tracking-widest text-zinc-400 uppercase">Hover FX</span>
+                    </div>
+                    
+                    <div class="glass-panel p-10 rounded-3xl flex flex-col items-center justify-center gap-6 hover:-translate-y-2 transition-transform duration-500 reveal-on-scroll" style="animation-delay: 0.3s">
+                        <div class="w-16 h-16 rounded-full bg-brand-orange/10 flex items-center justify-center border border-brand-orange/30">
+                            <iconify-icon icon="solar:tuning-square-linear" class="text-3xl text-brand-orange animate-bounce"></iconify-icon>
+                        </div>
+                        <span class="text-sm font-mono tracking-widest text-zinc-400 uppercase">Bounce</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Inicializa Lucide Icons
+        lucide.createIcons();
+        
+        // Efeito "Flashlight" para cards
+        document.querySelectorAll('.flashlight-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+        
+        // Lógica base de animação no scroll
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // Desconectar o observador após a animação rodar uma vez para performance
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

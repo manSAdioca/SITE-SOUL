@@ -1,0 +1,2351 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="5000" name="preview-ready-after-ms"/>
+<title>SOUL // Design System 4 — Sincronia Visual</title>
+
+<!-- fonts: Inter + Barlow Condensed + JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.gstatic.com" rel="preconnect" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+<!-- Tailwind CDN runtime -->
+<script src="../sonic-link.aura.build/assets/176e894661aa9cdc_3.4.17"></script>
+<!-- Iconify -->
+<script src="../sonic-link.aura.build/assets/851bed7af266f96a_iconify-icon.min.js"></script>
+<!-- Lucide -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<!-- GSAP -->
+<script src="../sonic-link.aura.build/assets/28033e449a31ebcc_gsap.min.js"></script>
+
+<style>
+/* ============================================================
+   DESIGN SYSTEM 4 — SOUL // SINCRONIA VISUAL
+   Base: Sonic-Link · Fusão: Finex + Lumina
+   ============================================================ */
+
+/* --- CSS Custom Properties (Design Tokens) --- */
+:root {
+  /* Primary palette */
+  --color-primary:      #6366F1; /* indigo-500   hsl(239,84%,67%) */
+  --color-primary-rgb:  99,102,241;
+  --color-primary-dark: #4f52d9;
+  --color-primary-glow: rgba(99,102,241,0.4);
+
+  /* Accent palette */
+  --color-accent:       #C5FF5C; /* lime-300      hsl(81,100%,68%) */
+  --color-accent-rgb:   197,255,92;
+  --color-accent-faint: rgba(197,255,92,0.15);
+
+  /* Fuchsia decorative */
+  --color-fuchsia:      #D47EFF;
+  --color-fuchsia-rgb:  212,126,255;
+  --color-fuchsia-faint:rgba(212,126,255,0.2);
+
+  /* Neutral surface */
+  --color-bg:           #09090B;
+  --color-surface:      #18181B;
+  --color-surface-2:    #0f0f11;
+  --color-border:       rgba(255,255,255,0.07);
+  --color-border-strong:rgba(255,255,255,0.12);
+
+  /* Text */
+  --color-text:         #e4e4e7; /* zinc-200 */
+  --color-text-muted:   #71717a; /* zinc-500 */
+  --color-text-dim:     #3f3f46; /* zinc-700 */
+  --color-white:        #ffffff;
+
+  /* Feedback */
+  --color-success:      #10b981;
+  --color-warning:      #f59e0b;
+  --color-danger:       #ef4444;
+  --color-info:         #22d3ee;
+
+  /* Typography scale */
+  --font-sans:   'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display:'Barlow Condensed', Impact, sans-serif;
+  --font-mono:   'JetBrains Mono', ui-monospace, monospace;
+
+  --text-xs:   0.75rem;   /* 12px */
+  --text-sm:   0.875rem;  /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg:   1.125rem;  /* 18px */
+  --text-xl:   1.25rem;   /* 20px */
+  --text-2xl:  1.5rem;    /* 24px */
+  --text-3xl:  1.875rem;  /* 30px */
+  --text-4xl:  2.25rem;   /* 36px */
+  --text-5xl:  3rem;      /* 48px */
+  --text-6xl:  3.75rem;   /* 60px */
+  --text-7xl:  4.5rem;    /* 72px */
+  --text-8xl:  6rem;      /* 96px */
+  --text-9xl:  8rem;      /* 128px */
+
+  /* Spacing */
+  --radius-sm:  0.5rem;
+  --radius-md:  0.75rem;
+  --radius-lg:  1rem;
+  --radius-xl:  1.5rem;
+  --radius-2xl: 2rem;
+  --radius-full:9999px;
+
+  /* Shadows */
+  --shadow-glow-primary: 0 0 20px rgba(99,102,241,0.35);
+  --shadow-glow-accent:  0 0 20px rgba(197,255,92,0.25);
+  --shadow-card:         0 2rem 5rem rgba(0,0,0,0.6);
+  --shadow-dark:         0 1px 3px rgba(0,0,0,0.8);
+
+  /* Transitions */
+  --ease-out:   cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-spring:cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 600ms;
+}
+
+/* --- Global Reset & Base --- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { font-size: 16px; }
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  overflow-x: hidden;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(99,102,241,0.35);
+  color: #fff;
+}
+
+/* --- Keyframes --- */
+@keyframes float-a {
+  0%,100%  { transform: translateY(0px) rotate(0deg); }
+  50%      { transform: translateY(-18px) rotate(1.5deg); }
+}
+@keyframes float-b {
+  0%,100%  { transform: translateY(0px) rotate(0deg); }
+  50%      { transform: translateY(-12px) rotate(-1deg); }
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(99,102,241,0.5); }
+  70%  { transform: scale(1);    box-shadow: 0 0 0 14px rgba(99,102,241,0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0   rgba(99,102,241,0); }
+}
+@keyframes glow-pulse {
+  0%,100% { opacity:0.5; }
+  50%     { opacity:1; }
+}
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+@keyframes shimmer-slide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(400%);  }
+}
+@keyframes beam-fall {
+  0%   { transform: translateY(-100%); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(1200%); opacity: 0; }
+}
+@keyframes fadeSlideUp {
+  from { opacity:0; transform:translateY(24px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeSlideIn {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes animationIn {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes rotate-gradient {
+  to { transform: rotate(360deg); }
+}
+@keyframes scanline {
+  0%   { top: -10%; }
+  100% { top: 110%; }
+}
+@keyframes dot-pulse {
+  0%,80%,100% { transform: scale(0); }
+  40%         { transform: scale(1); }
+}
+@keyframes border-beam {
+  100% { offset-distance: 100%; }
+}
+@keyframes wave-bars {
+  0%,100% { transform: scaleY(0.3); }
+  50%     { transform: scaleY(1); }
+}
+@keyframes noise-drift {
+  0%   { transform: translate(0,0); }
+  10%  { transform: translate(-1%,-1%); }
+  20%  { transform: translate(1%,0); }
+  30%  { transform: translate(0,1%); }
+  40%  { transform: translate(-1%,1%); }
+  50%  { transform: translate(1%,-1%); }
+  60%  { transform: translate(-1%,0); }
+  70%  { transform: translate(0,-1%); }
+  80%  { transform: translate(1%,1%); }
+  90%  { transform: translate(-1%,-1%); }
+  100% { transform: translate(0,0); }
+}
+@keyframes gradient-x {
+  0%,100% { background-position: 0% 50%;   }
+  50%     { background-position: 100% 50%; }
+}
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Utility Animation Classes --- */
+.animate-float-a   { animation: float-a 6s ease-in-out infinite; }
+.animate-float-b   { animation: float-b 8s ease-in-out infinite; }
+.animate-glow-pulse{ animation: glow-pulse 2.5s ease-in-out infinite; }
+.animate-spin-slow { animation: spin-slow 12s linear infinite; }
+.animate-beam-fall { animation: beam-fall 4s ease-in-out infinite; }
+.animate-gradient-x{
+  background-size: 200% 200%;
+  animation: gradient-x 4s ease infinite;
+}
+.animate-on-scroll { opacity: 0; transform: translateY(20px); }
+.animate-on-scroll.is-visible {
+  animation: fadeSlideIn 0.8s cubic-bezier(0.2,0.8,0.2,1) forwards;
+}
+
+/* --- Shimmer Button --- */
+.btn-shimmer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 30%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transform: skewX(-20deg);
+  animation: shimmer-slide 3s ease infinite;
+}
+
+/* --- Glow Button --- */
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-full);
+  padding: 0.625rem 1.5rem;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: background var(--duration-base) ease, box-shadow var(--duration-base) ease, transform var(--duration-fast) ease;
+  box-shadow: var(--shadow-glow-primary);
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.btn-primary:hover {
+  background: #7c7ff4;
+  box-shadow: 0 0 35px rgba(99,102,241,0.5);
+  transform: translateY(-1px) scale(1.02);
+}
+.btn-primary:active { transform: scale(0.98); }
+
+.btn-secondary {
+  background: rgba(255,255,255,0.05);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 0.625rem 1.5rem;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: all var(--duration-base) ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: var(--color-border-strong);
+  color: var(--color-white);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-text-muted);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color var(--duration-fast) ease, background var(--duration-fast) ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+}
+.btn-ghost:hover {
+  color: var(--color-white);
+  background: rgba(255,255,255,0.05);
+}
+
+/* Rotating conic shimmer button (Finex inspired) */
+.btn-conic {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.btn-conic:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 40px 8px rgba(99,102,241,0.35);
+}
+.btn-conic .conic-ring {
+  position: absolute;
+  inset: -200%;
+  width: 400%; height: 400%;
+  animation: rotate-gradient 4s linear infinite;
+  background: conic-gradient(from calc(270deg - 45deg), transparent 0, rgba(255,255,255,0.6) 90deg, transparent 90deg);
+}
+.btn-conic .conic-bg {
+  position: absolute;
+  inset: 1px;
+  border-radius: var(--radius-full);
+  background: rgba(10,10,20,0.85);
+  backdrop-filter: blur(8px);
+}
+.btn-conic .conic-inner {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+/* --- Card System --- */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--duration-base) ease, transform var(--duration-slow) ease;
+}
+.card:hover {
+  border-color: var(--color-border-strong);
+  transform: translateY(-3px);
+}
+.card-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(99,102,241,0.06), transparent 70%);
+  pointer-events: none;
+}
+
+/* Flashlight card (Finex-inspired) */
+.flashlight-card {
+  position: relative;
+}
+.flashlight-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(99,102,241,0.08), transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+  border-radius: inherit;
+  transition: opacity 0.3s;
+}
+
+/* --- Badge --- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+.badge-primary  { background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.25); color: #a5b4fc; }
+.badge-success  { background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.2);  color: #6ee7b7; }
+.badge-accent   { background: rgba(197,255,92,0.12); border-color: rgba(197,255,92,0.2);  color: #C5FF5C; }
+.badge-neutral  { background: rgba(255,255,255,0.05); border-color: var(--color-border);  color: var(--color-text-muted); }
+.badge-fuchsia  { background: rgba(212,126,255,0.1); border-color: rgba(212,126,255,0.2); color: #e9abff; }
+
+/* --- Input --- */
+.input {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  font-family: var(--font-sans);
+  padding: 0.625rem 0.875rem;
+  outline: none;
+  transition: border-color var(--duration-base) ease, box-shadow var(--duration-base) ease;
+  width: 100%;
+}
+.input::placeholder { color: var(--color-text-dim); }
+.input:focus {
+  border-color: rgba(99,102,241,0.5);
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+}
+
+/* --- Tooltip --- */
+.tooltip-wrap { position: relative; display: inline-flex; }
+.tooltip-tip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: rgba(24,24,27,0.95);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: var(--text-xs);
+  white-space: nowrap;
+  padding: 0.35rem 0.65rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  backdrop-filter: blur(12px);
+  z-index: 100;
+}
+.tooltip-wrap:hover .tooltip-tip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* --- Modal --- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.modal-overlay.open { opacity: 1; pointer-events: auto; }
+.modal-box {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  padding: 2rem;
+  max-width: 480px;
+  width: 100%;
+  position: relative;
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.3s var(--ease-spring);
+}
+.modal-overlay.open .modal-box {
+  transform: translateY(0) scale(1);
+}
+
+/* --- Toggle (Switch) --- */
+.toggle {
+  position: relative;
+  width: 2.25rem;
+  height: 1.25rem;
+  cursor: pointer;
+}
+.toggle input { display: none; }
+.toggle-track {
+  width: 100%; height: 100%;
+  border-radius: var(--radius-full);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid var(--color-border);
+  transition: background 0.25s ease;
+  position: relative;
+}
+.toggle input:checked + .toggle-track { background: var(--color-primary); }
+.toggle-thumb {
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 0.875rem; height: 0.875rem;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.25s var(--ease-spring);
+}
+.toggle input:checked ~ .toggle-thumb,
+.toggle input:checked + .toggle-track + .toggle-thumb { transform: translateX(1rem); }
+
+/* --- Progress Bar --- */
+.progress { height: 4px; border-radius: var(--radius-full); background: rgba(255,255,255,0.06); overflow: hidden; }
+.progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--color-primary), #a5b4fc);
+  box-shadow: 0 0 8px rgba(99,102,241,0.5);
+  transition: width 0.6s var(--ease-out);
+}
+
+/* --- Section Headers --- */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  background: rgba(255,255,255,0.03);
+  border-radius: var(--radius-full);
+  padding: 0.25rem 0.875rem;
+}
+
+/* --- Navbar --- */
+.nav-glass {
+  background: rgba(24,24,27,0.8);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: var(--radius-full);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 2px 30px rgba(0,0,0,0.4);
+}
+
+/* --- Background Decorations --- */
+.bg-dot-grid {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.4) 0px, rgba(255,255,255,0.4) 0.05rem, transparent 0.07rem);
+  background-size: 0.7rem 0.7rem;
+  mask-image: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.1) 20%, rgba(0,0,0,0.1) 80%, rgba(0,0,0,0.8));
+}
+.bg-stripe {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 4px,
+    rgba(255,255,255,0.015) 4px,
+    rgba(255,255,255,0.015) 5px
+  );
+}
+
+/* Wave equalizer bars */
+.wave-bar {
+  width: 3px;
+  background: var(--color-primary);
+  border-radius: 2px;
+  transform-origin: bottom;
+}
+.wave-bar:nth-child(1) { animation: wave-bars 0.8s 0s ease-in-out infinite; height: 12px; }
+.wave-bar:nth-child(2) { animation: wave-bars 0.8s 0.1s ease-in-out infinite; height: 20px; }
+.wave-bar:nth-child(3) { animation: wave-bars 0.8s 0.2s ease-in-out infinite; height: 28px; }
+.wave-bar:nth-child(4) { animation: wave-bars 0.8s 0.15s ease-in-out infinite; height: 22px; }
+.wave-bar:nth-child(5) { animation: wave-bars 0.8s 0.05s ease-in-out infinite; height: 16px; }
+.wave-bar:nth-child(6) { animation: wave-bars 0.8s 0.25s ease-in-out infinite; height: 24px; }
+.wave-bar:nth-child(7) { animation: wave-bars 0.8s 0.3s ease-in-out infinite; height: 18px; }
+
+/* Dot loader */
+.dot-loader span {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  animation: dot-pulse 1.4s ease-in-out infinite;
+}
+.dot-loader span:nth-child(2) { animation-delay: 0.2s; }
+.dot-loader span:nth-child(3) { animation-delay: 0.4s; }
+
+/* Scanline effect for hero */
+.scanline {
+  position: absolute;
+  left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(99,102,241,0.3), transparent);
+  animation: scanline 5s linear infinite;
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* Border beam animation */
+.border-beam-wrap {
+  position: relative;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+.border-beam-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(99,102,241,0.8) 40%,
+    rgba(197,255,92,0.6) 60%,
+    transparent 100%);
+  background-size: 200% 100%;
+  animation: gradient-x 3s linear infinite;
+  z-index: -1;
+}
+
+/* Media card (hero floating images) */
+.mediaCard {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  opacity: 0;
+  box-shadow: rgba(0,0,0,0.62) 0px 1.5rem 4rem, rgba(219,45,255,0.2) 0px 0px 2rem;
+}
+
+/* Staggered reveal text (Finex-inspired) */
+.staggered-reveal span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeSlideUp 0.6s ease forwards;
+}
+
+/* Corner decorators */
+.corner-tl, .corner-tr, .corner-bl, .corner-br {
+  position: absolute;
+  width: 2rem; height: 2rem;
+}
+.corner-tl { top: 1.5rem; left: 1.5rem; border-top: 1px solid rgba(197,255,92,0.6); border-left: 1px solid rgba(197,255,92,0.6); }
+.corner-tr { top: 1.5rem; right: 1.5rem; border-top: 1px solid rgba(212,126,255,0.5); border-right: 1px solid rgba(212,126,255,0.5); }
+.corner-bl { bottom: 1.5rem; left: 1.5rem; border-bottom: 1px solid rgba(197,255,92,0.4); border-left: 1px solid rgba(197,255,92,0.4); }
+.corner-br { bottom: 1.5rem; right: 1.5rem; border-bottom: 1px solid rgba(212,126,255,0.4); border-right: 1px solid rgba(212,126,255,0.4); }
+
+/* Vertical beam lines (Lumina-inspired) */
+.beam-line {
+  position: absolute;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(99,102,241,0.7), transparent);
+}
+.beam-line:nth-child(1) { animation: beam-fall 3.5s 0s ease-in-out infinite; }
+.beam-line:nth-child(2) { animation: beam-fall 4s 1.2s ease-in-out infinite; }
+.beam-line:nth-child(3) { animation: beam-fall 3s 2.5s ease-in-out infinite; }
+
+/* Section divider gradient */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
+  margin: 0 auto;
+}
+
+/* Typography utilities */
+.font-display   { font-family: var(--font-display); }
+.font-mono-soul { font-family: var(--font-mono); }
+.text-gradient-primary {
+  background: linear-gradient(135deg, var(--color-primary), #a5b4fc, var(--color-fuchsia));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.text-gradient-accent {
+  background: linear-gradient(135deg, var(--color-accent), #86efac);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow ring for floating elements */
+.glow-ring {
+  box-shadow: 0 0 0 1px rgba(99,102,241,0.2),
+              0 0 25px rgba(99,102,241,0.15),
+              inset 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+/* --- Typography Scale Demo --- */
+.type-demo { line-height: 1.1; }
+
+/* Color swatch */
+.swatch {
+  width: 3rem; height: 3rem;
+  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.swatch::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+}
+
+/* Icon showcase */
+.icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: rgba(255,255,255,0.02);
+  transition: all 0.25s ease;
+  cursor: default;
+}
+.icon-item:hover {
+  background: rgba(99,102,241,0.08);
+  border-color: rgba(99,102,241,0.25);
+  transform: translateY(-2px);
+}
+
+/* Section anchor */
+section { scroll-margin-top: 6rem; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.4); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(99,102,241,0.6); }
+</style>
+</head>
+<body class="min-h-screen overflow-x-hidden antialiased">
+
+<!-- ============================================================
+     FIXED BACKGROUNDS
+     ============================================================ -->
+
+<!-- Dot grid overlay -->
+<div class="fixed inset-0 z-0 pointer-events-none opacity-25 bg-dot-grid"></div>
+
+<!-- Central purple glow -->
+<div class="fixed inset-0 z-0 flex items-center justify-center pointer-events-none">
+  <div class="w-[900px] h-[900px] rounded-full opacity-20 blur-[140px]"
+       style="background: radial-gradient(circle at center, #6366F1, transparent 60%);"></div>
+</div>
+
+<!-- Grid structure lines -->
+<div class="fixed inset-0 pointer-events-none z-0 flex items-center justify-center p-6 md:p-12 lg:p-20 opacity-15">
+  <div class="relative w-full max-w-7xl h-full border border-white/10">
+    <div class="absolute inset-y-0 left-[25%] border-l border-white/10"></div>
+    <div class="absolute inset-y-0 right-[25%] border-l border-white/10"></div>
+    <div class="absolute inset-x-0 top-[33%] border-t border-white/10"></div>
+    <div class="absolute inset-x-0 bottom-[33%] border-t border-white/10"></div>
+  </div>
+</div>
+
+<!-- Diagonal stripes -->
+<div class="fixed inset-0 z-0 pointer-events-none opacity-30 bg-stripe"></div>
+
+<!-- Watermark -->
+<div class="fixed inset-0 flex items-center justify-center pointer-events-none z-0">
+  <h1 class="text-7xl md:text-9xl tracking-tighter text-white font-light uppercase opacity-[0.018] select-none mix-blend-overlay"
+      style="font-family: var(--font-display);">RESSONÂNCIA</h1>
+</div>
+
+<!-- Floating beam lines -->
+<div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+  <div class="beam-line absolute top-0 h-72 w-px left-[20%]"></div>
+  <div class="beam-line absolute top-0 h-56 w-px left-[55%]"></div>
+  <div class="beam-line absolute top-0 h-96 w-px right-[22%]"></div>
+</div>
+
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+<header class="fixed md:top-8 z-50 flex pointer-events-auto pr-4 pl-4 top-4 right-0 left-0 justify-center"
+        style="animation: animationIn 0.8s ease-out 0.1s both;">
+  <nav class="nav-glass flex items-center w-full md:w-auto max-w-4xl justify-between md:justify-center py-2 pr-2 pl-4 md:pl-6">
+    <!-- Logo -->
+    <div class="flex items-center gap-2 pr-2 md:pr-6 md:border-r border-white/10 py-1">
+      <iconify-icon class="text-lg" icon="solar:headphones-linear" stroke-width="1.5"
+                    style="color: var(--color-primary);"></iconify-icon>
+      <span class="uppercase cursor-pointer text-xs font-normal text-white tracking-tighter"
+            style="font-family: var(--font-sans);">SOUL.DS4</span>
+    </div>
+    <!-- Desktop links -->
+    <div class="hidden md:flex gap-6 px-6 items-center">
+      <a href="#hero"       class="btn-ghost">Hero</a>
+      <a href="#colors"     class="btn-ghost">Cores</a>
+      <a href="#typography" class="btn-ghost">Tipo</a>
+      <a href="#components" class="btn-ghost">UI</a>
+      <a href="#animations" class="btn-ghost">Animações</a>
+    </div>
+    <!-- CTA -->
+    <div class="hidden md:flex items-center gap-4 pl-6 border-l border-white/10">
+      <button class="btn-ghost">Entrar</button>
+      <button class="btn-primary btn-shimmer text-xs">Começar</button>
+    </div>
+    <!-- Mobile CTA -->
+    <div class="flex md:hidden items-center gap-3">
+      <button class="btn-primary text-xs py-1.5 px-3">Começar</button>
+    </div>
+  </nav>
+</header>
+
+
+<!-- ============================================================
+     SECTION 1 — HERO CINEMATIC (replica exact Sonic-Link hero)
+     ============================================================ -->
+<section id="hero" aria-label="Hero cinematográfico do Design System"
+         class="flex overflow-hidden antialiased text-white w-full h-screen relative items-center justify-center"
+         style="font-family: var(--font-sans);">
+
+  <!-- Dot overlay -->
+  <div aria-hidden="true" class="absolute inset-0 opacity-30 bg-dot-grid"></div>
+
+  <!-- Film stage -->
+  <div class="relative h-[91vh] w-[96vw] overflow-hidden rounded-[1.4rem] border border-white/10 bg-black shadow-2xl sm:rounded-[2rem] md:h-[89vh] md:w-[95vw]"
+       id="filmStage"
+       style="box-shadow: rgba(0,0,0,0.48) 0px 2rem 8rem, rgba(255,255,255,0.08) 0px 0px 0px 0.0625rem inset;">
+
+    <!-- WebGL canvas placeholder (animated gradient fallback) -->
+    <canvas aria-hidden="true" class="absolute inset-0 h-full w-full opacity-90" id="webglLayer"></canvas>
+
+    <!-- Abstract base image -->
+    <img alt="" class="absolute inset-0 h-full w-full scale-125 object-cover opacity-0 blur-xl" id="abstractBase"
+         src="../sonic-link.aura.build/assets/6a7bb45fc2ab1366_fa51902b-c2a4-4c33-a96e-a8f1ef.jpg"/>
+
+    <!-- Radial gradient overlay -->
+    <div aria-hidden="true" class="absolute inset-0"
+         style="background: radial-gradient(circle at 50% 56%, rgba(197,255,92,.22), transparent 18%), radial-gradient(circle at 63% 45%, rgba(210,111,255,.32), transparent 25%), linear-gradient(to bottom, rgba(0,0,0,.2), rgba(0,0,0,.12) 38%, rgba(0,0,0,.76));"></div>
+
+    <!-- Top / bottom vignettes -->
+    <div aria-hidden="true" class="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black via-black/70 to-transparent"></div>
+    <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-black via-black/75 to-transparent"></div>
+
+    <!-- Inner border -->
+    <div aria-hidden="true" class="absolute inset-4 rounded-[1rem] border border-white/[.08] sm:inset-5 md:inset-7"
+         style="box-shadow: inset 0 0 0 .0625rem rgba(255,255,255,.035);"></div>
+
+    <!-- Corner decorators -->
+    <div class="corner-tl"></div>
+    <div class="corner-tr"></div>
+    <div class="corner-bl"></div>
+    <div class="corner-br"></div>
+
+    <!-- Scanline effect -->
+    <div class="scanline"></div>
+
+    <!-- Structural grid lines inside stage -->
+    <div aria-hidden="true" class="absolute left-[8%] top-0 h-full w-px bg-white/[.07]">
+      <span class="absolute -left-1 top-[13%] h-2 w-2 bg-white/30"></span>
+      <span class="absolute -left-1 bottom-[16%] h-2 w-2 bg-lime-200/40"></span>
+    </div>
+    <div aria-hidden="true" class="absolute right-[8%] top-0 h-full w-px bg-white/[.07]">
+      <span class="absolute -left-1 top-[24%] h-2 w-2 bg-fuchsia-200/40"></span>
+      <span class="absolute -left-1 bottom-[22%] h-2 w-2 bg-white/25"></span>
+    </div>
+    <div aria-hidden="true" class="absolute left-0 top-[50%] h-px w-full bg-white/[.055]"></div>
+
+    <!-- Intro word -->
+    <div class="absolute inset-x-4 top-[4%] z-10 text-center opacity-0 sm:top-[3%]" id="introWord">
+      <p class="tracking-tight text-white/20 type-demo"
+         style="font-family: var(--font-display); font-weight: 600; font-size: clamp(5rem,17vw,13rem); line-height: 1;">
+        Seu Som.
+      </p>
+    </div>
+
+    <!-- Main title chunks -->
+    <div class="absolute left-1/2 top-[17%] z-20 flex w-[92%] -translate-x-1/2 items-center justify-center gap-[clamp(.45rem,2vw,2rem)] text-center opacity-0 sm:top-[18%] md:top-[17%]" id="mainTitle">
+      <span class="titleChunk inline-block tracking-tight text-white"
+            style="font-family: var(--font-display); font-weight: 700; font-size: clamp(4.7rem,13.5vw,13rem); line-height: 0.78;">Sua</span>
+      <span class="titleChunk inline-block tracking-tight text-white"
+            style="font-family: var(--font-display); font-weight: 700; font-size: clamp(4.7rem,13.5vw,13rem); line-height: 0.78;">Visão.</span>
+      <span class="titleChunk inline-block tracking-tight text-white"
+            style="font-family: var(--font-display); font-weight: 700; font-size: clamp(4.7rem,13.5vw,13rem); line-height: 0.78;">Um</span>
+      <span class="titleChunk inline-block tracking-tight text-white"
+            style="font-family: var(--font-display); font-weight: 700; font-size: clamp(4.7rem,13.5vw,13rem); line-height: 0.78;">Pulso</span>
+    </div>
+
+    <!-- Alt title -->
+    <div class="absolute left-1/2 top-[14%] z-20 w-[92%] -translate-x-1/2 text-center opacity-0" id="altTitle">
+      <p class="tracking-tight text-white"
+         style="font-family: var(--font-display); font-weight: 700; font-size: clamp(5rem,15vw,14rem); line-height: 0.76;">
+        Design Total
+      </p>
+    </div>
+
+    <!-- Resolve title (final) -->
+    <div class="absolute left-1/2 top-1/2 z-50 w-[92%] -translate-x-1/2 -translate-y-1/2 text-center opacity-0" id="resolveTitle">
+      <p class="tracking-tight text-white"
+         style="font-family: var(--font-display); font-weight: 700; font-size: clamp(4.5rem,16vw,14rem); line-height: 0.78;">
+        SOUL DS4
+      </p>
+      <p class="mx-auto mt-3 max-w-2xl text-xs font-normal uppercase tracking-[.32rem] text-lime-100/80 sm:text-sm">
+        Sistema de design futurista — fusão entre mundos
+      </p>
+    </div>
+
+    <!-- Floating phone mockup -->
+    <div class="absolute left-1/2 top-[34%] z-30 h-[49vh] min-h-[20rem] w-[min(25rem,58vw)] -translate-x-1/2 opacity-0 sm:top-[31%] md:w-[min(27rem,30vw)]"
+         id="phoneWrap" style="perspective: 80rem;">
+      <div class="relative mx-auto h-full w-full overflow-hidden rounded-[2.25rem] border border-white/15 bg-black shadow-2xl" id="phone"
+           style="box-shadow: rgba(154,134,202,0.45) 0px 0px 0px 0.45rem, rgba(0,0,0,0.68) 0px 2rem 5rem, rgba(214,126,255,0.28) 0px 0px 3rem;">
+        <div class="absolute inset-x-[18%] top-0 z-20 h-6 rounded-b-2xl bg-black"></div>
+        <div class="absolute inset-0 bg-black"></div>
+        <div aria-hidden="true" class="absolute inset-0 opacity-35"
+             style="background: radial-gradient(circle at 82% 12%, rgba(212,132,255,.45), transparent 16%), radial-gradient(circle at 12% 72%, rgba(196,255,96,.22), transparent 22%);"></div>
+        <!-- Phone content -->
+        <div class="relative z-10 flex h-full flex-col p-5 sm:p-6">
+          <div class="flex items-center justify-between text-xs font-medium text-white/80">
+            <span>9:41</span>
+            <div class="flex items-center gap-1">
+              <i data-lucide="bar-chart-2" style="width:.95rem;height:.95rem"></i>
+              <i data-lucide="wifi" style="width:.95rem;height:.95rem"></i>
+              <i data-lucide="zap" style="width:.95rem;height:.95rem"></i>
+            </div>
+          </div>
+          <div class="mt-6 flex items-start justify-between">
+            <h2 class="tracking-tight text-white text-5xl leading-none sm:text-6xl"
+                style="font-family: var(--font-display); font-weight: 700;">Descobrir</h2>
+            <div class="grid h-9 w-9 place-items-center rounded-full text-sm font-medium text-black"
+                 style="background: var(--color-fuchsia);">S</div>
+          </div>
+          <div class="mt-7 flex gap-2 overflow-hidden">
+            <span class="rounded-full px-4 py-2 text-xs font-medium text-black"
+                  style="background: var(--color-accent);">Tudo</span>
+            <span class="rounded-full bg-white/12 px-4 py-2 text-xs font-medium text-white/70">Visuais</span>
+            <span class="rounded-full bg-white/12 px-4 py-2 text-xs font-medium text-white/70">Audio</span>
+            <span class="rounded-full bg-white/12 px-4 py-2 text-xs font-medium text-white/70">Live</span>
+          </div>
+          <p class="mt-5 text-xl font-medium tracking-tight text-white sm:text-2xl"
+             style="font-family: var(--font-display);">Climas Populares</p>
+          <div class="mt-3 grid grid-cols-2 gap-3">
+            <div class="h-24 rounded-2xl border border-white/10 bg-white/[.06] p-3">
+              <i data-lucide="music" style="width:1.5rem;height:1.5rem;color:rgba(190,255,93,.9)"></i>
+              <p class="mt-5 text-xs font-medium uppercase tracking-widest text-white/55">Neon Soul</p>
+            </div>
+            <div class="h-24 rounded-2xl border border-white/10 bg-white/[.06] p-3">
+              <i data-lucide="play-circle" style="width:1.5rem;height:1.5rem;color:rgba(233,171,255,.9)"></i>
+              <p class="mt-5 text-xs font-medium uppercase tracking-widest text-white/55">Drive Noturno</p>
+            </div>
+          </div>
+          <div class="mt-auto rounded-3xl border border-white/10 bg-white/[.07] p-4">
+            <p class="text-xs font-medium uppercase tracking-widest text-white/40">Artistas perto de você</p>
+            <div class="mt-3 flex items-center gap-3">
+              <img alt="" class="h-10 w-10 rounded-full object-cover"
+                   src="../sonic-link.aura.build/assets/95767b6c354c4ac2_4f5668c5-fc4a-44e0-bc5e-a66418.jpg"/>
+              <div>
+                <p class="text-sm font-medium text-white">Mira Vale</p>
+                <p class="text-xs text-white/45">Sala ao vivo aberta</p>
+              </div>
+              <i data-lucide="activity" style="margin-left:auto;width:1.5rem;height:1.5rem;color:rgba(190,255,93,.8)"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating media cards layer -->
+    <div aria-label="Imagens flutuantes de memórias visuais" class="absolute inset-0 z-40 pointer-events-none" id="cardsLayer">
+      <figure class="mediaCard absolute left-[8%] top-[55%] h-[21vh] w-[20rem] max-w-[36vw] sm:left-[11%] sm:top-[55%]"
+              style="box-shadow: rgba(0,0,0,0.62) 0px 1.5rem 4rem, rgba(219,45,255,0.2) 0px 0px 2rem;">
+        <img alt="Artista sob luz magenta" class="h-full w-full object-cover"
+             src="../sonic-link.aura.build/assets/997bfe1766283ecf_c920d31f-46c8-4f39-957b-9a8d8e.jpg"/>
+        <div class="absolute inset-0 mix-blend-screen" style="background: rgba(212,126,255,0.25);"></div>
+      </figure>
+      <figure class="mediaCard absolute left-[29%] top-[50%] h-[14vh] w-[17rem] max-w-[31vw]"
+              style="box-shadow: rgba(0,0,0,0.55) 0px 1.5rem 4rem;">
+        <img alt="Retrato de estúdio" class="h-full w-full object-cover"
+             src="../sonic-link.aura.build/assets/ba37297dc82d7afa_36420201-a4f1-4395-ad84-184870.webp"/>
+        <div class="absolute inset-0 mix-blend-screen" style="background: rgba(251,146,60,0.2);"></div>
+      </figure>
+      <figure class="mediaCard absolute left-1/2 top-[59%] h-[22vh] w-[30rem] max-w-[45vw] -translate-x-1/2"
+              style="box-shadow: rgba(0,0,0,0.62) 0px 1.5rem 4rem, rgba(197,255,90,0.18) 0px 0px 2.5rem;">
+        <img alt="Mãos formando coração" class="h-full w-full object-cover"
+             src="../sonic-link.aura.build/assets/9711424e0ee784ea_6e1fbf28-831e-4d42-a71f-a33bc9.webp"/>
+        <div class="absolute inset-0 mix-blend-screen" style="background: rgba(197,255,90,0.2);"></div>
+      </figure>
+      <figure class="mediaCard absolute right-[23%] top-[48%] h-[16vh] w-[17rem] max-w-[30vw]"
+              style="box-shadow: rgba(0,0,0,0.55) 0px 1.5rem 4rem;">
+        <img alt="Performer amarelo" class="h-full w-full object-cover"
+             src="../sonic-link.aura.build/assets/2272b61025cfc711_c7cfb2bf-d3f2-4dfc-aa1e-e0ef5c.webp"/>
+        <div class="absolute inset-0 mix-blend-screen" style="background: rgba(250,204,21,0.3);"></div>
+      </figure>
+      <figure class="mediaCard absolute right-[8%] top-[51%] h-[23vh] w-[21rem] max-w-[37vw] sm:right-[11%]"
+              style="box-shadow: rgba(0,0,0,0.62) 0px 1.5rem 4rem, rgba(44,193,255,0.18) 0px 0px 2rem;">
+        <img alt="Produtor fones" class="h-full w-full object-cover"
+             src="../sonic-link.aura.build/assets/0e521e754a166df8_b4a03f35-290f-42a3-b369-97df97.webp"/>
+        <div class="absolute inset-0 mix-blend-screen" style="background: rgba(34,211,238,0.2);"></div>
+      </figure>
+    </div>
+
+    <!-- Flash overlay -->
+    <div class="bg-white opacity-0 z-[70] absolute top-0 right-0 bottom-0 left-0" id="flash"></div>
+
+    <!-- Meta rail -->
+    <div class="absolute bottom-6 left-1/2 z-[80] flex -translate-x-1/2 items-center gap-3 rounded-full border border-white/10 bg-black/35 px-4 py-2 opacity-0 backdrop-blur-md" id="metaRail">
+      <span class="h-1.5 w-1.5 rounded-full" style="background: var(--color-accent);"></span>
+      <span class="text-xs font-medium uppercase tracking-[.22rem] text-white/60"
+            style="font-family: var(--font-mono);">Design System · Intro · 8 seg</span>
+    </div>
+
+    <!-- Sequence label -->
+    <div class="absolute left-7 top-7 z-[80] hidden items-center gap-2 text-xs font-medium uppercase tracking-[.28rem] text-white/45 sm:flex" id="sequenceLabel"
+         style="font-family: var(--font-mono);">
+      <span class="h-px w-8 bg-white/25"></span>
+      <span>Resolução</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 2 — COLORS
+     ============================================================ -->
+<section id="colors" class="relative z-20 w-full max-w-6xl mx-auto px-4 py-24 flex flex-col gap-16 border-t border-white/10 animate-on-scroll">
+
+  <div class="flex flex-col gap-4">
+    <div class="section-label animate-on-scroll">
+      <iconify-icon icon="solar:palette-linear" stroke-width="1.5"></iconify-icon>
+      Sistema de Cores
+    </div>
+    <h2 class="text-4xl md:text-5xl font-light text-white tracking-tight animate-on-scroll"
+        style="font-family: var(--font-display); font-weight: 700; animation-delay: 0.1s">
+      Paleta <span class="text-gradient-primary">Cromática</span>
+    </h2>
+    <p class="text-zinc-400 text-sm font-light max-w-xl animate-on-scroll" style="animation-delay: 0.2s">
+      Cada cor carrega um papel semântico preciso — de primária a decorativa, com variantes de opacidade e participação em gradientes.
+    </p>
+  </div>
+
+  <!-- Primary colors -->
+  <div class="flex flex-col gap-6 animate-on-scroll">
+    <h3 class="text-white text-sm font-medium uppercase tracking-widest font-mono-soul text-zinc-500">Cores Primárias</h3>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+      <!-- Primary -->
+      <div class="card card-glow flex flex-col gap-3">
+        <div class="swatch" style="background: #6366F1;"></div>
+        <div>
+          <div class="text-white text-xs font-medium">Primary</div>
+          <div class="text-zinc-500 text-xs font-mono-soul mt-0.5">#6366F1</div>
+          <div class="text-zinc-600 text-xs font-mono-soul">rgb(99,102,241)</div>
+          <div class="text-zinc-600 text-xs font-mono-soul">hsl(239,84%,67%)</div>
+        </div>
+        <div class="badge badge-primary">Indigo 500</div>
+        <div class="text-zinc-600 text-xs">Botões · Links · Bordas ativas · Glow</div>
+      </div>
+      <!-- Accent -->
+      <div class="card flex flex-col gap-3">
+        <div class="swatch" style="background: #C5FF5C;"></div>
+        <div>
+          <div class="text-white text-xs font-medium">Accent</div>
+          <div class="text-zinc-500 text-xs font-mono-soul mt-0.5">#C5FF5C</div>
+          <div class="text-zinc-600 text-xs font-mono-soul">rgb(197,255,92)</div>
+          <div class="text-zinc-600 text-xs font-mono-soul">hsl(81,100%,68%)</div>
+        </div>
+        <div class="badge badge-accent">Lime 300</div>
+        <div class="text-zinc-600 text-xs">Tags · Status online · Decorativo</div>
+      </div>
+      <!-- Fuchsia -->
+      <div class="card flex flex-col gap-3">
+        <div class="swatch" style="background: #D47EFF;"></div>
+        <div>
+          <div class="text-white text-xs font-medium">Decorative</div>
+          <div class="text-zinc-500 text-xs font-mono-soul mt-0.5">#D47EFF</div>
+          <div class="text-zinc-600 text-xs font-mono-soul">rgb(212,126,255)</div>
+          <div class="text-zinc-600 text-xs font-mono-soul">hsl(285,100%,75%)</div>
+        </div>
+        <div class="badge badge-fuchsia">Fuchsia</div>
+        <div class="text-zinc-600 text-xs">Cantos · Filtros · Gradientes</div>
+      </div>
+      <!-- Surface -->
+      <div class="card flex flex-col gap-3">
+        <div class="swatch" style="background: #18181B;"></div>
+        <div>
+          <div class="text-white text-xs font-medium">Surface</div>
+          <div class="text-zinc-500 text-xs font-mono-soul mt-0.5">#18181B</div>
+          <div class="text-zinc-600 text-xs font-mono-soul">rgb(24,24,27)</div>
+          <div class="text-zinc-600 text-xs font-mono-soul">hsl(240,5%,10%)</div>
+        </div>
+        <div class="badge badge-neutral">Zinc 900</div>
+        <div class="text-zinc-600 text-xs">Cards · Modais · Navbars</div>
+      </div>
+      <!-- Background -->
+      <div class="card flex flex-col gap-3">
+        <div class="swatch" style="background: #09090B; border: 1px solid rgba(255,255,255,0.15);"></div>
+        <div>
+          <div class="text-white text-xs font-medium">Background</div>
+          <div class="text-zinc-500 text-xs font-mono-soul mt-0.5">#09090B</div>
+          <div class="text-zinc-600 text-xs font-mono-soul">rgb(9,9,11)</div>
+          <div class="text-zinc-600 text-xs font-mono-soul">hsl(240,6%,4%)</div>
+        </div>
+        <div class="badge badge-neutral">Zinc 950</div>
+        <div class="text-zinc-600 text-xs">Fundo global da página</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feedback colors -->
+  <div class="flex flex-col gap-6 animate-on-scroll">
+    <h3 class="text-white text-sm font-medium uppercase tracking-widest font-mono-soul text-zinc-500">Cores de Feedback</h3>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div class="card flex items-center gap-3">
+        <div class="swatch" style="background:#10b981; width:2.5rem; height:2.5rem; min-width:2.5rem;"></div>
+        <div>
+          <div class="text-white text-xs font-medium">Success</div>
+          <div class="text-zinc-500 text-xs font-mono-soul">#10B981</div>
+          <div class="text-zinc-600 text-xs">AA ✓</div>
+        </div>
+      </div>
+      <div class="card flex items-center gap-3">
+        <div class="swatch" style="background:#f59e0b; width:2.5rem; height:2.5rem; min-width:2.5rem;"></div>
+        <div>
+          <div class="text-white text-xs font-medium">Warning</div>
+          <div class="text-zinc-500 text-xs font-mono-soul">#F59E0B</div>
+          <div class="text-zinc-600 text-xs">AA ✓</div>
+        </div>
+      </div>
+      <div class="card flex items-center gap-3">
+        <div class="swatch" style="background:#ef4444; width:2.5rem; height:2.5rem; min-width:2.5rem;"></div>
+        <div>
+          <div class="text-white text-xs font-medium">Danger</div>
+          <div class="text-zinc-500 text-xs font-mono-soul">#EF4444</div>
+          <div class="text-zinc-600 text-xs">AA ✓</div>
+        </div>
+      </div>
+      <div class="card flex items-center gap-3">
+        <div class="swatch" style="background:#22d3ee; width:2.5rem; height:2.5rem; min-width:2.5rem;"></div>
+        <div>
+          <div class="text-white text-xs font-medium">Info</div>
+          <div class="text-zinc-500 text-xs font-mono-soul">#22D3EE</div>
+          <div class="text-zinc-600 text-xs">AA ✓</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gradient showcase -->
+  <div class="flex flex-col gap-6 animate-on-scroll">
+    <h3 class="text-white text-sm font-medium uppercase tracking-widest font-mono-soul text-zinc-500">Gradientes</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="h-20 rounded-xl" style="background: linear-gradient(135deg, #6366F1, #a5b4fc, #D47EFF);"></div>
+      <div class="h-20 rounded-xl" style="background: linear-gradient(135deg, #C5FF5C, #22d3ee);"></div>
+      <div class="h-20 rounded-xl animate-gradient-x" style="background: linear-gradient(135deg, #6366F1, #D47EFF, #C5FF5C, #6366F1);"></div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="h-16 rounded-xl" style="background: radial-gradient(circle at 30% 50%, rgba(99,102,241,0.4), transparent 60%), radial-gradient(circle at 70% 50%, rgba(212,126,255,0.3), transparent 60%), #09090B;"></div>
+      <div class="h-16 rounded-xl" style="background: radial-gradient(circle at 50% 0%, rgba(197,255,92,0.25), transparent 70%), #09090B;"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 3 — TYPOGRAPHY
+     ============================================================ -->
+<section id="typography" class="relative z-20 w-full max-w-6xl mx-auto px-4 py-24 flex flex-col gap-16 border-t border-white/10">
+
+  <div class="flex flex-col gap-4 animate-on-scroll">
+    <div class="section-label">
+      <iconify-icon icon="solar:text-bold-linear" stroke-width="1.5"></iconify-icon>
+      Tipografia
+    </div>
+    <h2 class="text-4xl md:text-5xl font-light text-white tracking-tight"
+        style="font-family: var(--font-display); font-weight: 700;">
+      Escala <span class="text-gradient-primary">Tipográfica</span>
+    </h2>
+  </div>
+
+  <!-- Font families -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 animate-on-scroll">
+    <div class="card card-glow">
+      <div class="section-label mb-4">Primary</div>
+      <div class="text-5xl text-white mb-3" style="font-family: var(--font-sans); font-weight: 300;">Aa</div>
+      <div class="text-white text-sm font-medium mb-1">Inter</div>
+      <div class="text-zinc-500 text-xs font-mono-soul">ui-sans-serif · Google Fonts</div>
+      <div class="text-zinc-600 text-xs mt-1">weights: 100–700</div>
+      <div class="mt-4 text-zinc-400 text-xs leading-relaxed">
+        Corpo · Labels · UI Elements · Navigation
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-label mb-4">Display</div>
+      <div class="text-5xl text-white mb-3" style="font-family: var(--font-display); font-weight: 700;">Aa</div>
+      <div class="text-white text-sm font-medium mb-1">Barlow Condensed</div>
+      <div class="text-zinc-500 text-xs font-mono-soul">Impact fallback · Google Fonts</div>
+      <div class="text-zinc-600 text-xs mt-1">weights: 400, 600, 700, 900</div>
+      <div class="mt-4 text-zinc-400 text-xs leading-relaxed">
+        Headlines · Hero · Cinematic · Displays
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-label mb-4">Monospace</div>
+      <div class="text-5xl text-white mb-3" style="font-family: var(--font-mono); font-weight: 300;">Aa</div>
+      <div class="text-white text-sm font-medium mb-1">JetBrains Mono</div>
+      <div class="text-zinc-500 text-xs font-mono-soul">ui-monospace · Google Fonts</div>
+      <div class="text-zinc-600 text-xs mt-1">weights: 300–500</div>
+      <div class="mt-4 text-zinc-400 text-xs leading-relaxed">
+        Labels · Badges · Code · Technical data
+      </div>
+    </div>
+  </div>
+
+  <!-- Type scale -->
+  <div class="flex flex-col gap-6 animate-on-scroll">
+    <h3 class="text-zinc-500 text-sm font-medium uppercase tracking-widest font-mono-soul">Escala de Tamanhos</h3>
+    <div class="card overflow-x-auto">
+      <table class="w-full min-w-[640px] text-sm">
+        <thead>
+          <tr class="border-b border-white/5 text-zinc-500 text-xs font-mono-soul uppercase tracking-widest">
+            <th class="text-left py-3 pr-6 font-medium">Papel</th>
+            <th class="text-left py-3 pr-6 font-medium">Tamanho</th>
+            <th class="text-left py-3 pr-6 font-medium">Peso</th>
+            <th class="text-left py-3 pr-6 font-medium">Line-height</th>
+            <th class="text-left py-3 pr-6 font-medium">Tracking</th>
+            <th class="text-left py-3 font-medium">Transform</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-white/5">
+          <tr class="group hover:bg-white/[0.02] transition-colors">
+            <td class="py-4 pr-6 text-zinc-400 font-mono-soul text-xs">H1 / Hero</td>
+            <td class="py-4 pr-6 text-white" style="font-family: var(--font-display); font-size: 2rem; line-height: 1;">Título</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">700</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">0.78–0.9</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">-0.02em</td>
+            <td class="py-4 text-zinc-500 text-xs">—</td>
+          </tr>
+          <tr class="group hover:bg-white/[0.02] transition-colors">
+            <td class="py-4 pr-6 text-zinc-400 font-mono-soul text-xs">H2</td>
+            <td class="py-4 pr-6 text-white text-3xl tracking-tight font-light">Título H2</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">300–500</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">1.1</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">-0.015em</td>
+            <td class="py-4 text-zinc-500 text-xs">—</td>
+          </tr>
+          <tr class="group hover:bg-white/[0.02] transition-colors">
+            <td class="py-4 pr-6 text-zinc-400 font-mono-soul text-xs">H3</td>
+            <td class="py-4 pr-6 text-white text-2xl tracking-tight font-normal">Título H3</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">400</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">1.2</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">-0.01em</td>
+            <td class="py-4 text-zinc-500 text-xs">—</td>
+          </tr>
+          <tr class="group hover:bg-white/[0.02] transition-colors">
+            <td class="py-4 pr-6 text-zinc-400 font-mono-soul text-xs">H4</td>
+            <td class="py-4 pr-6 text-white text-xl font-medium">Título H4</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">500</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">1.3</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">-0.005em</td>
+            <td class="py-4 text-zinc-500 text-xs">—</td>
+          </tr>
+          <tr class="group hover:bg-white/[0.02] transition-colors">
+            <td class="py-4 pr-6 text-zinc-400 font-mono-soul text-xs">body-lg</td>
+            <td class="py-4 pr-6 text-zinc-300 text-lg font-normal">Corpo grande para leads</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">400</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">1.6</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">0</td>
+            <td class="py-4 text-zinc-500 text-xs">—</td>
+          </tr>
+          <tr class="group hover:bg-white/[0.02] transition-colors">
+            <td class="py-4 pr-6 text-zinc-400 font-mono-soul text-xs">body</td>
+            <td class="py-4 pr-6 text-zinc-400 text-sm font-normal">Corpo principal do conteúdo</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">400</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">1.6</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">0</td>
+            <td class="py-4 text-zinc-500 text-xs">—</td>
+          </tr>
+          <tr class="group hover:bg-white/[0.02] transition-colors">
+            <td class="py-4 pr-6 text-zinc-400 font-mono-soul text-xs">body-sm</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs font-light">Texto pequeno e captions</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">300</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">1.5</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">0</td>
+            <td class="py-4 text-zinc-500 text-xs">—</td>
+          </tr>
+          <tr class="group hover:bg-white/[0.02] transition-colors">
+            <td class="py-4 pr-6 text-zinc-400 font-mono-soul text-xs">label</td>
+            <td class="py-4 pr-6 font-mono-soul text-xs uppercase tracking-widest" style="color: var(--color-text-muted);">RÓTULO LABEL</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">400</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">1.4</td>
+            <td class="py-4 pr-6 text-zinc-500 text-xs">0.12em</td>
+            <td class="py-4 text-zinc-500 text-xs">UPPERCASE</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 4 — UI COMPONENTS
+     ============================================================ -->
+<section id="components" class="relative z-20 w-full max-w-6xl mx-auto px-4 py-24 flex flex-col gap-20 border-t border-white/10">
+
+  <div class="flex flex-col gap-4 animate-on-scroll">
+    <div class="section-label">
+      <iconify-icon icon="solar:widget-linear" stroke-width="1.5"></iconify-icon>
+      Componentes UI
+    </div>
+    <h2 class="text-4xl md:text-5xl font-light text-white tracking-tight"
+        style="font-family: var(--font-display); font-weight: 700;">
+      Biblioteca de <span class="text-gradient-primary">Componentes</span>
+    </h2>
+  </div>
+
+  <!-- --- BUTTONS --- -->
+  <div class="flex flex-col gap-8 animate-on-scroll">
+    <h3 class="text-zinc-500 text-xs font-medium uppercase tracking-widest font-mono-soul">01 — Botões</h3>
+    <div class="card flashlight-card" id="btn-card">
+      <div class="flex flex-wrap gap-4 items-center">
+        <!-- Primary -->
+        <button class="btn-primary btn-shimmer">
+          <iconify-icon icon="solar:play-linear" stroke-width="1.5"></iconify-icon>
+          Primário
+        </button>
+        <!-- Secondary -->
+        <button class="btn-secondary">
+          <iconify-icon icon="solar:document-linear" stroke-width="1.5"></iconify-icon>
+          Secundário
+        </button>
+        <!-- Ghost -->
+        <button class="btn-ghost">
+          <iconify-icon icon="solar:settings-linear" stroke-width="1.5"></iconify-icon>
+          Ghost
+        </button>
+        <!-- Conic shimmer -->
+        <div class="btn-conic border-beam-wrap">
+          <div class="conic-ring"></div>
+          <div class="conic-bg"></div>
+          <div class="conic-inner">
+            <iconify-icon icon="solar:star-linear" stroke-width="1.5"></iconify-icon>
+            Shimmer
+          </div>
+        </div>
+        <!-- Disabled -->
+        <button class="btn-primary opacity-40 cursor-not-allowed" disabled>Desativado</button>
+        <!-- Icon-only -->
+        <button class="btn-primary" style="padding: 0.625rem;">
+          <iconify-icon icon="solar:arrow-right-linear" stroke-width="1.5"></iconify-icon>
+        </button>
+      </div>
+      <!-- Sizes row -->
+      <div class="flex flex-wrap gap-4 items-center mt-6 pt-6 border-t border-white/5">
+        <button class="btn-primary" style="font-size:0.7rem; padding:0.4rem 1rem;">XS</button>
+        <button class="btn-primary" style="font-size:0.8rem; padding:0.5rem 1.25rem;">SM</button>
+        <button class="btn-primary">MD (padrão)</button>
+        <button class="btn-primary" style="font-size:1rem; padding:0.75rem 1.75rem;">LG</button>
+        <button class="btn-primary" style="font-size:1.1rem; padding:1rem 2.5rem;">XL</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- --- INPUTS --- -->
+  <div class="flex flex-col gap-8 animate-on-scroll">
+    <h3 class="text-zinc-500 text-xs font-medium uppercase tracking-widest font-mono-soul">02 — Inputs</h3>
+    <div class="card flashlight-card" id="input-card">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Text input -->
+        <div class="flex flex-col gap-2">
+          <label class="text-zinc-400 text-xs font-medium uppercase tracking-widest font-mono-soul">Texto</label>
+          <div class="relative">
+            <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-600 w-3.5 h-3.5"></i>
+            <input type="text" class="input" style="padding-left: 2.25rem;" placeholder="Buscar na biblioteca..."/>
+          </div>
+        </div>
+        <!-- Select -->
+        <div class="flex flex-col gap-2">
+          <label class="text-zinc-400 text-xs font-medium uppercase tracking-widest font-mono-soul">Select</label>
+          <div class="relative">
+            <select class="input appearance-none" style="cursor: pointer;">
+              <option>Dó Menor</option>
+              <option>Ré Maior</option>
+              <option>Mi Menor</option>
+            </select>
+            <i data-lucide="chevron-down" class="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 w-3.5 h-3.5 pointer-events-none"></i>
+          </div>
+        </div>
+        <!-- Slider -->
+        <div class="flex flex-col gap-3">
+          <label class="text-zinc-400 text-xs font-medium uppercase tracking-widest font-mono-soul">Range Slider</label>
+          <div class="progress">
+            <div class="progress-fill" style="width: 72%;"></div>
+          </div>
+          <div class="flex justify-between text-xs font-mono-soul" style="color: var(--color-text-muted);">
+            <span>Criatividade</span><span style="color: var(--color-primary);">0.72</span>
+          </div>
+        </div>
+        <!-- Toggle -->
+        <div class="flex flex-col gap-3">
+          <label class="text-zinc-400 text-xs font-medium uppercase tracking-widest font-mono-soul">Toggles</label>
+          <div class="flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+              <span class="text-zinc-400 text-sm">Calor Analógico</span>
+              <div class="relative w-9 h-5 cursor-pointer" onclick="this.classList.toggle('active')">
+                <div class="w-full h-full rounded-full border border-white/10 transition-colors duration-300"
+                     style="background: rgba(255,255,255,0.08);" id="tog1-track"></div>
+                <div class="absolute top-[3px] left-[3px] w-3.5 h-3.5 rounded-full bg-white transition-transform duration-300" id="tog1-thumb"></div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-zinc-400 text-sm">Modo Pro</span>
+              <div class="relative w-9 h-5 cursor-pointer" id="tog2">
+                <div class="w-full h-full rounded-full transition-colors duration-300"
+                     style="background: var(--color-primary);"></div>
+                <div class="absolute top-[3px] left-[calc(100%-1.25rem)] w-3.5 h-3.5 rounded-full bg-white shadow-sm"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- --- CARDS --- -->
+  <div class="flex flex-col gap-8 animate-on-scroll">
+    <h3 class="text-zinc-500 text-xs font-medium uppercase tracking-widest font-mono-soul">03 — Cards</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Node card (Sonic-Link style) -->
+      <div class="group cursor-pointer">
+        <div class="p-[1px] rounded-[20px] transition-all duration-500"
+             style="background: linear-gradient(to bottom, rgba(99,102,241,0.3), rgba(255,255,255,0.05), transparent); box-shadow: 0 2rem 5rem rgba(0,0,0,0.6);">
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-3xl rounded-full -z-10"
+               style="background: rgba(99,102,241,0.1);"></div>
+          <div class="p-6 rounded-[19px] relative overflow-hidden flex flex-col gap-6"
+               style="background: rgba(24,24,27,0.95); border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(20px);">
+            <div class="absolute inset-0 pointer-events-none"
+                 style="background: radial-gradient(circle at center, rgba(99,102,241,0.05), transparent 80%);"></div>
+            <div class="flex justify-between items-start relative z-10">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-black flex items-center justify-center border border-white/5">
+                  <iconify-icon icon="solar:soundwave-linear" stroke-width="1.5" style="color: var(--color-primary); font-size: 1rem;"></iconify-icon>
+                </div>
+                <span class="font-mono-soul text-xs tracking-widest" style="color: var(--color-primary);">MIXER_M9</span>
+              </div>
+              <div class="badge badge-primary">SYNC</div>
+            </div>
+            <div class="w-full h-24 rounded-xl bg-black border border-white/5 overflow-hidden relative z-10">
+              <img alt="Estrutura visual" class="w-full h-full object-cover mix-blend-screen opacity-70"
+                   src="../sonic-link.aura.build/assets/d11b714c5007bc5d_3c92c955-4639-430a-bead-f54dfa.webp"
+                   style="filter: grayscale(1) sepia(1) hue-rotate(240deg) saturate(3) brightness(0.9);"/>
+              <div class="absolute inset-0 opacity-20 pointer-events-none"
+                   style="background-image: repeating-linear-gradient(transparent, transparent 2px, #000 2px, #000 4px);"></div>
+            </div>
+            <div class="relative z-10">
+              <button class="w-full py-2.5 rounded-lg border border-white/5 hover:bg-white/10 hover:border-white/10 transition-all flex items-center justify-center gap-2 text-white text-sm"
+                      style="background: rgba(255,255,255,0.05);">
+                Iniciar Sincronização
+                <iconify-icon icon="solar:arrow-right-linear" stroke-width="1.5" class="text-zinc-400"></iconify-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats card (Finex-inspired) -->
+      <div class="card group hover:border-white/20 transition-all duration-300 flashlight-card" id="stat-card">
+        <div class="flex justify-between items-start mb-4">
+          <div class="p-2 rounded-lg" style="background: rgba(99,102,241,0.1); color: var(--color-primary);">
+            <i data-lucide="download" class="w-4 h-4"></i>
+          </div>
+          <span class="badge badge-neutral font-mono-soul">Download</span>
+        </div>
+        <div class="flex items-baseline gap-1 mb-4">
+          <span class="text-3xl font-light text-white tracking-tight tabular-nums">892,4</span>
+          <span class="text-xs text-zinc-500">Mbps</span>
+        </div>
+        <div class="h-8 w-full opacity-60 group-hover:opacity-100 transition-opacity">
+          <svg class="w-full h-full" viewBox="0 0 100 24" fill="none" preserveAspectRatio="none">
+            <path d="M0 18 L10 14 L20 16 L30 10 L40 12 L50 8 L60 14 L70 10 L80 6 L90 8 L100 4"
+                  stroke="var(--color-primary)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+            <path d="M0 18 L10 14 L20 16 L30 10 L40 12 L50 8 L60 14 L70 10 L80 6 L90 8 L100 4 V 24 H 0 Z"
+                  fill="var(--color-primary)" fill-opacity="0.15"/>
+          </svg>
+        </div>
+        <div class="progress mt-4">
+          <div class="progress-fill" style="width: 89%;"></div>
+        </div>
+      </div>
+
+      <!-- Profile card (Lumina-inspired) -->
+      <div class="card group hover:border-white/20 transition-all">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-12 h-12 rounded-full p-[1px] flex-shrink-0"
+               style="background: linear-gradient(to bottom, rgba(255,255,255,0.25), transparent);">
+            <div class="w-full h-full rounded-full overflow-hidden bg-black">
+              <img alt="DJ" class="w-full h-full object-cover mix-blend-luminosity opacity-80"
+                   src="../sonic-link.aura.build/assets/2a6a616171120ca0_f19460d3-0d95-499d-97fe-733c3a.webp"
+                   style="filter: grayscale(1) sepia(1) hue-rotate(240deg) saturate(2);"/>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-sm font-normal text-white tracking-tight">DJ Apex</h3>
+            <p class="font-mono-soul text-xs uppercase tracking-widest mt-1" style="color: var(--color-primary);">Líder de Sessão</p>
+          </div>
+          <div class="ml-auto">
+            <span class="h-2 w-2 rounded-full inline-block animate-glow-pulse" style="background: var(--color-success); box-shadow: 0 0 8px rgba(16,185,129,0.8);"></span>
+          </div>
+        </div>
+        <div class="pt-4 border-t border-white/5 flex flex-col gap-4">
+          <div>
+            <div class="flex justify-between text-xs font-mono-soul mb-2">
+              <span class="text-zinc-500">THREADS</span>
+              <span class="text-white">128</span>
+            </div>
+            <div class="progress"><div class="progress-fill" style="width: 64%; background: linear-gradient(90deg, #71717a, #a1a1aa);"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs font-mono-soul mb-2">
+              <span style="color: var(--color-primary);">LOAD</span>
+              <span class="text-white">88%</span>
+            </div>
+            <div class="progress"><div class="progress-fill" style="width: 88%;"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- --- NAVBAR --- -->
+  <div class="flex flex-col gap-8 animate-on-scroll">
+    <h3 class="text-zinc-500 text-xs font-medium uppercase tracking-widest font-mono-soul">04 — Navbar</h3>
+    <div class="card">
+      <div class="nav-glass flex items-center justify-between px-4 py-2 rounded-full">
+        <div class="flex items-center gap-2">
+          <iconify-icon icon="solar:headphones-linear" stroke-width="1.5" style="color: var(--color-primary); font-size: 1rem;"></iconify-icon>
+          <span class="text-xs font-normal text-white tracking-tighter uppercase font-sans">SOUL.DS4</span>
+        </div>
+        <div class="hidden md:flex gap-6 items-center">
+          <span class="btn-ghost">Música</span>
+          <span class="btn-ghost">Modelos</span>
+          <span class="btn-ghost">Estúdio</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="btn-ghost hidden md:flex">Entrar</span>
+          <button class="btn-primary text-xs py-1.5 px-4 btn-shimmer">Cadastrar</button>
+        </div>
+      </div>
+      <p class="text-zinc-600 text-xs font-mono-soul mt-4">pill nav · backdrop-blur-xl · bg-[#18181B]/80 · border border-white/5</p>
+    </div>
+  </div>
+
+  <!-- --- BADGES --- -->
+  <div class="flex flex-col gap-8 animate-on-scroll">
+    <h3 class="text-zinc-500 text-xs font-medium uppercase tracking-widest font-mono-soul">05 — Badges & Labels</h3>
+    <div class="card">
+      <div class="flex flex-wrap gap-3">
+        <span class="badge badge-primary"><iconify-icon icon="solar:check-circle-linear" stroke-width="1.5"></iconify-icon>Primary</span>
+        <span class="badge badge-success"><iconify-icon icon="solar:check-circle-linear" stroke-width="1.5"></iconify-icon>Success</span>
+        <span class="badge badge-accent"><iconify-icon icon="solar:star-linear" stroke-width="1.5"></iconify-icon>Accent</span>
+        <span class="badge badge-fuchsia"><iconify-icon icon="solar:magic-stick-3-linear" stroke-width="1.5"></iconify-icon>Decorative</span>
+        <span class="badge badge-neutral">Neutral</span>
+        <span class="badge badge-primary">v4.2</span>
+        <span class="badge badge-success">● Online</span>
+        <span class="badge badge-neutral">SINCRONIZADO</span>
+        <span class="badge badge-fuchsia">POPULAR</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- --- TOOLTIPS --- -->
+  <div class="flex flex-col gap-8 animate-on-scroll">
+    <h3 class="text-zinc-500 text-xs font-medium uppercase tracking-widest font-mono-soul">06 — Tooltips</h3>
+    <div class="card">
+      <div class="flex flex-wrap gap-6 items-center">
+        <div class="tooltip-wrap">
+          <button class="btn-primary">Hover aqui</button>
+          <div class="tooltip-tip">Dica: Clique para sincronizar</div>
+        </div>
+        <div class="tooltip-wrap">
+          <button class="btn-secondary">Configurações</button>
+          <div class="tooltip-tip">Abrir painel de configurações</div>
+        </div>
+        <div class="tooltip-wrap">
+          <iconify-icon icon="solar:info-circle-linear" stroke-width="1.5" class="cursor-help" style="color: var(--color-primary); font-size: 1.25rem;"></iconify-icon>
+          <div class="tooltip-tip">Mais informações disponíveis</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- --- MODAL --- -->
+  <div class="flex flex-col gap-8 animate-on-scroll">
+    <h3 class="text-zinc-500 text-xs font-medium uppercase tracking-widest font-mono-soul">07 — Modal</h3>
+    <div class="card">
+      <button class="btn-primary btn-shimmer" onclick="document.getElementById('demoModal').classList.add('open')">
+        <iconify-icon icon="solar:maximize-square-linear" stroke-width="1.5"></iconify-icon>
+        Abrir Modal
+      </button>
+      <p class="text-zinc-600 text-xs font-mono-soul mt-4">backdrop-blur + scale transition + spring easing</p>
+    </div>
+  </div>
+
+  <!-- Modal overlay -->
+  <div class="modal-overlay" id="demoModal" onclick="if(event.target===this) this.classList.remove('open')">
+    <div class="modal-box">
+      <div class="flex justify-between items-start mb-6">
+        <div>
+          <div class="badge badge-primary mb-3">Modal Demo</div>
+          <h3 class="text-white text-lg font-light tracking-tight">Confirmar Sincronização</h3>
+          <p class="text-zinc-400 text-sm mt-1">Você está prestes a iniciar uma sessão de sincronização de malha sônica.</p>
+        </div>
+        <button onclick="document.getElementById('demoModal').classList.remove('open')"
+                class="text-zinc-500 hover:text-white p-1 rounded-md hover:bg-white/5 transition-all">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <div class="space-y-3 mb-6">
+        <div class="flex justify-between text-sm">
+          <span class="text-zinc-400">Latência estimada</span>
+          <span class="text-white font-mono-soul">&lt;12ms</span>
+        </div>
+        <div class="flex justify-between text-sm">
+          <span class="text-zinc-400">Protocolo</span>
+          <span class="text-white font-mono-soul">Sonic v2.0</span>
+        </div>
+        <div class="flex justify-between text-sm">
+          <span class="text-zinc-400">Nó mais próximo</span>
+          <span class="text-white font-mono-soul">SA-BR-01</span>
+        </div>
+      </div>
+      <div class="flex gap-3">
+        <button class="btn-primary btn-shimmer flex-1 justify-center">Confirmar</button>
+        <button class="btn-secondary flex-1 justify-center" onclick="document.getElementById('demoModal').classList.remove('open')">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- --- AUDIO STUDIO WORKSPACE (Sonic-Link Section) --- -->
+  <div class="flex flex-col gap-8 animate-on-scroll">
+    <h3 class="text-zinc-500 text-xs font-medium uppercase tracking-widest font-mono-soul">08 — Studio Workspace</h3>
+    <div class="overflow-hidden shadow-2xl w-full h-[520px] border border-zinc-800 rounded-xl mx-auto relative flex flex-col"
+         style="background: #0a0a0a; color: var(--color-text);">
+      <!-- Title bar -->
+      <div class="flex border-zinc-800 border-b items-center h-11 px-4 shrink-0" style="background: #0f0f11;">
+        <div class="flex gap-2 w-20 items-center">
+          <div class="w-3 h-3 rounded-full border" style="background: #3f3f46; border-color: rgba(63,63,70,0.5);"></div>
+          <div class="w-3 h-3 rounded-full border" style="background: #3f3f46; border-color: rgba(63,63,70,0.5);"></div>
+          <div class="w-3 h-3 rounded-full border" style="background: #3f3f46; border-color: rgba(63,63,70,0.5);"></div>
+        </div>
+        <div class="flex-1 text-center">
+          <span class="text-xs font-normal text-zinc-500 font-mono-soul">Motor Neural.Audio — Estúdio</span>
+        </div>
+        <div class="w-20"></div>
+      </div>
+      <div class="flex-1 flex overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-56 flex flex-col border-r border-zinc-800 shrink-0" style="background: #0f0f11;">
+          <div class="flex items-center gap-3 px-4 py-4 border-b border-zinc-800">
+            <div class="w-6 h-6 rounded flex items-center justify-center border" style="background: rgba(99,102,241,0.1); color: var(--color-primary); border-color: rgba(99,102,241,0.2);">
+              <i data-lucide="audio-waveform" class="w-3.5 h-3.5"></i>
+            </div>
+            <span class="font-medium text-sm text-zinc-100">Neural.Audio</span>
+          </div>
+          <nav class="flex-1 overflow-y-auto px-3 space-y-1 py-3">
+            <a href="#" class="flex items-center gap-2.5 px-2 py-1.5 rounded-md text-xs font-normal border"
+               style="background: rgba(99,102,241,0.1); color: var(--color-primary); border-color: rgba(99,102,241,0.15);">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>Coprodutor IA
+            </a>
+            <a href="#" class="flex items-center gap-2.5 px-2 py-1.5 rounded-md hover:bg-zinc-800/50 transition-colors text-xs text-zinc-400">
+              <i data-lucide="mic" class="w-3.5 h-3.5"></i>Estúdio
+            </a>
+            <a href="#" class="flex items-center gap-2.5 px-2 py-1.5 rounded-md hover:bg-zinc-800/50 transition-colors text-xs text-zinc-400">
+              <i data-lucide="library" class="w-3.5 h-3.5"></i>Stems
+            </a>
+          </nav>
+        </aside>
+        <!-- Main chat -->
+        <section class="flex-1 flex flex-col relative" style="background: #0a0a0a;">
+          <div class="flex-1 overflow-y-auto p-5 space-y-5 pt-14 pb-16">
+            <!-- User msg -->
+            <div class="flex flex-col items-end gap-1">
+              <span class="text-[10px] text-zinc-500">Você</span>
+              <div class="text-zinc-200 text-sm p-3.5 rounded-2xl rounded-tr-sm max-w-xs border border-zinc-800/80 leading-relaxed"
+                   style="background: #18181b;">Gere uma linha de baixo dark techno a 130 BPM.</div>
+            </div>
+            <!-- AI response -->
+            <div class="flex gap-3 items-start">
+              <div class="w-8 h-8 rounded-full border flex items-center justify-center shrink-0 mt-1"
+                   style="background: rgba(99,102,241,0.1); border-color: rgba(99,102,241,0.2);">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5" style="color: var(--color-primary);"></i>
+              </div>
+              <div class="flex-1 flex flex-col gap-3">
+                <p class="text-zinc-300 text-sm leading-relaxed">Aqui está a linha de baixo a 130 BPM com saturação de fita sutil.</p>
+                <!-- Audio player -->
+                <div class="rounded-xl overflow-hidden border border-zinc-800/80 p-3.5 flex flex-col gap-3" style="background: #0f0f11; max-width: 340px;">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-medium text-zinc-200">techno_bassline_130bpm.wav</span>
+                    <span class="text-[10px] text-zinc-500 font-mono-soul">0:07</span>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <button class="w-9 h-9 rounded-full bg-zinc-100 hover:bg-white flex items-center justify-center text-black shrink-0 transition-colors">
+                      <svg class="ml-0.5" fill="currentColor" height="14" viewBox="0 0 24 24" width="14"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                    </button>
+                    <div class="flex-1 flex items-center gap-[3px] h-8">
+                      <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                      <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                      <div class="wave-bar"></div>
+                      <!-- static bars after wave -->
+                      <div class="w-1 h-3 rounded-full bg-zinc-700 opacity-40"></div>
+                      <div class="w-1 h-5 rounded-full bg-zinc-700 opacity-40"></div>
+                      <div class="w-1 h-4 rounded-full bg-zinc-700 opacity-40"></div>
+                      <div class="w-1 h-6 rounded-full bg-zinc-700 opacity-40"></div>
+                      <div class="w-1 h-3 rounded-full bg-zinc-700 opacity-40"></div>
+                      <div class="w-1 h-4 rounded-full bg-zinc-700 opacity-40"></div>
+                      <div class="w-1 h-2 rounded-full bg-zinc-700 opacity-40"></div>
+                      <div class="w-1 h-5 rounded-full bg-zinc-700 opacity-40"></div>
+                      <div class="w-1 h-7 rounded-full bg-zinc-700 opacity-40"></div>
+                    </div>
+                  </div>
+                  <div class="flex gap-2">
+                    <button class="flex-1 py-1 rounded border border-zinc-700/50 text-[10px] font-medium text-zinc-300 hover:bg-zinc-800 transition-colors flex items-center justify-center gap-1.5" style="background: rgba(255,255,255,0.03);">
+                      <i data-lucide="download" class="w-2.5 h-2.5"></i>WAV
+                    </button>
+                    <button class="flex-1 py-1 rounded border border-zinc-700/50 text-[10px] font-medium text-zinc-300 hover:bg-zinc-800 transition-colors flex items-center justify-center gap-1.5" style="background: rgba(255,255,255,0.03);">
+                      <i data-lucide="layers" class="w-2.5 h-2.5"></i>MIDI
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Input bar -->
+          <div class="p-4 absolute bottom-0 w-full" style="background: linear-gradient(to top, #0a0a0a, #0a0a0a 60%, transparent);">
+            <div class="flex items-center gap-2 rounded-xl px-3 border border-zinc-800 focus-within:border-indigo-500/50 transition-colors"
+                 style="background: rgba(24,24,27,0.8); backdrop-filter: blur(12px);">
+              <button class="p-2 rounded-md hover:bg-zinc-800 transition-colors text-zinc-400">
+                <i data-lucide="paperclip" class="w-4 h-4"></i>
+              </button>
+              <input class="flex-1 bg-transparent border-none outline-none text-sm placeholder-zinc-500 text-zinc-100 py-3"
+                     placeholder="Descreva o som que você quer criar..." type="text"/>
+              <button class="p-1.5 rounded-lg text-white transition-colors flex items-center justify-center h-8 w-8 shadow-sm"
+                      style="background: var(--color-primary);">
+                <i data-lucide="arrow-up" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- --- PRICING CARDS --- -->
+  <div class="flex flex-col gap-8 animate-on-scroll">
+    <h3 class="text-zinc-500 text-xs font-medium uppercase tracking-widest font-mono-soul">09 — Pricing Cards</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="p-8 rounded-[19px] flex flex-col border border-white/5 shadow-2xl"
+           style="background: rgba(24,24,27,0.9); backdrop-filter: blur(20px);">
+        <div class="font-mono-soul text-xs text-zinc-500 uppercase tracking-widest mb-2">Conexão Base</div>
+        <div class="flex items-baseline gap-1 mb-6">
+          <span class="text-4xl font-light text-white">R$49</span>
+          <span class="text-zinc-500 text-xs font-mono-soul">/CICLO</span>
+        </div>
+        <ul class="flex flex-col gap-3 mb-8 flex-1">
+          <li class="flex items-center gap-2.5 text-sm text-zinc-400 font-light">
+            <iconify-icon icon="solar:check-circle-linear" style="color: var(--color-primary); font-size: 1.1rem;"></iconify-icon>10TB de Dados de Áudio
+          </li>
+          <li class="flex items-center gap-2.5 text-sm text-zinc-400 font-light">
+            <iconify-icon icon="solar:check-circle-linear" style="color: var(--color-primary); font-size: 1.1rem;"></iconify-icon>Mixer Único
+          </li>
+          <li class="flex items-center gap-2.5 text-sm text-zinc-400 font-light">
+            <iconify-icon icon="solar:check-circle-linear" style="color: var(--color-primary); font-size: 1.1rem;"></iconify-icon>Latência Padrão
+          </li>
+        </ul>
+        <button class="btn-secondary w-full justify-center">Iniciar</button>
+      </div>
+
+      <div class="p-8 rounded-[19px] flex flex-col relative overflow-hidden md:-translate-y-4"
+           style="background: rgba(24,24,27,0.95); border: 1px solid rgba(99,102,241,0.3); box-shadow: 0 0 40px rgba(99,102,241,0.15); backdrop-filter: blur(20px);">
+        <div class="absolute top-0 inset-x-0 h-1" style="background: linear-gradient(90deg, transparent, var(--color-primary), transparent);"></div>
+        <div class="font-mono-soul text-xs uppercase tracking-widest mb-2 flex justify-between items-center" style="color: var(--color-primary);">
+          <span>Nó Nexus</span>
+          <span class="badge badge-primary" style="font-size: 0.6rem;">POPULAR</span>
+        </div>
+        <div class="flex items-baseline gap-1 mb-6">
+          <span class="text-4xl font-light text-white">R$149</span>
+          <span class="text-zinc-500 text-xs font-mono-soul">/CICLO</span>
+        </div>
+        <ul class="flex flex-col gap-3 mb-8 flex-1">
+          <li class="flex items-center gap-2.5 text-sm text-zinc-300 font-light">
+            <iconify-icon icon="solar:check-circle-linear" style="color: var(--color-primary); font-size: 1.1rem;"></iconify-icon>50TB de Banda
+          </li>
+          <li class="flex items-center gap-2.5 text-sm text-zinc-300 font-light">
+            <iconify-icon icon="solar:check-circle-linear" style="color: var(--color-primary); font-size: 1.1rem;"></iconify-icon>Malha Multi-Mixer
+          </li>
+          <li class="flex items-center gap-2.5 text-sm text-zinc-300 font-light">
+            <iconify-icon icon="solar:check-circle-linear" style="color: var(--color-primary); font-size: 1.1rem;"></iconify-icon>Baixa Latência
+          </li>
+          <li class="flex items-center gap-2.5 text-sm text-zinc-300 font-light">
+            <iconify-icon icon="solar:check-circle-linear" style="color: var(--color-primary); font-size: 1.1rem;"></iconify-icon>Reprodução Prioritária
+          </li>
+        </ul>
+        <button class="btn-primary btn-shimmer w-full justify-center">Aprimorar Conexão</button>
+      </div>
+
+      <div class="p-8 rounded-[19px] flex flex-col border border-white/5 shadow-2xl"
+           style="background: rgba(24,24,27,0.9); backdrop-filter: blur(20px);">
+        <div class="font-mono-soul text-xs text-zinc-500 uppercase tracking-widest mb-2">Overlord</div>
+        <div class="flex items-baseline gap-1 mb-6">
+          <span class="text-4xl font-light text-white">R$499</span>
+          <span class="text-zinc-500 text-xs font-mono-soul">/CICLO</span>
+        </div>
+        <ul class="flex flex-col gap-3 mb-8 flex-1">
+          <li class="flex items-center gap-2.5 text-sm text-zinc-400 font-light">
+            <iconify-icon icon="solar:check-circle-linear" style="color: var(--color-primary); font-size: 1.1rem;"></iconify-icon>Banda Ilimitada
+          </li>
+          <li class="flex items-center gap-2.5 text-sm text-zinc-400 font-light">
+            <iconify-icon icon="solar:check-circle-linear" style="color: var(--color-primary); font-size: 1.1rem;"></iconify-icon>Array Global de Canais
+          </li>
+          <li class="flex items-center gap-2.5 text-sm text-zinc-400 font-light">
+            <iconify-icon icon="solar:check-circle-linear" style="color: var(--color-primary); font-size: 1.1rem;"></iconify-icon>Latência Zero
+          </li>
+        </ul>
+        <button class="btn-secondary w-full justify-center">Falar com Vendas</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 5 — ICONS
+     ============================================================ -->
+<section id="icons" class="relative z-20 w-full max-w-6xl mx-auto px-4 py-24 flex flex-col gap-12 border-t border-white/10">
+
+  <div class="flex flex-col gap-4 animate-on-scroll">
+    <div class="section-label">
+      <iconify-icon icon="solar:star-linear" stroke-width="1.5"></iconify-icon>
+      Ícones
+    </div>
+    <h2 class="text-4xl md:text-5xl font-light text-white tracking-tight"
+        style="font-family: var(--font-display); font-weight: 700;">
+      Biblioteca de <span class="text-gradient-primary">Ícones</span>
+    </h2>
+    <p class="text-zinc-400 text-sm font-light max-w-xl">
+      Usando <span class="text-white">Iconify</span> (solar:*) + <span class="text-white">Lucide</span> — stroke-width: 1.5, tamanhos: 16, 20, 24px.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-8 gap-3 animate-on-scroll">
+    <!-- Solar icons -->
+    <div class="icon-item">
+      <iconify-icon icon="solar:headphones-linear" stroke-width="1.5" style="font-size: 1.5rem; color: var(--color-primary);"></iconify-icon>
+      <span class="text-zinc-600 text-[10px] font-mono-soul text-center">headphones</span>
+    </div>
+    <div class="icon-item">
+      <iconify-icon icon="solar:soundwave-linear" stroke-width="1.5" style="font-size: 1.5rem; color: var(--color-primary);"></iconify-icon>
+      <span class="text-zinc-600 text-[10px] font-mono-soul text-center">soundwave</span>
+    </div>
+    <div class="icon-item">
+      <iconify-icon icon="solar:cpu-linear" stroke-width="1.5" style="font-size: 1.5rem; color: var(--color-primary);"></iconify-icon>
+      <span class="text-zinc-600 text-[10px] font-mono-soul text-center">cpu</span>
+    </div>
+    <div class="icon-item">
+      <iconify-icon icon="solar:pulse-linear" stroke-width="1.5" style="font-size: 1.5rem; color: var(--color-primary);"></iconify-icon>
+      <span class="text-zinc-600 text-[10px] font-mono-soul text-center">pulse</span>
+    </div>
+    <div class="icon-item">
+      <iconify-icon icon="solar:magic-stick-3-linear" stroke-width="1.5" style="font-size: 1.5rem; color: var(--color-fuchsia);"></iconify-icon>
+      <span class="text-zinc-600 text-[10px] font-mono-soul text-center">magic-stick</span>
+    </div>
+    <div class="icon-item">
+      <iconify-icon icon="solar:star-linear" stroke-width="1.5" style="font-size: 1.5rem;" class="text-zinc-400"></iconify-icon>
+      <span class="text-zinc-600 text-[10px] font-mono-soul text-center">star</span>
+    </div>
+    <div class="icon-item">
+      <iconify-icon icon="solar:check-circle-linear" stroke-width="1.5" style="font-size: 1.5rem; color: var(--color-success);"></iconify-icon>
+      <span class="text-zinc-600 text-[10px] font-mono-soul text-center">check-circle</span>
+    </div>
+    <div class="icon-item">
+      <iconify-icon icon="solar:history-linear" stroke-width="1.5" style="font-size: 1.5rem;" class="text-zinc-400"></iconify-icon>
+      <span class="text-zinc-600 text-[10px] font-mono-soul text-center">history</span>
+    </div>
+    <!-- Lucide icons -->
+    <div class="icon-item">
+      <i data-lucide="audio-waveform" class="w-6 h-6" style="color: var(--color-primary);"></i>
+      <span class="text-zinc-600 text-[10px] font-mono-soul text-center">audio-waveform</span>
+    </div>
+    <div class="icon-item">
+      <i data-lucide="sparkles" class="w-6 h-6" style="color: var(--color-accent);"></i>
+      <span class="text-zinc-600 text-[10px] font-mono-soul text-center">sparkles</span>
+    </div>
+    <div class="icon-item">
+      <i data-lucide="activity" class="w-6 h-6" style="color: var(--color-primary);"></i>
+      <span class="text-zinc-600 text-[10px] font-mono-soul text-center">activity</span>
+    </div>
+    <div class="icon-item">
+      <i data-lucide="zap" class="w-6 h-6 text-yellow-400"></i>
+      <span class="text-zinc-600 text-[10px] font-mono-soul text-center">zap</span>
+    </div>
+    <div class="icon-item">
+      <i data-lucide="layers" class="w-6 h-6 text-zinc-400"></i>
+      <span class="text-zinc-600 text-[10px] font-mono-soul text-center">layers</span>
+    </div>
+    <div class="icon-item">
+      <i data-lucide="server" class="w-6 h-6 text-zinc-400"></i>
+      <span class="text-zinc-600 text-[10px] font-mono-soul text-center">server</span>
+    </div>
+    <div class="icon-item">
+      <i data-lucide="shield-check" class="w-6 h-6" style="color: var(--color-success);"></i>
+      <span class="text-zinc-600 text-[10px] font-mono-soul text-center">shield-check</span>
+    </div>
+    <div class="icon-item">
+      <i data-lucide="download" class="w-6 h-6 text-zinc-400"></i>
+      <span class="text-zinc-600 text-[10px] font-mono-soul text-center">download</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 6 — ANIMATIONS SHOWCASE
+     ============================================================ -->
+<section id="animations" class="relative z-20 w-full max-w-6xl mx-auto px-4 py-24 flex flex-col gap-16 border-t border-white/10">
+
+  <div class="flex flex-col gap-4 animate-on-scroll">
+    <div class="section-label">
+      <iconify-icon icon="solar:magic-stick-3-linear" stroke-width="1.5"></iconify-icon>
+      Animações
+    </div>
+    <h2 class="text-4xl md:text-5xl font-light text-white tracking-tight"
+        style="font-family: var(--font-display); font-weight: 700;">
+      Sistema de <span class="text-gradient-primary">Animações</span>
+    </h2>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 animate-on-scroll">
+
+    <!-- Float -->
+    <div class="card flex flex-col items-center gap-4 py-8">
+      <div class="animate-float-a w-16 h-16 rounded-2xl glow-ring flex items-center justify-center"
+           style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3);">
+        <iconify-icon icon="solar:headphones-linear" stroke-width="1.5" style="font-size: 1.75rem; color: var(--color-primary);"></iconify-icon>
+      </div>
+      <div class="text-center">
+        <div class="text-white text-sm font-medium">Float</div>
+        <div class="text-zinc-500 text-xs font-mono-soul">float-a · 6s ease-in-out infinite</div>
+      </div>
+    </div>
+
+    <!-- Glow Pulse -->
+    <div class="card flex flex-col items-center gap-4 py-8">
+      <div class="w-16 h-16 rounded-full flex items-center justify-center animate-glow-pulse"
+           style="background: rgba(99,102,241,0.2); box-shadow: 0 0 30px rgba(99,102,241,0.5);">
+        <iconify-icon icon="solar:cpu-linear" stroke-width="1.5" style="font-size: 1.75rem; color: var(--color-primary);"></iconify-icon>
+      </div>
+      <div class="text-center">
+        <div class="text-white text-sm font-medium">Glow Pulse</div>
+        <div class="text-zinc-500 text-xs font-mono-soul">glow-pulse · 2.5s ease infinite</div>
+      </div>
+    </div>
+
+    <!-- Spin Slow -->
+    <div class="card flex flex-col items-center gap-4 py-8">
+      <div class="w-16 h-16 flex items-center justify-center relative">
+        <div class="absolute inset-0 rounded-full border border-dashed border-indigo-500/30 animate-spin-slow"></div>
+        <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: rgba(99,102,241,0.15);">
+          <iconify-icon icon="solar:pulse-linear" stroke-width="1.5" style="font-size: 1.25rem; color: var(--color-primary);"></iconify-icon>
+        </div>
+      </div>
+      <div class="text-center">
+        <div class="text-white text-sm font-medium">Spin Slow</div>
+        <div class="text-zinc-500 text-xs font-mono-soul">spin-slow · 12s linear infinite</div>
+      </div>
+    </div>
+
+    <!-- Wave Bars -->
+    <div class="card flex flex-col items-center gap-4 py-8">
+      <div class="flex items-end gap-1 h-12">
+        <div class="wave-bar bg-indigo-500"></div>
+        <div class="wave-bar bg-indigo-400"></div>
+        <div class="wave-bar bg-indigo-500"></div>
+        <div class="wave-bar bg-indigo-400"></div>
+        <div class="wave-bar bg-indigo-500"></div>
+        <div class="wave-bar bg-indigo-400"></div>
+        <div class="wave-bar bg-indigo-500"></div>
+      </div>
+      <div class="text-center">
+        <div class="text-white text-sm font-medium">Wave Bars</div>
+        <div class="text-zinc-500 text-xs font-mono-soul">scaleY · 0.8s staggered</div>
+      </div>
+    </div>
+
+    <!-- Dot Loader -->
+    <div class="card flex flex-col items-center gap-4 py-8">
+      <div class="dot-loader flex items-center gap-2">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="text-center">
+        <div class="text-white text-sm font-medium">Dot Loader</div>
+        <div class="text-zinc-500 text-xs font-mono-soul">dot-pulse · 1.4s staggered</div>
+      </div>
+    </div>
+
+    <!-- Gradient Animate -->
+    <div class="card flex flex-col items-center gap-4 py-8">
+      <div class="w-full h-8 rounded-lg animate-gradient-x"
+           style="background: linear-gradient(135deg, var(--color-primary), var(--color-fuchsia), var(--color-accent), var(--color-primary));"></div>
+      <div class="text-center">
+        <div class="text-white text-sm font-medium">Gradient X</div>
+        <div class="text-zinc-500 text-xs font-mono-soul">background-position · 4s ease infinite</div>
+      </div>
+    </div>
+
+    <!-- Shimmer Button -->
+    <div class="card flex flex-col items-center gap-4 py-8">
+      <button class="btn-primary btn-shimmer">Shimmer Sweep</button>
+      <div class="text-center">
+        <div class="text-white text-sm font-medium">Shimmer</div>
+        <div class="text-zinc-500 text-xs font-mono-soul">translateX slide · 3s infinite</div>
+      </div>
+    </div>
+
+    <!-- Scan line -->
+    <div class="card flex flex-col items-center gap-4 py-8 overflow-hidden relative">
+      <div class="scanline" style="animation-duration: 3s; background: linear-gradient(90deg, transparent, rgba(197,255,92,0.3), transparent);"></div>
+      <div class="w-full h-16 rounded-lg border border-white/5 relative overflow-hidden"
+           style="background: #0f0f11;">
+        <div class="absolute inset-x-0 top-0 h-px" style="background: rgba(197,255,92,0.3);"></div>
+        <div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(transparent, transparent 2px, rgba(197,255,92,0.05) 2px, rgba(197,255,92,0.05) 4px);"></div>
+      </div>
+      <div class="text-center">
+        <div class="text-white text-sm font-medium">Scanline</div>
+        <div class="text-zinc-500 text-xs font-mono-soul">top -10%→110% · 5s linear</div>
+      </div>
+    </div>
+
+    <!-- Conic rotate -->
+    <div class="card flex flex-col items-center gap-4 py-8">
+      <div class="btn-conic border-beam-wrap">
+        <div class="conic-ring"></div>
+        <div class="conic-bg"></div>
+        <div class="conic-inner">Conic Ring</div>
+      </div>
+      <div class="text-center">
+        <div class="text-white text-sm font-medium">Conic Gradient</div>
+        <div class="text-zinc-500 text-xs font-mono-soul">rotate-gradient · 4s linear</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transition timing reference -->
+  <div class="flex flex-col gap-6 animate-on-scroll">
+    <h3 class="text-zinc-500 text-xs font-medium uppercase tracking-widest font-mono-soul">Timing de Transições</h3>
+    <div class="card">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="flex flex-col gap-2">
+          <div class="text-white text-sm font-medium">Fast</div>
+          <div class="text-zinc-500 text-xs font-mono-soul">150ms · hover states</div>
+          <div class="h-1 rounded-full" style="background: var(--color-primary); width: 30%;"></div>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div class="text-white text-sm font-medium">Base</div>
+          <div class="text-zinc-500 text-xs font-mono-soul">300ms · focus / active</div>
+          <div class="h-1 rounded-full" style="background: var(--color-primary); width: 60%;"></div>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div class="text-white text-sm font-medium">Slow</div>
+          <div class="text-zinc-500 text-xs font-mono-soul">600ms · card / entrance</div>
+          <div class="h-1 rounded-full" style="background: var(--color-primary); width: 100%;"></div>
+        </div>
+      </div>
+      <div class="mt-6 pt-6 border-t border-white/5 grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="flex flex-col gap-2">
+          <div class="text-white text-sm font-medium">ease-out</div>
+          <div class="text-zinc-500 text-xs font-mono-soul">cubic-bezier(0.25,0.46,0.45,0.94)</div>
+          <div class="text-zinc-600 text-xs">Elementos saindo / entrando na tela</div>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div class="text-white text-sm font-medium">ease-spring</div>
+          <div class="text-zinc-500 text-xs font-mono-soul">cubic-bezier(0.34,1.56,0.64,1)</div>
+          <div class="text-zinc-600 text-xs">Modais · Toasts · Dropdowns</div>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div class="text-white text-sm font-medium">linear</div>
+          <div class="text-zinc-500 text-xs font-mono-soul">linear</div>
+          <div class="text-zinc-600 text-xs">Rotações · Beams · Shimmer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 7 — TESTIMONIALS (Node Cluster style)
+     ============================================================ -->
+<section class="relative z-20 w-full max-w-6xl mx-auto px-4 py-24 flex flex-col gap-12 border-t border-white/10 animate-on-scroll">
+  <div class="flex flex-col gap-2 items-center text-center">
+    <div class="section-label mb-4">REGISTROS DE REPRODUÇÃO</div>
+    <h2 class="text-3xl font-normal text-white tracking-tight">Feedback dos Criadores</h2>
+    <p class="text-zinc-400 text-sm font-light">Registros verificados de produtores e designers de elite.</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="card hover:border-white/15 transition-all">
+      <iconify-icon icon="solar:chat-round-line-linear" class="absolute top-6 right-6 text-white/5 text-4xl"></iconify-icon>
+      <p class="text-zinc-300 text-sm font-light leading-relaxed mb-8">"A redução de latência é sem precedentes. Estamos mantendo sincronismo com 99,8% de estabilidade durante transferências de áudio de alta carga."</p>
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-full overflow-hidden bg-black p-[1px]"
+             style="background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent);">
+          <img alt="Sarah" class="w-full h-full object-cover mix-blend-luminosity opacity-80"
+               src="../sonic-link.aura.build/assets/585a27183f42ba3e_917d6f93-fb36-439a-8c48-884b67.jpg"
+               style="filter: grayscale(1) sepia(1) hue-rotate(240deg) saturate(2); border-radius: 50%;"/>
+        </div>
+        <div>
+          <div class="text-white text-sm font-normal">Sarah Vance</div>
+          <div class="font-mono-soul text-[10px] uppercase tracking-widest mt-1" style="color: var(--color-primary);">Produtora Líder</div>
+        </div>
+      </div>
+    </div>
+    <div class="card hover:border-white/15 transition-all">
+      <iconify-icon icon="solar:chat-round-line-linear" class="absolute top-6 right-6 text-white/5 text-4xl"></iconify-icon>
+      <p class="text-zinc-300 text-sm font-light leading-relaxed mb-8">"A integração levou menos de dois ciclos. Os painéis oferecem insights granulares sobre ressonância sônica sem comprometer nossos motores locais."</p>
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-full overflow-hidden bg-black p-[1px]"
+             style="background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent);">
+          <img alt="Elias" class="w-full h-full object-cover mix-blend-luminosity opacity-80"
+               src="../sonic-link.aura.build/assets/26ecdbdc59109db9_3a9a24d2-3644-4299-9ddf-51f6d3.webp"
+               style="filter: grayscale(1) sepia(1) hue-rotate(240deg) saturate(2); border-radius: 50%;"/>
+        </div>
+        <div>
+          <div class="text-white text-sm font-normal">Elias Thorne</div>
+          <div class="font-mono-soul text-[10px] uppercase tracking-widest mt-1" style="color: var(--color-primary);">Arquiteto de Áudio</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="relative z-20 border-t border-white/10 pt-16 pb-8" style="background: #000000;">
+  <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center gap-2">
+        <iconify-icon icon="solar:headphones-linear" stroke-width="1.5" style="color: var(--color-primary); font-size: 1.5rem;"></iconify-icon>
+        <span class="font-sans text-sm tracking-tighter uppercase text-white">SOUL.DS4</span>
+      </div>
+      <p class="text-zinc-400 text-xs font-light leading-relaxed">
+        Sistema de design futurista para interfaces de próxima geração — construído sobre Sonic-Link, Finex e Lumina.
+      </p>
+    </div>
+    <div class="flex flex-col gap-4">
+      <h4 class="text-white text-xs font-mono-soul uppercase tracking-widest">Design</h4>
+      <a class="text-zinc-500 text-sm hover:text-white transition-colors font-light" href="#colors">Sistema de Cores</a>
+      <a class="text-zinc-500 text-sm hover:text-white transition-colors font-light" href="#typography">Tipografia</a>
+      <a class="text-zinc-500 text-sm hover:text-white transition-colors font-light" href="#components">Componentes</a>
+    </div>
+    <div class="flex flex-col gap-4">
+      <h4 class="text-white text-xs font-mono-soul uppercase tracking-widest">Tokens</h4>
+      <a class="text-zinc-500 text-sm hover:text-white transition-colors font-light" href="#animations">Animações</a>
+      <a class="text-zinc-500 text-sm hover:text-white transition-colors font-light" href="#icons">Ícones</a>
+      <a class="text-zinc-500 text-sm hover:text-white transition-colors font-light" href="#">Espaçamento</a>
+    </div>
+    <div class="flex flex-col gap-4">
+      <h4 class="text-white text-xs font-mono-soul uppercase tracking-widest">Projeto</h4>
+      <a class="text-zinc-500 text-sm hover:text-white transition-colors font-light" href="#">PROJETO SOUL</a>
+      <a class="text-zinc-500 text-sm hover:text-white transition-colors font-light" href="#">Documentação</a>
+      <a class="text-zinc-500 text-sm hover:text-white transition-colors font-light" href="#">Licença</a>
+    </div>
+  </div>
+  <div class="max-w-6xl mx-auto px-4 border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+    <span class="font-sans text-xs tracking-tighter text-zinc-500 font-light uppercase">
+      SOUL // Design System 4 © 2026
+    </span>
+    <div class="flex items-center gap-4">
+      <a class="text-zinc-500 hover:text-white transition-colors" href="#">
+        <iconify-icon icon="solar:mask-happly-linear" style="font-size: 1.25rem;"></iconify-icon>
+      </a>
+      <a class="text-zinc-500 hover:text-white transition-colors" href="#">
+        <iconify-icon icon="solar:user-circle-linear" style="font-size: 1.25rem;"></iconify-icon>
+      </a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script>
+// Init Lucide icons
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.lucide) lucide.createIcons();
+});
+
+// ---- Scroll-reveal animation observer ----
+const scrollObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const delay = el.dataset.delay ? parseFloat(el.dataset.delay) : (i * 80);
+      setTimeout(() => {
+        el.classList.add('is-visible');
+        el.style.animationDelay = delay + 'ms';
+      }, delay);
+      scrollObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.animate-on-scroll').forEach(el => scrollObserver.observe(el));
+
+// ---- Flashlight cards ----
+document.querySelectorAll('.flashlight-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+    card.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+  });
+});
+
+// ---- HERO GSAP Animation (Sonic-Link identical timeline) ----
+(function heroAnimation() {
+  if (typeof gsap === 'undefined') return;
+
+  // WebGL canvas gradient animation (fallback for prism)
+  const canvas = document.getElementById('webglLayer');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let t = 0;
+    function resizeCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function drawGradient() {
+      t += 0.003;
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      // Animated radial gradients
+      const cx1 = w * (0.5 + 0.15 * Math.sin(t));
+      const cy1 = h * (0.4 + 0.1 * Math.cos(t * 0.7));
+      const g1 = ctx.createRadialGradient(cx1, cy1, 0, cx1, cy1, w * 0.5);
+      g1.addColorStop(0, 'rgba(99,102,241,0.35)');
+      g1.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = g1;
+      ctx.fillRect(0, 0, w, h);
+
+      const cx2 = w * (0.7 + 0.1 * Math.cos(t * 1.3));
+      const cy2 = h * (0.3 + 0.1 * Math.sin(t * 0.5));
+      const g2 = ctx.createRadialGradient(cx2, cy2, 0, cx2, cy2, w * 0.4);
+      g2.addColorStop(0, 'rgba(212,126,255,0.28)');
+      g2.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = g2;
+      ctx.fillRect(0, 0, w, h);
+
+      const cx3 = w * (0.3 + 0.12 * Math.sin(t * 0.9 + 1));
+      const cy3 = h * (0.6 + 0.08 * Math.cos(t * 1.1));
+      const g3 = ctx.createRadialGradient(cx3, cy3, 0, cx3, cy3, w * 0.35);
+      g3.addColorStop(0, 'rgba(197,255,92,0.18)');
+      g3.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = g3;
+      ctx.fillRect(0, 0, w, h);
+
+      requestAnimationFrame(drawGradient);
+    }
+    drawGradient();
+  }
+
+  // GSAP Timeline - exact replica of pulsewave-intro
+  const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+
+  // Phase 1: Intro word fades in
+  tl.to('#introWord', { opacity: 1, duration: 1.2 }, 0)
+    .to('#introWord', { opacity: 0, duration: 0.6 }, 1.8)
+
+  // Phase 2: Main title chunks
+    .to('#mainTitle', { opacity: 1, duration: 0.4 }, 2.2)
+    .to('.titleChunk', {
+      opacity: 1, y: 0,
+      stagger: 0.08,
+      duration: 0.5,
+      ease: 'power3.out',
+      from: { opacity: 0, y: 30 }
+    }, 2.2)
+    .to('#mainTitle', { opacity: 0, duration: 0.5 }, 3.8)
+
+  // Phase 3: Alt title
+    .to('#altTitle', { opacity: 1, duration: 0.5 }, 4.2)
+    .to('#altTitle', { opacity: 0, duration: 0.4 }, 5.2)
+
+  // Phase 4: Flash
+    .to('#flash', { opacity: 0.6, duration: 0.08 }, 5.5)
+    .to('#flash', { opacity: 0, duration: 0.3 }, 5.6)
+
+  // Phase 5: Resolve title appears
+    .to('#resolveTitle', { opacity: 1, duration: 0.8 }, 5.7)
+    .to('#phoneWrap', { opacity: 1, duration: 1, ease: 'power3.out' }, 6.0)
+    .to('#phone', { rotationY: -5, rotationX: 3, duration: 1.5, ease: 'power2.out' }, 6.0)
+
+  // Phase 6: Media cards cascade
+    .to('.mediaCard', {
+      opacity: 1,
+      y: 0,
+      stagger: 0.12,
+      duration: 0.7,
+      ease: 'power2.out',
+      from: { opacity: 0, y: 30 }
+    }, 6.5)
+
+  // Meta rail
+    .to('#metaRail', { opacity: 1, duration: 0.5 }, 6.8)
+    .to('#sequenceLabel', { opacity: 1, duration: 0.5 }, 7.0);
+
+  // Infinite float animation for phone
+  gsap.to('#phone', {
+    rotationY: '-=3',
+    rotationX: '+=2',
+    duration: 4,
+    ease: 'sine.inOut',
+    yoyo: true,
+    repeat: -1,
+    delay: 8
+  });
+})();
+
+// ---- Toggle interactivity ----
+const tog1 = document.querySelector('[id^="tog1"]') ? document.getElementById('tog1-track').parentElement : null;
+if (tog1) {
+  let tog1On = false;
+  tog1.addEventListener('click', () => {
+    tog1On = !tog1On;
+    const track = document.getElementById('tog1-track');
+    const thumb = document.getElementById('tog1-thumb');
+    track.style.background = tog1On ? 'var(--color-primary)' : 'rgba(255,255,255,0.08)';
+    thumb.style.transform = tog1On ? 'translateX(1rem)' : 'translateX(0)';
+  });
+}
+
+// ---- Lucide re-init after DOMContentLoaded ----
+setTimeout(() => {
+  if (window.lucide) lucide.createIcons();
+}, 300);
+</script>
+</body>
+</html>
