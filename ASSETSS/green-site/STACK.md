@@ -1,0 +1,6 @@
+- **Tailwind CSS** — utility-first CSS framework powering all layout, spacing, color and typography classes (loaded via the local Tailwind runtime script)
+- **Lucide** — icon library used for every icon in the page (rocket, menu, bar-chart-2, layers, users, shield-check, check, chevron-down)
+- **Google Fonts (Geist, Plus Jakarta Sans)** — web fonts used for body text and headings via the `font-geist` and `font-jakarta` utility classes
+- **Inter** — fallback body font set via `font-[Inter]` on `<body>`
+- **HTML `<details>`/`<summary>`** — native disclosure widget driving the FAQ accordion
+- **Supabase Storage** — public CDN hosting the CTA background image and the image-fallback URL pool

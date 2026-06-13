@@ -157,6 +157,7 @@ function initPulsewave() {
     gsap.set(cards, { y: 160, scale: 0.72, filter: "blur(.7rem)" });
     gsap.set(abstractBase, { opacity: 0, scale: 1.35 });
     gsap.set(resolveTitle, { scale: 1.35, filter: "blur(1rem)" });
+    gsap.set(".eco-badge", { opacity: 0, scale: 0.8, filter: "blur(0.5rem)" });
 
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
@@ -194,7 +195,8 @@ function initPulsewave() {
       .to([phoneWrap, cards], { opacity: 0, scale: 0.7, y: 160, filter: "blur(1rem)", duration: 0.85, ease: "power3.in" }, 14.2)
       .to(resolveTitle, { opacity: 1, scale: 1, filter: "blur(0rem)", duration: 1.05, ease: "expo.out" }, 14.65)
       .to(resolveTitle, { scale: 1.04, duration: 2.7, ease: "sine.inOut" }, 15.8)
-      .to(metaRail, { opacity: 0.55, duration: 1.2 }, 15.8);
+      .to(metaRail, { opacity: 0.55, duration: 1.2 }, 15.8)
+      .to(".eco-badge", { opacity: 1, scale: 1, filter: "blur(0rem)", duration: 1.4, stagger: 0.25, ease: "back.out(1.4)" }, 15.0);
   }
 }
 initPulsewave();

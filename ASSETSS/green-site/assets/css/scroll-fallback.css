@@ -1,0 +1,74 @@
+/* Scroll fallback - ensures native scroll works if JS scroll fails */
+html, html.lenis, html.lenis-smooth, html.has-scroll-smooth, html.has-scroll-init {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    height: auto !important;
+    scroll-behavior: smooth !important;
+}
+body, body.lenis, body.has-scroll-smooth {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    min-height: 100vh !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: none !important;
+}
+/* Hide preloaders/loaders that block content */
+.loader, .preloader, .page-loader, .loading, .loading-screen,
+[class*="loader"], [class*="preload"], [id*="loader"], [id*="preload"],
+.loading-overlay, .page-transition {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+/* Neutralize scroll library wrappers */
+.lenis-wrapper, .smooth-scroll, [data-scroll-container], [data-scroll], .locomotive-scroll-container {
+    transform: none !important;
+    will-change: auto !important;
+}
+[data-scroll-section] {
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+/* Fix fixed-position wrappers that block scroll (but preserve footer) */
+body > div:first-child:not(footer):not([class*="footer"]),
+.wrapper:not(footer),
+main,
+#__next,
+#root,
+#app {
+    position: relative !important;
+    overflow: visible !important;
+    height: auto !important;
+}
+/* Restore footer to bottom of page flow instead of fixed */
+footer, [class*="footer"], .footer-sticky {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    z-index: 1 !important;
+    height: auto !important;
+}
+/* Remove margin-bottom trick used with fixed footers */
+.wrapper {
+    margin-bottom: 0 !important;
+}
+/* Ensure all content is visible (some sites hide until JS loads) */
+.word-inner, .split-animate, [data-animation], .gsap-marker-start, .gsap-marker-end {
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+/* Fix for translate-y animations that hide content initially */
+.translate-y-full, [class*="translate-y"] {
+    transform: none !important;
+}
+/* Fix hero text that starts hidden */
+.hero-text span, .hero-fade {
+    transform: none !important;
+    opacity: 1 !important;
+}

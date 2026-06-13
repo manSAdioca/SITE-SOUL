@@ -1,0 +1,17 @@
+- **Tailwind CSS (CDN runtime)** — utility-first CSS framework powering all layout, spacing, color and typography in the page; loaded as a runtime script (`resource_3fa48481346f.es`).
+- **Tailwind custom plugin** — inline runtime config that adds 3D-transform utilities (`rotate-x-*`, `rotate-y-*`, `rotate-z-*`, `perspective-*`, `transform-style-*`).
+- **Lucide Icons** — icon library used throughout the navigation, cards, footer and CTAs via `<i data-lucide="...">` placeholders.
+- **Iconify (simple-icons set)** — renders brand logos (git, npm, jQuery, Lucid, OpenStack, ServiceNow, Wrike) inside the infinite logo marquee.
+- **Unicorn Studio** — third-party WebGL shader runtime that paints the animated red/black hero background (`data-us-project="sajpUiTp7MIKdX6daDCu"`).
+- **Google Fonts (self-hosted)** — Inter (default), Manrope (display), Oswald (mockup heading), Instrument Serif and Geist via local `css2_*.css` font files.
+- **CSS Houdini `@property`** — typed custom properties (`--gradient-angle`, `--gradient-shine`, `--num`) used to animate gradients and a counter without JS.
+- **CSS `@keyframes` library** — fadeSlideIn, columnReveal, border-spin, shimmer, breathe, infinite-scroll, bar-grow, tooltip-fade, progress-loop, brandIdentityLoop, frameUp, stepFadeUp, shimmerMove, cursor-sim-path, countUp, barCycle and float-visual drive every section's micro-animations.
+- **IntersectionObserver API** — `scroll-reveal.js` toggles `.animate-on-scroll.animate` when sections enter the viewport.
+- **`requestAnimationFrame` marquee engine** — `marquee.js` continuously translates the testimonial columns and accelerates them with scroll velocity.
+- **Vanilla JS pricing toggle** — `pricing-toggle.js` swaps monthly/yearly prices for the Growth and Scale plans with a fade transition.
+- **SVG SMIL (`<animate>`, `<animateTransform>`)** — drives the floating 3D cube, pulsing data beam, and orbiting particles inside the Content/Motion bento card.
+- **CSS `backdrop-filter`** — multi-layer progressive blur band at the top of the page and the navbar's glass effect.
+- **CSS conic & radial gradients** — power the spinning border beams on every CTA button and the shiny-CTA component.
+- **CSS `mask-image` / `-webkit-mask`** — used for the progressive blur, marquee fade edges, hero fade, and the border-gradient utility ring.
+- **Aura builder runtime (`resource_3fa48481346f.es`, `aura-supabase-token-firewall`)** — the no-code builder runtime + a Supabase auth-token firewall that ships with every Aura export.
+- **Image fallback handler** — inline IIFE that swaps broken `<img>` URLs to a Supabase storage CDN fallback when an image errors out.

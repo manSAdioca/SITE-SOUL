@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Portfólio Premium | Agência Digital</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Barlow Condensed', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            primary: '#6366F1', // Indigo
+                            secondary: '#a855f7', // Purple
+                            accent: '#22d3ee', // Cyan
+                            dark: '#020202',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP & Lucide -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            background-color: #020202;
+            color: #ffffff;
+            overflow-x: hidden;
+            overflow-y: hidden; /* Prevent scroll during preloader */
+            cursor: none; /* Hide default cursor */
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot {
+            position: fixed; top: 0; left: 0;
+            width: 6px; height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 100000;
+            transform: translate(-50%, -50%);
+        }
+        .cursor-halo {
+            position: fixed; top: 0; left: 0;
+            width: 40px; height: 40px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 60%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+        }
+        .hovering .cursor-halo {
+            width: 70px; height: 70px;
+            background: radial-gradient(circle, rgba(99,102,241,0.25) 0%, transparent 70%);
+            border-color: rgba(99,102,241,0.4);
+            backdrop-filter: blur(2px);
+        }
+
+        /* Preloader */
+        #preloader {
+            position: fixed; inset: 0; z-index: 99990;
+            background: #020202;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .preloader-text-wrapper {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(2rem, 6vw, 5rem);
+            font-weight: 700;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .text-dim { color: rgba(255,255,255,0.05); }
+        .text-bright {
+            position: absolute; inset: 0; color: #fff;
+            clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+            text-shadow: 0 0 20px rgba(255,255,255,0.4);
+        }
+        .sweep-light {
+            position: absolute; top: 0; left: -100%;
+            width: 30%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99,102,241,0.8), transparent);
+            transform: skewX(-20deg);
+            filter: blur(8px);
+            mix-blend-mode: screen;
+        }
+
+        /* Mesh Background */
+        .mesh-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+        .mesh-orb {
+            position: absolute; border-radius: 50%;
+            filter: blur(120px); opacity: 0.3;
+            animation: float 25s infinite ease-in-out alternate;
+        }
+        .orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #6366F1; animation-delay: 0s; }
+        .orb-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: #a855f7; animation-delay: -5s; }
+        .orb-3 { top: 30%; left: 40%; width: 40vw; height: 40vw; background: #22d3ee; opacity: 0.15; animation-delay: -10s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(8%, 8%) scale(1.1); }
+        }
+
+        .noise-bg {
+            position: fixed; inset: 0; z-index: 1;
+            pointer-events: none; opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Grid Lines */
+        .grid-lines {
+            position: fixed; inset: 0; z-index: 1; pointer-events: none;
+            background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 100px 100px;
+            background-position: center center;
+            mask-image: radial-gradient(circle at center, black 20%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center, black 20%, transparent 80%);
+        }
+
+        /* Hero Text Gradient */
+        .text-gradient {
+            background: linear-gradient(to right, #fff, #a1a1aa, #6366F1, #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientMove 5s linear infinite;
+        }
+        @keyframes gradientMove { to { background-position: 200% center; } }
+
+        /* Buttons */
+        .btn-premium {
+            position: relative;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.2,0.8,0.2,1);
+            overflow: hidden;
+            z-index: 10;
+        }
+        .btn-premium::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(45deg, #6366F1, #a855f7, #22d3ee);
+            opacity: 0; z-index: -1;
+            transition: opacity 0.4s ease;
+        }
+        .btn-premium:hover::before { opacity: 1; }
+        .btn-premium:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255,255,255,0.3);
+            box-shadow: 0 15px 35px rgba(99,102,241,0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.4s ease;
+            z-index: 10;
+        }
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Floating Project Cards */
+        .parallax-wrap {
+            position: absolute;
+            will-change: transform;
+            z-index: 5;
+        }
+        .floating-card {
+            border-radius: 1.25rem;
+            background: rgba(10, 10, 10, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            overflow: hidden;
+            transform-style: preserve-3d;
+            will-change: transform;
+            position: relative;
+        }
+        .floating-card::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 40%);
+            pointer-events: none; z-index: 2;
+        }
+        .floating-card img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
+            opacity: 0.8; mix-blend-mode: luminosity; filter: grayscale(30%);
+        }
+        .parallax-wrap:hover .floating-card img {
+            transform: scale(1.05); opacity: 1; mix-blend-mode: normal; filter: grayscale(0%);
+        }
+        
+        /* Specific Card Placements */
+        .c1 { top: 15%; left: 8%; width: 280px; height: 180px; }
+        .c2 { bottom: 15%; left: 12%; width: 220px; height: 280px; }
+        .c3 { top: 20%; right: 10%; width: 240px; height: 200px; }
+        .c4 { bottom: 20%; right: 15%; width: 300px; height: 160px; }
+
+        @media (max-width: 768px) {
+            .parallax-wrap { display: none; } /* Hide complex cards on mobile for clean hero */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-halo"></div>
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="preloader-text-wrapper">
+            <span class="text-dim">O FUTURO DIGITAL</span>
+            <span class="text-bright">O FUTURO DIGITAL</span>
+            <div class="sweep-light"></div>
+        </div>
+    </div>
+
+    <!-- BACKGROUND SYSTEM -->
+    <div class="mesh-bg">
+        <div class="mesh-orb orb-1"></div>
+        <div class="mesh-orb orb-2"></div>
+        <div class="mesh-orb orb-3"></div>
+    </div>
+    <div class="noise-bg"></div>
+    <div class="grid-lines"></div>
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-6 flex justify-between items-center opacity-0 translate-y-[-20px]" id="navbar">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full border border-white/20 bg-white/5 flex items-center justify-center backdrop-blur-md">
+                <i data-lucide="hexagon" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="font-display tracking-widest uppercase text-sm font-bold">STUDIO</span>
+        </div>
+        <button class="interactive hover:text-brand-accent transition-colors">
+            <i data-lucide="menu" class="w-6 h-6 text-white"></i>
+        </button>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <main id="hero-section" class="relative w-full h-screen flex items-center justify-center overflow-hidden">
+        
+        <!-- FLOATING CARDS (PROVA SOCIAL) -->
+        <div class="parallax-wrap c1" data-speed-x="20" data-speed-y="30">
+            <div class="floating-card organic-float interactive" style="animation-delay: 0s;">
+                <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=800&auto=format&fit=crop" alt="Projeto 1"/>
+            </div>
+        </div>
+        <div class="parallax-wrap c2" data-speed-x="-25" data-speed-y="-15">
+            <div class="floating-card organic-float interactive" style="animation-delay: -1.5s;">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" alt="Projeto 2"/>
+            </div>
+        </div>
+        <div class="parallax-wrap c3" data-speed-x="-30" data-speed-y="25">
+            <div class="floating-card organic-float interactive" style="animation-delay: -3s;">
+                <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=800&auto=format&fit=crop" alt="Projeto 3"/>
+            </div>
+        </div>
+        <div class="parallax-wrap c4" data-speed-x="15" data-speed-y="-35">
+            <div class="floating-card organic-float interactive" style="animation-delay: -4.5s;">
+                <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&w=800&auto=format&fit=crop" alt="Projeto 4"/>
+            </div>
+        </div>
+
+        <!-- HERO CONTENT -->
+        <div class="hero-content relative z-20 flex flex-col items-center text-center max-w-4xl px-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand-primary animate-pulse"></span>
+                <span class="text-[10px] font-mono tracking-widest uppercase text-zinc-300">UX/UI & Desenvolvimento Premium</span>
+            </div>
+
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight mb-6 leading-[1.1]">
+                Design, estratégia e <br/>
+                tecnologia para marcas que <br/>
+                <span class="text-gradient">desejam crescer.</span>
+            </h1>
+
+            <p class="text-zinc-400 text-base md:text-lg max-w-2xl font-sans mb-10 leading-relaxed font-light">
+                Criação de Sites, Landing Pages e Estratégias Digitais com foco absoluto em conversão e posicionamento premium. Transformando ideias em experiências que vendem.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 items-center">
+                <button class="interactive btn-premium px-8 py-4 rounded-full text-sm font-semibold tracking-wide flex items-center gap-2">
+                    VER PROJETOS
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+                <button class="interactive btn-outline px-8 py-4 rounded-full text-sm font-semibold tracking-wide text-zinc-300 flex items-center gap-2">
+                    FALAR COMIGO
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- JS -->
+    <script>
+        // Init Icons
+        lucide.createIcons();
+
+        // Cursor Setup
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorHalo = document.querySelector('.cursor-halo');
+        const interactives = document.querySelectorAll('.interactive, a, button');
+
+        // GSAP QuickTo for smooth cursor tracking
+        let xToDot = gsap.quickTo(cursorDot, "x", {duration: 0.1, ease: "power3"});
+        let yToDot = gsap.quickTo(cursorDot, "y", {duration: 0.1, ease: "power3"});
+        let xToHalo = gsap.quickTo(cursorHalo, "x", {duration: 0.3, ease: "power3"});
+        let yToHalo = gsap.quickTo(cursorHalo, "y", {duration: 0.3, ease: "power3"});
+
+        window.addEventListener("mousemove", e => {
+            xToDot(e.clientX); yToDot(e.clientY);
+            xToHalo(e.clientX); yToHalo(e.clientY);
+        });
+
+        // Hover states for cursor
+        interactives.forEach(el => {
+            el.addEventListener("mouseenter", () => document.body.classList.add("hovering"));
+            el.addEventListener("mouseleave", () => document.body.classList.remove("hovering"));
+        });
+
+        // Preloader Animation Timeline
+        const tl = gsap.timeline();
+        tl.timeScale(1.25); // Entrada levemente mais rápida
+
+        // 1. Sweep effect
+        tl.to(".sweep-light", {
+            left: "200%",
+            duration: 1.8,
+            ease: "power2.inOut",
+            delay: 0.2
+        })
+        // 2. Reveal text from left to right mask
+        .to(".text-bright", {
+            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+            duration: 1.8,
+            ease: "power3.inOut"
+        }, "-=1.8")
+        // 3. Blur out the text
+        .to(".preloader-text-wrapper", {
+            opacity: 0,
+            filter: "blur(15px)",
+            scale: 1.1,
+            duration: 0.8,
+            ease: "power2.in",
+            delay: 0.5
+        })
+        // 4. Fade out preloader background
+        .to("#preloader", {
+            opacity: 0,
+            duration: 1,
+            ease: "power2.inOut",
+            onComplete: () => {
+                document.getElementById("preloader").style.display = "none";
+                document.body.style.overflowY = "auto"; // restore scroll if page had content below
+            }
+        }, "-=0.2")
+        // 5. Reveal Hero Content
+        .from("#navbar", {
+            y: -20, opacity: 0, duration: 1, ease: "power3.out"
+        }, "-=0.5")
+        .from(".hero-content > *", {
+            y: 40, opacity: 0, filter: "blur(10px)",
+            stagger: 0.15, duration: 1.2, ease: "power3.out"
+        }, "-=1")
+        // 6. Reveal Floating Cards
+        .from(".parallax-wrap", {
+            y: 100, opacity: 0, rotateX: 15, scale: 0.9,
+            stagger: 0.1, duration: 1.5, ease: "back.out(1.2)"
+        }, "-=1");
+
+        // Organic Floating Animation for Cards
+        gsap.utils.toArray(".organic-float").forEach((card, i) => {
+            gsap.to(card, {
+                y: "-=20",
+                duration: "random(3, 5)",
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+        });
+
+        // Mouse Parallax for Cards
+        const heroSection = document.getElementById("hero-section");
+        const parallaxWraps = document.querySelectorAll(".parallax-wrap");
+        
+        heroSection.addEventListener("mousemove", (e) => {
+            // Normalized coordinates (-1 to 1)
+            const x = (e.clientX / window.innerWidth - 0.5) * 2;
+            const y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+            parallaxWraps.forEach(wrap => {
+                const speedX = parseFloat(wrap.dataset.speedX);
+                const speedY = parseFloat(wrap.dataset.speedY);
+                
+                gsap.to(wrap, {
+                    x: x * speedX,
+                    y: y * speedY,
+                    rotateX: -y * 10,
+                    rotateY: x * 10,
+                    duration: 1.5,
+                    ease: "power2.out"
+                });
+            });
+        });
+
+        // Reset Parallax on mouse leave
+        heroSection.addEventListener("mouseleave", () => {
+            parallaxWraps.forEach(wrap => {
+                gsap.to(wrap, {
+                    x: 0, y: 0, rotateX: 0, rotateY: 0,
+                    duration: 1.5, ease: "power2.out"
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>

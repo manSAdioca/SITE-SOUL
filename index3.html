@@ -496,6 +496,97 @@
                 <span class="h-px w-8 bg-white/25"></span>
                 <span>Resolvendo</span>
             </div>
+            
+            <!-- ECOSSISTEMA FLUTUANTE (Badges) -->
+            <div id="ecosystem-layer" class="absolute inset-0 z-[60] pointer-events-none perspective-[1200px]">
+                
+                <!-- Google Ads (Superior Esquerda, mais ao canto) -->
+                <div class="eco-badge opacity-0 absolute pointer-events-auto group will-change-transform" data-eco="google-ads" style="top: 10%; left: 3%;">
+                    <div class="relative flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#0a0a0a]/40 border border-white/20 backdrop-blur-xl shadow-[0_15px_40px_rgba(0,0,0,0.6),inset_0_1px_2px_rgba(255,255,255,0.2)] transition-colors duration-300 hover:border-orange-500/50 hover:bg-[#111]/80 cursor-default overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-white/[0.05] via-transparent to-white/[0.05] animate-pulse pointer-events-none"></div>
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" class="w-5 h-5 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] relative z-10">
+                        <span class="text-white/90 text-[10px] sm:text-[11px] font-bold tracking-[0.15em] uppercase whitespace-nowrap relative z-10">Google Ads</span>
+                        <div class="absolute inset-0 bg-orange-500/0 group-hover:bg-orange-500/15 blur-xl transition-all duration-300 pointer-events-none rounded-2xl"></div>
+                    </div>
+                </div>
+
+                <!-- Meta Ads (Superior Direita, mais ao canto) -->
+                <div class="eco-badge opacity-0 absolute pointer-events-auto group will-change-transform" data-eco="meta-ads" style="top: 12%; right: 4%;">
+                    <div class="relative flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#0a0a0a]/40 border border-white/20 backdrop-blur-xl shadow-[0_15px_40px_rgba(0,0,0,0.6),inset_0_1px_2px_rgba(255,255,255,0.2)] transition-colors duration-300 hover:border-blue-500/50 hover:bg-[#111]/80 cursor-default overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-white/[0.05] via-transparent to-white/[0.05] animate-pulse pointer-events-none"></div>
+                        <svg class="w-6 h-6 drop-shadow-[0_0_8px_rgba(0,198,255,0.4)] relative z-10" viewBox="0 0 24 24" fill="url(#meta-grad)">
+                            <defs>
+                                <linearGradient id="meta-grad" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#0668E1" />
+                                    <stop offset="100%" stop-color="#00C6FF" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M20.73,8.73c-2.45-2.28-5.83-2.6-8.73-0.7c-2.9-1.9-6.28-1.58-8.73,0.7c-3.03,2.83-3.03,7.42,0,10.25c2.45,2.28,5.83,2.6,8.73,0.7c2.9,1.9,6.28,1.58,8.73-0.7C23.76,16.15,23.76,11.56,20.73,8.73z M17.2,16.27c-1.63,1.52-3.88,1.73-5.82,0.47c0.23-0.34,0.47-0.7,0.67-1.07c0.98,0.77,2.37,0.77,3.35,0c0.98-0.92,0.98-2.41,0-3.33c-0.98-0.92-2.37-0.92-3.35,0c-0.2,0.37-0.44,0.73-0.67,1.07c-1.94,1.26-4.19,1.05-5.82-0.47c-2.02-1.89-2.02-4.94,0-6.83c1.63-1.52,3.88-1.73,5.82-0.47c-0.23,0.34-0.47,0.7-0.67,1.07c-0.98-0.77-2.37-0.77-3.35,0c-0.98,0.92-0.98,2.41,0,3.33c0.98,0.92,2.37,0.92,3.35,0c0.2-0.37,0.44-0.73,0.67-1.07c1.94-1.26,4.19-1.05,5.82,0.47C19.22,11.33,19.22,14.38,17.2,16.27z"/>
+                        </svg>
+                        <span class="text-white/90 text-[10px] sm:text-[11px] font-bold tracking-[0.15em] uppercase whitespace-nowrap relative z-10">Meta Ads</span>
+                        <div class="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/15 blur-xl transition-all duration-300 pointer-events-none rounded-2xl"></div>
+                    </div>
+                </div>
+
+                <!-- Instagram (Empurrado bem para a direita para não encostar no texto) -->
+                <div class="eco-badge opacity-0 absolute pointer-events-auto group will-change-transform" data-eco="instagram" style="top: 40%; right: 2%;">
+                    <div class="relative flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#0a0a0a]/40 border border-white/20 backdrop-blur-xl shadow-[0_15px_40px_rgba(0,0,0,0.6),inset_0_1px_2px_rgba(255,255,255,0.2)] transition-colors duration-300 hover:border-pink-500/50 hover:bg-[#111]/80 cursor-default overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-white/[0.05] via-transparent to-white/[0.05] animate-pulse pointer-events-none"></div>
+                        <svg class="w-6 h-6 drop-shadow-[0_0_8px_rgba(220,39,67,0.4)] relative z-10" viewBox="0 0 24 24" fill="none" stroke="url(#insta-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <defs>
+                                <linearGradient id="insta-grad" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#f09433" />
+                                    <stop offset="25%" stop-color="#e6683c" />
+                                    <stop offset="50%" stop-color="#dc2743" />
+                                    <stop offset="75%" stop-color="#cc2366" />
+                                    <stop offset="100%" stop-color="#bc1888" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                        <span class="text-white/90 text-[10px] sm:text-[11px] font-bold tracking-[0.15em] uppercase whitespace-nowrap relative z-10">Instagram</span>
+                        <div class="absolute inset-0 bg-pink-500/0 group-hover:bg-pink-500/15 blur-xl transition-all duration-300 pointer-events-none rounded-2xl"></div>
+                    </div>
+                </div>
+
+                <!-- Google Tag Manager (Novo, Intermediária Esquerda, afastado do texto) -->
+                <div class="eco-badge opacity-0 absolute pointer-events-auto group will-change-transform" data-eco="gtm" style="top: 45%; left: 2%;">
+                    <div class="relative flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#0a0a0a]/40 border border-white/20 backdrop-blur-xl shadow-[0_15px_40px_rgba(0,0,0,0.6),inset_0_1px_2px_rgba(255,255,255,0.2)] transition-colors duration-300 hover:border-yellow-500/50 hover:bg-[#111]/80 cursor-default overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-white/[0.05] via-transparent to-white/[0.05] animate-pulse pointer-events-none"></div>
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" class="w-5 h-5 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] relative z-10">
+                        <span class="text-white/90 text-[10px] sm:text-[11px] font-bold tracking-[0.15em] uppercase whitespace-nowrap relative z-10">Tag Manager</span>
+                        <div class="absolute inset-0 bg-yellow-500/0 group-hover:bg-yellow-500/15 blur-xl transition-all duration-300 pointer-events-none rounded-2xl"></div>
+                    </div>
+                </div>
+
+                <!-- Google Meu Negócio (Inferior Esquerda) - Imagem Corrigida para o logo G limpo -->
+                <div class="eco-badge opacity-0 absolute pointer-events-auto group will-change-transform" data-eco="gmb" style="top: 75%; left: 12%;">
+                    <div class="relative flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#0a0a0a]/40 border border-white/20 backdrop-blur-xl shadow-[0_15px_40px_rgba(0,0,0,0.6),inset_0_1px_2px_rgba(255,255,255,0.2)] transition-colors duration-300 hover:border-blue-400/50 hover:bg-[#111]/80 cursor-default overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-white/[0.05] via-transparent to-white/[0.05] animate-pulse pointer-events-none"></div>
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" class="w-5 h-5 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] relative z-10">
+                        <span class="text-white/90 text-[10px] sm:text-[11px] font-bold tracking-[0.15em] uppercase whitespace-nowrap relative z-10">Meu Negócio</span>
+                        <div class="absolute inset-0 bg-blue-400/0 group-hover:bg-blue-400/15 blur-xl transition-all duration-300 pointer-events-none rounded-2xl"></div>
+                    </div>
+                </div>
+
+                <!-- Microsoft Clarity (Inferior Direita) - Imagem Corrigida para SVG 4 quadrados limpo -->
+                <div class="eco-badge opacity-0 absolute pointer-events-auto group will-change-transform" data-eco="clarity" style="top: 78%; right: 10%;">
+                    <div class="relative flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#0a0a0a]/40 border border-white/20 backdrop-blur-xl shadow-[0_15px_40px_rgba(0,0,0,0.6),inset_0_1px_2px_rgba(255,255,255,0.2)] transition-colors duration-300 hover:border-cyan-500/50 hover:bg-[#111]/80 cursor-default overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-white/[0.05] via-transparent to-white/[0.05] animate-pulse pointer-events-none"></div>
+                        <svg class="w-5 h-5 drop-shadow-[0_0_6px_rgba(255,255,255,0.2)] relative z-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="2" y="2" width="9" height="9" fill="#f35325"/>
+                            <rect x="13" y="2" width="9" height="9" fill="#81bc06"/>
+                            <rect x="2" y="13" width="9" height="9" fill="#05a6f0"/>
+                            <rect x="13" y="13" width="9" height="9" fill="#ffba08"/>
+                        </svg>
+                        <span class="text-white/90 text-[10px] sm:text-[11px] font-bold tracking-[0.15em] uppercase whitespace-nowrap relative z-10">Clarity</span>
+                        <div class="absolute inset-0 bg-cyan-500/0 group-hover:bg-cyan-500/15 blur-xl transition-all duration-300 pointer-events-none rounded-2xl"></div>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
         <!-- DEPENDÊNCIAS ORIGINAIS GSAP -->
@@ -644,18 +735,26 @@
             <div class="absolute top-1/2 left-1/4 -translate-y-1/2 -translate-x-1/2 w-[30rem] h-[30rem] md:w-[40rem] md:h-[40rem] bg-orange-600/10 rounded-full blur-[120px]"></div>
             <div class="absolute bottom-0 right-0 w-[20rem] h-[20rem] md:w-[30rem] md:h-[30rem] bg-indigo-600/5 rounded-full blur-[100px]"></div>
             
-            <!-- Linhas orgânicas (SVG) -->
-            <svg class="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 1440 800" preserveAspectRatio="none">
-                <path class="soul-line" d="M-100,600 C300,400 500,800 800,500 C1100,200 1300,600 1600,400" fill="none" stroke="url(#gold-gradient)" stroke-width="1.5" />
-                <path class="soul-line" d="M-100,700 C200,600 400,900 900,400 C1200,100 1400,500 1600,300" fill="none" stroke="url(#gold-gradient)" stroke-width="0.8" opacity="0.6"/>
-                <defs>
-                    <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="#f97316" stop-opacity="0" />
-                        <stop offset="50%" stop-color="#fcd34d" stop-opacity="1" />
-                        <stop offset="100%" stop-color="#f97316" stop-opacity="0" />
-                    </linearGradient>
-                </defs>
-            </svg>
+            <!-- Linhas Verticais Minimalistas (Atravessando Dobra 2 e 3) -->
+            <div class="absolute inset-0 flex justify-evenly pointer-events-none z-0 opacity-40">
+                <div class="w-[1px] h-full bg-white/5 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-[10%] bg-gradient-to-b from-transparent via-orange-500 to-transparent animate-[slideLine_7s_linear_infinite]"></div>
+                </div>
+                <div class="w-[1px] h-full bg-white/5 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-[10%] bg-gradient-to-b from-transparent via-orange-500 to-transparent animate-[slideLine_11s_linear_infinite_2s]"></div>
+                </div>
+                <div class="w-[1px] h-full bg-white/5 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-[10%] bg-gradient-to-b from-transparent via-orange-500 to-transparent animate-[slideLine_9s_linear_infinite_4s]"></div>
+                </div>
+            </div>
+            <style>
+                @keyframes slideLine {
+                    0% { transform: translateY(-100%); opacity: 0; }
+                    5% { opacity: 1; }
+                    95% { opacity: 1; }
+                    100% { transform: translateY(1000%); opacity: 0; }
+                }
+            </style>
         </div>
 
         <div class="container mx-auto px-6 lg:px-12 relative z-10 max-w-[1400px]">
@@ -665,24 +764,31 @@
                 <div class="w-full lg:col-span-7 relative soul-mockup-wrapper" style="perspective: 1200px;">
                     
                     <!-- Desktop Mockup -->
-                    <div class="soul-mockup-desktop origin-center relative z-10 w-full max-w-[40rem] mx-auto">
+                    <div class="soul-mockup-desktop origin-center relative z-10 w-full max-w-[40rem] mx-auto group">
+                        <!-- Blush no Hover -->
+                        <div class="absolute inset-4 bg-orange-500/0 blur-[80px] rounded-full transition-all duration-700 ease-out group-hover:bg-orange-500/50 -z-10 group-hover:scale-110 pointer-events-none"></div>
+                        
                         <!-- Efeito de Movimento no Hover -->
-                        <div class="relative rounded-xl overflow-hidden border border-white/10 bg-[#111]/80 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5),_0_0_30px_rgba(249,115,22,0.15)] aspect-video group cursor-pointer transition-all duration-500 ease-out hover:-translate-y-3 hover:scale-[1.03] hover:shadow-[0_40px_80px_rgba(0,0,0,0.6),_0_0_50px_rgba(249,115,22,0.3)]">
+                        <div class="relative rounded-xl overflow-hidden border border-white/10 bg-[#111]/80 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5),_0_0_30px_rgba(249,115,22,0.15)] aspect-video cursor-pointer transition-all duration-500 ease-out group-hover:-translate-y-3 group-hover:scale-[1.03] group-hover:shadow-[0_40px_80px_rgba(0,0,0,0.6),_0_0_60px_rgba(249,115,22,0.4)]">
                             <!-- Header Safari/Chrome -->
-                            <div class="h-6 bg-white/5 border-b border-white/5 flex items-center px-4 gap-1.5">
+                            <div class="relative z-20 h-6 bg-white/5 border-b border-white/5 flex items-center px-4 gap-1.5">
                                 <div class="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
                                 <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></div>
                                 <div class="w-2.5 h-2.5 rounded-full bg-green-500/80"></div>
                             </div>
-                            <img src="assets/Sun & SAL DOBRA 2.png" alt="Desktop Interface" class="w-full h-full object-cover object-top opacity-90 transition-all duration-[8s] ease-in-out group-hover:object-bottom" onerror="this.src='https://images.unsplash.com/photo-1558655146-d09347e92766?w=800&q=80'">
-                            <div class="absolute inset-0 bg-gradient-to-tr from-orange-500/10 to-transparent mix-blend-overlay pointer-events-none"></div>
+                            <img src="assets/Sun & SAL DOBRA 2.png" alt="Desktop Interface" class="absolute top-6 left-0 w-full h-[calc(100%-1.5rem)] object-cover object-top opacity-90 transition-opacity duration-700 ease-in-out group-hover:opacity-0" onerror="this.src='https://images.unsplash.com/photo-1558655146-d09347e92766?w=800&q=80'">
+                            <img src="assets/Sun e sal 2 dobra 2.png" alt="Desktop Interface Continuation" class="absolute top-6 left-0 w-full h-[calc(100%-1.5rem)] object-cover object-top opacity-0 transition-opacity duration-700 ease-in-out group-hover:opacity-90">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-orange-500/10 to-transparent mix-blend-overlay pointer-events-none z-30"></div>
                         </div>
                     </div>
                     
                     <!-- Mobile Mockup -->
-                    <div class="soul-mockup-mobile origin-center absolute -bottom-8 -right-4 lg:-right-8 z-20 w-28 sm:w-36 md:w-40">
+                    <div class="soul-mockup-mobile origin-center absolute -bottom-8 -right-4 lg:-right-8 z-20 w-28 sm:w-36 md:w-40 group">
+                        <!-- Blush no Hover -->
+                        <div class="absolute inset-2 bg-orange-500/0 blur-[50px] rounded-full transition-all duration-700 ease-out group-hover:bg-orange-500/50 -z-10 group-hover:scale-110 pointer-events-none"></div>
+                        
                         <!-- Efeito de Movimento no Hover -->
-                        <div class="relative rounded-[2rem] overflow-hidden border-4 border-[#1a1a1a] bg-black shadow-[0_10px_40px_rgba(0,0,0,0.8),_0_0_20px_rgba(249,115,22,0.2)] aspect-[9/19] group cursor-pointer transition-all duration-500 ease-out hover:-translate-y-5 hover:scale-110 hover:-rotate-3 hover:shadow-[0_20px_60px_rgba(0,0,0,0.8),_0_0_40px_rgba(249,115,22,0.4)]">
+                        <div class="relative rounded-[2rem] overflow-hidden border-4 border-[#1a1a1a] bg-black shadow-[0_10px_40px_rgba(0,0,0,0.8),_0_0_20px_rgba(249,115,22,0.2)] aspect-[9/19] cursor-pointer transition-all duration-500 ease-out group-hover:-translate-y-5 group-hover:scale-110 group-hover:-rotate-3 group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.8),_0_0_40px_rgba(249,115,22,0.4)]">
                             <img src="assets/Drink Voro dobra 2.png" alt="Mobile Interface" class="w-full h-full object-cover object-top opacity-90 transition-all duration-[6s] ease-in-out group-hover:object-bottom" onerror="this.src='https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&q=80'">
                             <div class="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none"></div>
                         </div>
@@ -708,54 +814,277 @@
 
                     <!-- Cards 2x2 -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-                        <div class="group p-5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md hover:bg-white/[0.06] hover:border-orange-500/30 hover:shadow-[0_0_20px_rgba(249,115,22,0.1)] transition-all duration-300 soul-card">
-                            <div class="w-8 h-8 rounded-full bg-orange-500/10 flex items-center justify-center mb-3 group-hover:scale-110 group-hover:bg-orange-500/20 transition-all">
-                                <span class="text-orange-400 text-sm">🎯</span>
+                        <div class="group p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md cursor-pointer hover:-translate-y-2 hover:bg-gradient-to-br hover:from-white/[0.08] hover:to-white/[0.02] hover:border-orange-500/50 hover:shadow-[0_15px_40px_-10px_rgba(249,115,22,0.4)] transition-all duration-500 ease-out soul-card relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-orange-500/0 via-orange-500/0 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                            <div class="relative w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center mb-4 group-hover:scale-125 group-hover:-rotate-6 group-hover:bg-orange-500/20 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all duration-500 ease-out">
+                                <span class="text-orange-400 text-base">🎯</span>
                             </div>
-                            <h3 class="text-white font-semibold text-sm mb-2">Estratégia Primeiro</h3>
-                            <p class="text-white/50 text-xs leading-relaxed">Antes do design, entendemos seu negócio, mercado e objetivos.</p>
+                            <h3 class="relative text-white font-semibold text-sm mb-2 group-hover:text-orange-400 transition-colors duration-300">Estratégia Primeiro</h3>
+                            <p class="relative text-white/50 text-xs leading-relaxed group-hover:text-white/80 transition-colors duration-300">Antes do design, entendemos seu negócio, mercado e objetivos.</p>
                         </div>
-                        <div class="group p-5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md hover:bg-white/[0.06] hover:border-orange-500/30 hover:shadow-[0_0_20px_rgba(249,115,22,0.1)] transition-all duration-300 soul-card">
-                            <div class="w-8 h-8 rounded-full bg-orange-500/10 flex items-center justify-center mb-3 group-hover:scale-110 group-hover:bg-orange-500/20 transition-all">
-                                <span class="text-orange-400 text-sm">🎨</span>
+                        <div class="group p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md cursor-pointer hover:-translate-y-2 hover:bg-gradient-to-br hover:from-white/[0.08] hover:to-white/[0.02] hover:border-orange-500/50 hover:shadow-[0_15px_40px_-10px_rgba(249,115,22,0.4)] transition-all duration-500 ease-out soul-card relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-orange-500/0 via-orange-500/0 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                            <div class="relative w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center mb-4 group-hover:scale-125 group-hover:rotate-6 group-hover:bg-orange-500/20 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all duration-500 ease-out">
+                                <span class="text-orange-400 text-base">🎨</span>
                             </div>
-                            <h3 class="text-white font-semibold text-sm mb-2">Design Exclusivo</h3>
-                            <p class="text-white/50 text-xs leading-relaxed">Interfaces desenvolvidas para refletir a essência da sua marca.</p>
+                            <h3 class="relative text-white font-semibold text-sm mb-2 group-hover:text-orange-400 transition-colors duration-300">Design Exclusivo</h3>
+                            <p class="relative text-white/50 text-xs leading-relaxed group-hover:text-white/80 transition-colors duration-300">Interfaces desenvolvidas para refletir a essência da sua marca.</p>
                         </div>
-                        <div class="group p-5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md hover:bg-white/[0.06] hover:border-orange-500/30 hover:shadow-[0_0_20px_rgba(249,115,22,0.1)] transition-all duration-300 soul-card">
-                            <div class="w-8 h-8 rounded-full bg-orange-500/10 flex items-center justify-center mb-3 group-hover:scale-110 group-hover:bg-orange-500/20 transition-all">
-                                <span class="text-orange-400 text-sm">⚡</span>
+                        <div class="group p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md cursor-pointer hover:-translate-y-2 hover:bg-gradient-to-br hover:from-white/[0.08] hover:to-white/[0.02] hover:border-orange-500/50 hover:shadow-[0_15px_40px_-10px_rgba(249,115,22,0.4)] transition-all duration-500 ease-out soul-card relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-orange-500/0 via-orange-500/0 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                            <div class="relative w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center mb-4 group-hover:scale-125 group-hover:-rotate-6 group-hover:bg-orange-500/20 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all duration-500 ease-out">
+                                <span class="text-orange-400 text-base">⚡</span>
                             </div>
-                            <h3 class="text-white font-semibold text-sm mb-2">Performance</h3>
-                            <p class="text-white/50 text-xs leading-relaxed">Sites rápidos, responsivos e otimizados para todos os dispositivos.</p>
+                            <h3 class="relative text-white font-semibold text-sm mb-2 group-hover:text-orange-400 transition-colors duration-300">Performance</h3>
+                            <p class="relative text-white/50 text-xs leading-relaxed group-hover:text-white/80 transition-colors duration-300">Sites rápidos, responsivos e otimizados para todos os dispositivos.</p>
                         </div>
-                        <div class="group p-5 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md hover:bg-white/[0.06] hover:border-orange-500/30 hover:shadow-[0_0_20px_rgba(249,115,22,0.1)] transition-all duration-300 soul-card">
-                            <div class="w-8 h-8 rounded-full bg-orange-500/10 flex items-center justify-center mb-3 group-hover:scale-110 group-hover:bg-orange-500/20 transition-all">
-                                <span class="text-orange-400 text-sm">📈</span>
+                        <div class="group p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md cursor-pointer hover:-translate-y-2 hover:bg-gradient-to-br hover:from-white/[0.08] hover:to-white/[0.02] hover:border-orange-500/50 hover:shadow-[0_15px_40px_-10px_rgba(249,115,22,0.4)] transition-all duration-500 ease-out soul-card relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-orange-500/0 via-orange-500/0 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                            <div class="relative w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center mb-4 group-hover:scale-125 group-hover:rotate-6 group-hover:bg-orange-500/20 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all duration-500 ease-out">
+                                <span class="text-orange-400 text-base">📈</span>
                             </div>
-                            <h3 class="text-white font-semibold text-sm mb-2">Conversão</h3>
-                            <p class="text-white/50 text-xs leading-relaxed">Cada elemento é pensado para gerar mais contatos e oportunidades.</p>
+                            <h3 class="relative text-white font-semibold text-sm mb-2 group-hover:text-orange-400 transition-colors duration-300">Conversão</h3>
+                            <p class="relative text-white/50 text-xs leading-relaxed group-hover:text-white/80 transition-colors duration-300">Cada elemento é pensado para gerar mais contatos e oportunidades.</p>
                         </div>
                     </div>
 
-                    <!-- Indicadores -->
-                    <div class="flex flex-col sm:flex-row gap-6 sm:gap-8 border-t border-white/10 pt-8 soul-stats">
-                        <div>
-                            <p class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-200">100%</p>
-                            <p class="text-white/50 text-xs uppercase tracking-wider mt-1">Projetos exclusivos</p>
+                    <!-- Indicadores Animados -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6 pt-8 border-t border-white/10 soul-stats">
+                        
+                        <div class="group relative flex flex-col justify-center p-5 rounded-2xl bg-[#111]/40 border border-white/5 hover:border-orange-500/30 hover:bg-white/[0.03] transition-all duration-500 overflow-hidden cursor-default">
+                            <!-- Glow pulsante contínuo -->
+                            <div class="absolute -inset-4 bg-gradient-to-r from-orange-500/0 via-orange-500/10 to-orange-500/0 opacity-30 animate-pulse pointer-events-none"></div>
+                            
+                            <div class="relative z-10 flex flex-col items-center sm:items-start">
+                                <p class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-200 drop-shadow-[0_0_12px_rgba(249,115,22,0.2)] mb-1 group-hover:drop-shadow-[0_0_20px_rgba(249,115,22,0.5)] transition-all duration-500">100%</p>
+                                <p class="text-white/50 text-[10px] sm:text-xs uppercase tracking-widest font-medium group-hover:text-white/80 transition-colors duration-500 text-center sm:text-left leading-snug">Projetos Exclusivos</p>
+                            </div>
+                            
+                            <!-- Borda animada no hover -->
+                            <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         </div>
-                        <div>
-                            <p class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-200">+20</p>
-                            <p class="text-white/50 text-xs uppercase tracking-wider mt-1">Componentes premium</p>
+
+                        <div class="group relative flex flex-col justify-center p-5 rounded-2xl bg-[#111]/40 border border-white/5 hover:border-orange-500/30 hover:bg-white/[0.03] transition-all duration-500 overflow-hidden cursor-default">
+                            <!-- Glow pulsante contínuo -->
+                            <div class="absolute -inset-4 bg-gradient-to-r from-orange-500/0 via-orange-500/10 to-orange-500/0 opacity-30 animate-pulse pointer-events-none" style="animation-delay: 0.2s;"></div>
+                            
+                            <div class="relative z-10 flex flex-col items-center sm:items-start">
+                                <p class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-200 drop-shadow-[0_0_12px_rgba(249,115,22,0.2)] mb-1 group-hover:drop-shadow-[0_0_20px_rgba(249,115,22,0.5)] transition-all duration-500">+20</p>
+                                <p class="text-white/50 text-[10px] sm:text-xs uppercase tracking-widest font-medium group-hover:text-white/80 transition-colors duration-500 text-center sm:text-left leading-snug">Componentes Premium</p>
+                            </div>
+                            
+                            <!-- Borda animada no hover -->
+                            <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         </div>
-                        <div>
-                            <p class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-200">∞</p>
-                            <p class="text-white/50 text-xs uppercase tracking-wider mt-1">Possibilidades criativas</p>
+
+                        <div class="group relative flex flex-col justify-center p-5 rounded-2xl bg-[#111]/40 border border-white/5 hover:border-orange-500/30 hover:bg-white/[0.03] transition-all duration-500 overflow-hidden cursor-default">
+                            <!-- Glow pulsante contínuo -->
+                            <div class="absolute -inset-4 bg-gradient-to-r from-orange-500/0 via-orange-500/10 to-orange-500/0 opacity-30 animate-pulse pointer-events-none" style="animation-delay: 0.4s;"></div>
+                            
+                            <div class="relative z-10 flex flex-col items-center sm:items-start">
+                                <p class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-200 drop-shadow-[0_0_12px_rgba(249,115,22,0.2)] mb-1 group-hover:drop-shadow-[0_0_20px_rgba(249,115,22,0.5)] transition-all duration-500">∞</p>
+                                <p class="text-white/50 text-[10px] sm:text-xs uppercase tracking-widest font-medium group-hover:text-white/80 transition-colors duration-500 text-center sm:text-left leading-snug">Possibilidades Criativas</p>
+                            </div>
+                            
+                            <!-- Borda animada no hover -->
+                            <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         </div>
+
                     </div>
 
                 </div>
             </div>
+
+            <!-- GALERIA DE PROJETOS (PORTFÓLIO) -->
+            <section id="soul-projetos" class="relative py-24 sm:py-32 bg-transparent z-10 border-t border-white/5 mt-16">
+                <!-- O fundo da Dobra 2 (linhas minimalistas) já vaza para esta dobra automaticamente por conta do aninhamento -->
+                
+                <!-- Header -->
+                <div class="text-center mb-16 sm:mb-24 px-6 soul-stagger">
+                    <span class="inline-block py-1 px-4 rounded-full border border-orange-500/20 bg-orange-500/5 text-orange-400 text-[10px] sm:text-xs font-mono uppercase tracking-[0.2em] mb-6">Portfólio</span>
+                    <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60 mb-6 tracking-tight drop-shadow-md">Projetos Selecionados</h2>
+                    <p class="text-lg md:text-xl text-white/50 max-w-2xl mx-auto font-light leading-relaxed">Explore alguns dos projetos e sistemas visuais desenvolvidos pela Soul.</p>
+                </div>
+
+                <!-- Grid de Projetos -->
+                <!-- Usei o grupo magnético: um div wrapper e um cursor customizado -->
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative project-gallery-container cursor-none">
+                    
+                    <!-- Cursor customizado magnético que aparece apenas sobre a galeria -->
+                    <style>
+                    @keyframes cursorFlash {
+                        0% { box-shadow: 0 0 20px rgba(255,255,255,0.1), inset 0 0 10px rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+                        50% { box-shadow: 0 0 40px rgba(255,255,255,0.4), inset 0 0 20px rgba(255,255,255,0.3); border-color: rgba(255,255,255,0.6); }
+                        100% { box-shadow: 0 0 20px rgba(255,255,255,0.1), inset 0 0 10px rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+                    }
+                    .animate-cursor-flash {
+                        animation: cursorFlash 2s infinite ease-in-out;
+                    }
+                    </style>
+                    <div id="project-cursor" class="fixed w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-white/5 backdrop-blur-xl border border-white/20 text-white flex items-center justify-center font-bold text-[10px] sm:text-xs uppercase tracking-widest pointer-events-none z-[100] scale-0 opacity-0 transition-opacity duration-300 ease-out animate-cursor-flash" style="mix-blend-mode: normal;">
+                        <span id="project-cursor-text" class="text-center leading-tight drop-shadow-md opacity-0">Visualizar<br>Projeto</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
+                        
+                        <!-- Projeto 01: Esports Tournament -->
+                        <a href="ASSETSS/esports-tournament-96.aura.build/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-purple-500/30 transition-all duration-700">
+                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
+                                <img src="ASSETSS/gallery-covers/cover_esports_1781138383357.png" alt="Arena Esports" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                                <div class="absolute inset-0 bg-purple-500/0 group-hover:bg-purple-500/10 transition-colors duration-700 mix-blend-overlay"></div>
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-purple-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">01</span>
+                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-purple-400 transition-colors duration-500">Arena Esports</h3>
+                                <p class="text-white/50 text-sm font-medium">Plataforma de Torneios Gaming</p>
+                            </div>
+                        </a>
+
+                        <!-- Projeto 02: Cogni -->
+                        <a href="ASSETSS/cogni.aura.build/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-blue-500/30 transition-all duration-700">
+                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
+                                <img src="ASSETSS/gallery-covers/cover_cogni_1781138391442.png" alt="Cogni IA" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                                <div class="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-colors duration-700 mix-blend-overlay"></div>
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-blue-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">02</span>
+                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-blue-400 transition-colors duration-500">Cogni.IA</h3>
+                                <p class="text-white/50 text-sm font-medium">Dashboard Analítico de Inteligência</p>
+                            </div>
+                        </a>
+
+                        <!-- Projeto 03: Parallax Clean -->
+                        <a href="ASSETSS/parallax-clean/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-slate-300/30 transition-all duration-700">
+                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
+                                <img src="ASSETSS/gallery-covers/cover_aethereal_1781138401242.png" alt="Aethereal" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                                <div class="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-700 mix-blend-overlay"></div>
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-slate-300 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">03</span>
+                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-slate-200 transition-colors duration-500">Aethereal</h3>
+                                <p class="text-white/50 text-sm font-medium">Arquitetura Minimalista Limpa</p>
+                            </div>
+                        </a>
+
+                        <!-- Projeto 04: Creative Agency -->
+                        <a href="ASSETSS/creative-agency-template.aura.build/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-rose-500/30 transition-all duration-700">
+                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
+                                <img src="ASSETSS/gallery-covers/cover_creative_1781138412257.png" alt="Soul Creative" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                                <div class="absolute inset-0 bg-rose-500/0 group-hover:bg-rose-500/10 transition-colors duration-700 mix-blend-overlay"></div>
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-rose-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">04</span>
+                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-rose-400 transition-colors duration-500">Soul Creative</h3>
+                                <p class="text-white/50 text-sm font-medium">Portfólio de Agência Digital</p>
+                            </div>
+                        </a>
+
+                        <!-- Projeto 05: Green Site -->
+                        <a href="ASSETSS/green-site/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-green-500/30 transition-all duration-700">
+                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
+                                <img src="ASSETSS/gallery-covers/cover_eco_1781138422669.png" alt="Nova Eco" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                                <div class="absolute inset-0 bg-green-500/0 group-hover:bg-green-500/10 transition-colors duration-700 mix-blend-overlay"></div>
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-green-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">05</span>
+                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-green-400 transition-colors duration-500">Nova Eco</h3>
+                                <p class="text-white/50 text-sm font-medium">Tecnologia Sustentável & Verde</p>
+                            </div>
+                        </a>
+
+                        <!-- Projeto 06: Lumina -->
+                        <a href="lumina-video/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-orange-500/30 transition-all duration-700">
+                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
+                                <img src="ASSETSS/gallery-covers/cover_lumina_1781138434139.png" alt="Lumina Play" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                                <div class="absolute inset-0 bg-orange-500/0 group-hover:bg-orange-500/10 transition-colors duration-700 mix-blend-overlay"></div>
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-orange-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">06</span>
+                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-orange-400 transition-colors duration-500">Lumina Play</h3>
+                                <p class="text-white/50 text-sm font-medium">Sistema de Plataforma de Vídeo</p>
+                            </div>
+                        </a>
+
+                        <!-- Projeto 07: Barbershop -->
+                        <a href="ASSETSS/barbershop-landing-51.aura.build/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-amber-500/30 transition-all duration-700">
+                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
+                                <img src="ASSETSS/gallery-covers/cover_corte_1781138454394.png" alt="Corte Clássico" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                                <div class="absolute inset-0 bg-amber-500/0 group-hover:bg-amber-500/10 transition-colors duration-700 mix-blend-overlay"></div>
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-amber-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">07</span>
+                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-amber-400 transition-colors duration-500">Corte Clássico</h3>
+                                <p class="text-white/50 text-sm font-medium">Landing Page Premium Barber</p>
+                            </div>
+                        </a>
+
+                        <!-- Projeto 08: Aero Drone -->
+                        <a href="ASSETSS/autonomous-drone-62.aura.build/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-cyan-500/30 transition-all duration-700">
+                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
+                                <img src="ASSETSS/gallery-covers/cover_drone_1781138465741.png" alt="AeroTech Drones" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                                <div class="absolute inset-0 bg-cyan-500/0 group-hover:bg-cyan-500/10 transition-colors duration-700 mix-blend-overlay"></div>
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-cyan-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">08</span>
+                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-cyan-400 transition-colors duration-500">AeroTech Drones</h3>
+                                <p class="text-white/50 text-sm font-medium">Tecnologia e Aviação Autônoma</p>
+                            </div>
+                        </a>
+
+                        <!-- Projeto 09: ARTools -->
+                        <a href="artools_final/artools/index.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-red-500/30 transition-all duration-700">
+                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
+                                <img src="ASSETSS/gallery-covers/cover_artools_pt.png" alt="Artools Inteligência" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                                <div class="absolute inset-0 bg-red-500/0 group-hover:bg-red-500/10 transition-colors duration-700 mix-blend-overlay"></div>
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-red-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">09</span>
+                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-red-400 transition-colors duration-500">Caneta Tecnológica</h3>
+                                <p class="text-white/50 text-sm font-medium">Escaneamento Inteligente 3D</p>
+                            </div>
+                        </a>
+
+                        <!-- Projeto 10: Finex Internet -->
+                        <a href="finex-internet.aura.build/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-indigo-500/30 transition-all duration-700">
+                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
+                                <img src="ASSETSS/gallery-covers/cover_finex_1781138487824.png" alt="Finex Fibra" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                                <div class="absolute inset-0 bg-indigo-500/0 group-hover:bg-indigo-500/10 transition-colors duration-700 mix-blend-overlay"></div>
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-indigo-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">10</span>
+                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-indigo-400 transition-colors duration-500">Finex Fibra</h3>
+                                <p class="text-white/50 text-sm font-medium">Provedor ISP de Ultra Velocidade</p>
+                            </div>
+                        </a>
+
+                        <!-- Projeto 11: White Medical -->
+                        <a href="ASSETSS/white-medical/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-teal-500/30 transition-all duration-700">
+                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
+                                <img src="ASSETSS/gallery-covers/cover_vitalis_1781138498326.png" alt="Clínica Vitalis" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                                <div class="absolute inset-0 bg-teal-500/0 group-hover:bg-teal-500/10 transition-colors duration-700 mix-blend-overlay"></div>
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-teal-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">11</span>
+                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-teal-400 transition-colors duration-500">Clínica Vitalis</h3>
+                                <p class="text-white/50 text-sm font-medium">Centro Médico Especializado</p>
+                            </div>
+                        </a>
+
+
+                    </div>
+                </div>
+            </section>
 
             <!-- Frase de Impacto Bottom -->
             <div class="mt-24 lg:mt-32 text-center max-w-3xl mx-auto soul-quote">
@@ -838,6 +1167,72 @@
             { opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "power2.out" },
             "-=0.5"
         );
+
+        // --- GALERIA DE PROJETOS ---
+        
+        // Entrada dos Cards da Galeria
+        gsap.fromTo(".soul-project-card",
+            { opacity: 0, y: 60, scale: 0.95, rotateX: 10 },
+            { 
+                opacity: 1, 
+                y: 0, 
+                scale: 1, 
+                rotateX: 0,
+                duration: 1, 
+                stagger: 0.15, 
+                ease: "expo.out",
+                scrollTrigger: {
+                    trigger: "#soul-projetos",
+                    start: "top 75%",
+                    toggleActions: "play none none reverse"
+                }
+            }
+        );
+
+        // Custom Magnetic Cursor (Awwwards Style)
+        const projectGallery = document.querySelector('.project-gallery-container');
+        const projectCursor = document.getElementById('project-cursor');
+
+        if (projectGallery && projectCursor) {
+            // Mostrar cursor como uma pequena bolinha de vidro
+            projectGallery.addEventListener('mouseenter', () => {
+                gsap.to(projectCursor, { scale: 0.2, opacity: 1, duration: 0.4, ease: "back.out(1.5)" });
+                gsap.to('#project-cursor-text', { opacity: 0, duration: 0.1 });
+            });
+            
+            // Esconder cursor totalmente
+            projectGallery.addEventListener('mouseleave', () => {
+                gsap.to(projectCursor, { scale: 0, opacity: 0, duration: 0.3, ease: "power2.in" });
+            });
+
+            // Seguir o mouse
+            projectGallery.addEventListener('mousemove', (e) => {
+                gsap.to(projectCursor, {
+                    left: e.clientX,
+                    top: e.clientY,
+                    duration: 0.15,
+                    ease: "power2.out",
+                    xPercent: -50,
+                    yPercent: -50
+                });
+            });
+
+            // Efeito de crescimento (Grow) ao passar sobre os projetos
+            const projectCards = document.querySelectorAll('.soul-project-card');
+            projectCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    // Cresce e revela o texto
+                    gsap.to(projectCursor, { scale: 1, backgroundColor: "rgba(255,255,255,0.15)", duration: 0.4, ease: "back.out(1.5)" });
+                    gsap.to('#project-cursor-text', { opacity: 1, duration: 0.3, delay: 0.1 });
+                });
+                card.addEventListener('mouseleave', () => {
+                    // Volta a ser a bolinha pequena
+                    gsap.to(projectCursor, { scale: 0.2, backgroundColor: "rgba(255,255,255,0.05)", duration: 0.3 });
+                    gsap.to('#project-cursor-text', { opacity: 0, duration: 0.2 });
+                });
+            });
+        }
     </script>
+    <script src="sonic-link.aura.build/assets/js/ecosystem-floating.js"></script>
 </body>
 </html>
