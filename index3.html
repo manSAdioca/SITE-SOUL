@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="overflow-x-hidden">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -48,6 +48,21 @@
     <style>
         body { background-color: #000; color: #fff; cursor: none; }
         
+        @media (pointer: coarse) {
+            body { cursor: auto; }
+            #cursor-dot, #cursor-halo, #project-cursor, .cursor-none {
+                display: none !important;
+                opacity: 0 !important;
+            }
+            .cursor-none { cursor: auto !important; }
+        }
+        
+        /* Ocultar scrollbar horizontal e garantir responsividade touch */
+        html, body {
+            max-width: 100vw;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
         /* --- PREMIUM PRELOADER CINEMATOGRÁFICO --- */
         #black-preloader {
             position: fixed; inset: 0; z-index: 999990;
@@ -216,7 +231,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen overflow-x-hidden bg-black antialiased selection:bg-[#f97316]/30 selection:text-white text-zinc-400 relative">
+<body class="min-h-screen overflow-x-hidden w-full max-w-[100vw] bg-black antialiased selection:bg-[#f97316]/30 selection:text-white text-zinc-400 relative">
 
     <!-- CUSTOM CURSOR -->
     <div class="cursor-dot" id="cursor-dot"></div>
@@ -331,12 +346,12 @@
                 <img src="assets/logo%203.png" alt="Logo" class="h-10 w-auto" />
             </div>
             <div class="hidden md:flex gap-6 px-6 items-center">
-                <button class="hover:text-white cursor-none transition-colors text-xs text-zinc-500 tracking-widest font-mono">Projetos</button>
-                <button class="hover:text-white cursor-none transition-colors text-xs text-zinc-500 tracking-widest font-mono">Serviços</button>
-                <button class="hover:text-white cursor-none transition-colors text-xs text-zinc-500 tracking-widest font-mono">Sobre</button>
+                <button onclick="window.premiumScrollTo('#soul-projetos')" class="hover:text-white cursor-none transition-colors text-xs text-zinc-500 tracking-widest font-mono">Projetos</button>
+                <button onclick="window.premiumScrollTo('#soul-design-section')" class="hover:text-white cursor-none transition-colors text-xs text-zinc-500 tracking-widest font-mono">Serviços</button>
+                <button onclick="window.premiumScrollTo('#soul-transformation')" class="hover:text-white cursor-none transition-colors text-xs text-zinc-500 tracking-widest font-mono">Sobre</button>
             </div>
             <div class="hidden md:flex items-center gap-4 pl-6 border-l border-white/10">
-                <button class="hover:bg-orange-400 cursor-none transition-colors text-xs font-medium text-white tracking-tight bg-orange-500 rounded-full pt-1.5 pr-4 pb-1.5 pl-4 shadow-[0_0_12px_rgba(249,115,22,0.4)]">Iniciar Projeto</button>
+                <button onclick="window.premiumScrollTo('#soul-transformation')" class="hover:bg-orange-400 cursor-none transition-colors text-xs font-medium text-white tracking-tight bg-orange-500 rounded-full pt-1.5 pr-4 pb-1.5 pl-4 shadow-[0_0_12px_rgba(249,115,22,0.4)]">Iniciar Projeto</button>
             </div>
         </nav>
     </header>
@@ -346,7 +361,7 @@
         <div aria-hidden="true" class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle, rgba(255, 255, 255, 0.45) 0px, rgba(255, 255, 255, 0.45) 0.055rem, transparent 0.075rem); background-size: 0.7rem 0.7rem; mask-image: linear-gradient(rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.15) 19%, rgba(0, 0, 0, 0.12) 81%, rgba(0, 0, 0, 0.85));"></div>
         <div aria-hidden="true" class="opacity-20 absolute top-0 right-0 bottom-0 left-0"></div>
         
-        <div class="relative h-[91vh] w-[96vw] overflow-hidden rounded-[1.4rem] border border-white/10 bg-black shadow-2xl sm:rounded-[2rem] md:h-[89vh] md:w-[95vw]" id="filmStage" style="box-shadow: rgba(0, 0, 0, 0.48) 0px 2rem 8rem, rgba(255, 255, 255, 0.08) 0px 0px 0px 0.0625rem inset;">
+        <div class="relative h-[100vh] w-[100vw] sm:h-[91vh] sm:w-[96vw] overflow-hidden sm:rounded-[1.4rem] border-0 sm:border border-white/10 bg-black shadow-2xl md:h-[89vh] md:w-[95vw] md:rounded-[2rem]" id="filmStage" style="box-shadow: rgba(0, 0, 0, 0.48) 0px 2rem 8rem, rgba(255, 255, 255, 0.08) 0px 0px 0px 0.0625rem inset;">
             <canvas aria-hidden="true" class="absolute inset-0 h-full w-full opacity-90" id="webglLayer"></canvas>
             <img alt="" class="absolute inset-0 h-full w-full scale-125 object-cover opacity-0 blur-xl" id="abstractBase" src="sonic-link.aura.build/assets/6a7bb45fc2ab1366_fa51902b-c2a4-4c33-a96e-a8f1ef.jpg"/>
             <div aria-hidden="true" class="absolute inset-0" style="background: radial-gradient(circle at 50% 56%, rgba(249,115,22,.15), transparent 18%), radial-gradient(circle at 63% 45%, rgba(249,115,22,.25), transparent 25%), linear-gradient(to bottom, rgba(0,0,0,.2), rgba(0,0,0,.12) 38%, rgba(0,0,0,.76));"></div>
@@ -356,21 +371,21 @@
             
             <!-- (PRELOADER 1) TEXTO 1 DA TIMELINE GSAP -->
             <div class="absolute inset-x-4 top-[4%] z-10 text-center opacity-0 sm:top-[3%]" id="introWord">
-                <p class="tracking-tight text-white/20 text-[clamp(4.5rem,15vw,11rem)] leading-none" style="font-family: 'Barlow Condensed', Impact, sans-serif; font-weight: 600;">Bem-vindo ao</p>
+                <p class="tracking-tight text-white/20 text-[clamp(3.5rem,15vw,11rem)] leading-none" style="font-family: 'Barlow Condensed', Impact, sans-serif; font-weight: 600;">Bem-vindo ao</p>
             </div>
             
             <!-- (PRELOADER 2) TEXTO 2 DA TIMELINE GSAP -->
-            <div class="absolute left-1/2 top-[17%] z-20 flex w-[92%] -translate-x-1/2 items-center justify-center gap-[clamp(.45rem,2vw,2rem)] text-center opacity-0 sm:top-[18%] md:top-[17%]" id="mainTitle">
+            <div class="absolute left-1/2 top-[17%] z-20 flex flex-wrap w-[92%] -translate-x-1/2 items-center justify-center gap-[clamp(.45rem,2vw,2rem)] text-center opacity-0 sm:top-[18%] md:top-[17%]" id="mainTitle">
                 <!-- Mantivemos as 4 chunks originais para garantir que a timeline funcione idêntica! -->
-                <span class="titleChunk inline-block tracking-tight text-white text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>Futuro</span>
-                <span class="titleChunk inline-block tracking-tight text-white text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>Digital.</span>
-                <span class="titleChunk hidden tracking-tight text-white text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>-</span>
-                <span class="titleChunk hidden tracking-tight text-white text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>-</span>
+                <span class="titleChunk inline-block tracking-tight text-white text-[clamp(4rem,12vw,12rem)] sm:text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>Futuro</span>
+                <span class="titleChunk inline-block tracking-tight text-white text-[clamp(4rem,12vw,12rem)] sm:text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>Digital.</span>
+                <span class="titleChunk hidden tracking-tight text-white text-[clamp(4rem,12vw,12rem)] sm:text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>-</span>
+                <span class="titleChunk hidden tracking-tight text-white text-[clamp(4rem,12vw,12rem)] sm:text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>-</span>
             </div>
             
             <!-- (PRELOADER 3) TEXTO 3 DA TIMELINE GSAP -->
             <div class="absolute left-1/2 top-[14%] z-20 w-[92%] -translate-x-1/2 text-center opacity-0" id="altTitle">
-                <p class="tracking-tight text-white text-[clamp(4.5rem,14vw,12rem)] leading-[.76]" style="font-family: 'Barlow Condensed', Impact, sans-serif; font-weight: 700;">Alto Impacto</p>
+                <p class="tracking-tight text-white text-[clamp(3.5rem,14vw,12rem)] sm:text-[clamp(4.5rem,14vw,12rem)] leading-[.76]" style="font-family: 'Barlow Condensed', Impact, sans-serif; font-weight: 700;">Alto Impacto</p>
             </div>
             
             <!-- (HERO FINAL) TEXTO DE RESOLUÇÃO FINAL GSAP -->
@@ -380,31 +395,11 @@
                     Transformando ideias em experiências digitais que vendem.
                 </p>
                 <!-- Os CTAs exigidos pela agência (escondidos até o fade-in) -->
-                <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-6">
-                    <!-- Botão 1 Animado (Borda Giratória Conic-Gradient) -->
-                    <button class="group isolate inline-flex cursor-pointer overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_50px_10px_rgba(249,115,22,0.45)] bg-gradient-to-b from-white/20 via-white/0 to-white/5 rounded-full relative shadow-[0_0_25px_rgba(249,115,22,0.3),0_8px_40px_rgba(249,115,22,0.15)]">
-                        <div class="absolute inset-0 overflow-hidden rounded-full">
-                            <div class="absolute inset-[-100%] w-[300%] h-[300%] left-[-100%] top-[-100%] animate-[spin_3s_linear_infinite]" style="background: conic-gradient(from 0deg, transparent 0deg, transparent 80deg, rgba(253,186,116,0.9) 180deg, transparent 280deg, transparent 360deg);"></div>
-                        </div>
-                        <div class="absolute inset-[1px] rounded-full backdrop-blur-xl z-0 bg-neutral-950/90"></div>
-                        <div class="z-10 flex gap-3 overflow-hidden text-sm font-medium text-white w-full rounded-full py-3.5 pl-7 pr-5 relative items-center justify-center">
-                            <span class="whitespace-nowrap relative z-10 font-semibold tracking-wide text-base text-white/95 group-hover:text-white transition-colors">Ver Projetos</span>
-                            <span class="inline-flex items-center justify-center z-10 bg-white/10 w-7 h-7 rounded-full ml-1 relative group-hover:translate-x-1 transition-transform text-white/80 group-hover:text-white">
-                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                            </span>
-                        </div>
-                    </button>
-
-                    <!-- Botão 2 Animado (Borda Giratória Conic-Gradient Sutil) -->
-                    <button class="group isolate inline-flex cursor-pointer overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_50px_10px_rgba(255,255,255,0.2)] bg-gradient-to-b from-white/10 via-white/0 to-white/5 rounded-full relative shadow-[0_0_25px_rgba(255,255,255,0.1),0_8px_40px_rgba(0,0,0,0.4)]">
-                        <div class="absolute inset-0 overflow-hidden rounded-full">
-                            <div class="absolute inset-[-100%] w-[300%] h-[300%] left-[-100%] top-[-100%] animate-[spin_4s_linear_infinite]" style="background: conic-gradient(from 0deg, transparent 0deg, transparent 120deg, rgba(255,255,255,0.5) 180deg, transparent 240deg, transparent 360deg);"></div>
-                        </div>
-                        <div class="absolute inset-[1px] rounded-full backdrop-blur-xl z-0 bg-[#0a0a0a]/90"></div>
-                        <div class="z-10 flex gap-3 overflow-hidden text-sm font-medium text-white rounded-full py-3.5 px-8 relative items-center">
-                            <span class="whitespace-nowrap relative z-10 font-semibold tracking-wide text-base text-white/90 group-hover:text-white transition-colors">Falar Comigo</span>
-                        </div>
-                    </button>
+                <div class="mt-12 flex flex-col items-center justify-center opacity-70 pointer-events-none animate-[pulse_4s_ease-in-out_infinite]">
+                    <p class="text-white/60 uppercase tracking-[0.35em] text-[10px] font-semibold mb-4 text-center font-mono drop-shadow-md">Deslize para a Experiência</p>
+                    <div class="w-[26px] h-[42px] border border-white/20 rounded-full flex justify-center pt-2 relative shadow-[0_0_20px_rgba(249,115,22,0.15)] bg-black/20 backdrop-blur-md">
+                        <div class="w-1 h-2.5 bg-orange-500 rounded-full animate-bounce shadow-[0_0_8px_rgba(249,115,22,0.9)]"></div>
+                    </div>
                 </div>
             </div>
 
@@ -1109,7 +1104,7 @@
         <canvas id="sparks-canvas" class="absolute inset-0 w-full h-full pointer-events-none mix-blend-screen z-[5] opacity-80" style="height: 100%; width: 100%;"></canvas>
 
         <!-- Header da Seção -->
-        <div class="relative z-10 max-w-7xl mx-auto px-6 mb-32 text-center exp-reveal-text">
+        <div class="relative z-10 max-w-7xl mx-auto px-6 mb-20 text-center exp-reveal-text">
             <span class="inline-block py-1.5 px-5 rounded-full border border-white/10 bg-white/5 text-white/70 text-[10px] sm:text-xs font-mono uppercase tracking-[0.3em] mb-8 backdrop-blur-md shadow-[0_0_20px_rgba(255,255,255,0.05)]">Nossa Metodologia</span>
             <h2 class="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white mb-6 tracking-tighter leading-[1.1]" style="font-family: 'Barlow Condensed', Impact, sans-serif;">
                 Estratégia antes da <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-200">execução.</span><br/>
@@ -1121,21 +1116,21 @@
         </div>
 
         <!-- Scroll Journey Container -->
-        <div class="relative z-10 max-w-6xl mx-auto px-6 pb-40" id="exp-journey-container">
+        <div class="relative z-10 max-w-6xl mx-auto px-6 pb-20" id="exp-journey-container">
             
             <!-- Trilha Base (Linha apagada) -->
-            <div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent md:-translate-x-1/2"></div>
+            <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent md:-translate-x-1/2"></div>
             
             <!-- Trilha Iluminada (Scroll) -->
-            <div id="exp-glow-line" class="absolute left-8 md:left-1/2 top-0 w-[3px] h-0 bg-gradient-to-b from-orange-400 via-amber-300 to-indigo-500 md:-translate-x-1/2 shadow-[0_0_20px_rgba(249,115,22,0.8),0_0_40px_rgba(99,102,241,0.4)] z-0 rounded-full transform-gpu will-change-[height]"></div>
+            <div id="exp-glow-line" class="absolute left-4 md:left-1/2 top-0 w-[3px] h-0 bg-gradient-to-b from-orange-400 via-amber-300 to-indigo-500 md:-translate-x-1/2 shadow-[0_0_20px_rgba(249,115,22,0.8),0_0_40px_rgba(99,102,241,0.4)] z-0 rounded-full transform-gpu will-change-[height]"></div>
             
             <!-- Partícula/Cursor da Trilha -->
-            <div id="exp-line-particle" class="absolute left-8 md:left-1/2 top-0 w-3 h-3 rounded-full bg-white shadow-[0_0_15px_#fff,0_0_30px_#f97316] -translate-x-[5px] md:-translate-x-[6px] -translate-y-1/2 z-10 opacity-0 transition-opacity duration-300"></div>
+            <div id="exp-line-particle" class="absolute left-4 md:left-1/2 top-0 w-3 h-3 rounded-full bg-white shadow-[0_0_15px_#fff,0_0_30px_#f97316] -translate-x-[5px] md:-translate-x-[6px] -translate-y-1/2 z-10 opacity-0 transition-opacity duration-300"></div>
 
-            <div class="relative z-10 space-y-32 md:space-y-48 mt-10">
+            <div class="relative z-10 space-y-16 md:space-y-24 mt-10">
                 <!-- Etapa 01 -->
-                <div class="exp-step relative flex flex-col md:flex-row items-center justify-between w-full opacity-20 transition-all duration-1000" data-color="#f97316" data-step="1">
-                    <div class="md:w-[45%] text-left md:text-right pl-20 md:pl-0 pr-0 md:pr-16 order-2 md:order-1 mt-8 md:mt-0 transform translate-y-10 exp-step-content transition-all duration-1000">
+                <div class="exp-step relative flex flex-col md:flex-row items-center justify-between w-full opacity-0 transition-all duration-1000" data-color="#f97316" data-step="1">
+                    <div class="md:w-[45%] text-left md:text-right pl-14 md:pl-0 pr-0 md:pr-16 order-2 md:order-1 mt-8 md:mt-0 transform translate-y-10 exp-step-content transition-all duration-1000">
                         <div class="inline-flex items-center gap-3 mb-4">
                             <span class="text-orange-500 text-sm font-mono tracking-[0.2em] font-bold">01</span>
                             <span class="h-px w-8 bg-orange-500/50 hidden md:block"></span>
@@ -1146,12 +1141,12 @@
                         </p>
                     </div>
                     
-                    <div class="absolute left-8 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700">
+                    <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700">
                         <div class="w-2 h-2 rounded-full bg-white/20 exp-node-dot transition-all duration-500"></div>
                         <div class="absolute inset-0 rounded-full border border-orange-500 opacity-0 scale-150 exp-node-ring transition-all duration-700 pointer-events-none"></div>
                     </div>
                     
-                    <div class="md:w-[45%] w-full pl-20 md:pl-16 order-1 md:order-2">
+                    <div class="md:w-[45%] w-full pl-14 md:pl-16 order-1 md:order-2">
                         <div class="exp-visual-card relative w-full h-56 md:h-72 rounded-3xl border border-white/5 bg-[#050505] overflow-hidden transform-gpu perspective-[1000px] cursor-none shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                             <div class="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-transparent z-0"></div>
                             <div class="exp-card-inner w-full h-full p-6 flex flex-col justify-between relative z-10 transition-transform duration-300 ease-out transform-gpu">
@@ -1172,8 +1167,8 @@
                 </div>
 
                 <!-- Etapa 02 -->
-                <div class="exp-step relative flex flex-col md:flex-row items-center justify-between w-full opacity-20 transition-all duration-1000" data-color="#6366f1" data-step="2">
-                    <div class="md:w-[45%] w-full pl-20 md:pl-0 pr-0 md:pr-16 order-1 md:order-1">
+                <div class="exp-step relative flex flex-col md:flex-row items-center justify-between w-full opacity-0 transition-all duration-1000" data-color="#6366f1" data-step="2">
+                    <div class="md:w-[45%] w-full pl-14 md:pl-0 pr-0 md:pr-16 order-1 md:order-1">
                         <div class="exp-visual-card relative w-full h-56 md:h-72 rounded-3xl border border-white/5 bg-[#050505] overflow-hidden transform-gpu perspective-[1000px] cursor-none shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                             <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent z-0"></div>
                             <div class="exp-card-inner w-full h-full p-6 flex items-center justify-center relative z-10 transition-transform duration-300 ease-out transform-gpu">
@@ -1187,12 +1182,12 @@
                         </div>
                     </div>
 
-                    <div class="absolute left-8 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700">
+                    <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700">
                         <div class="w-2 h-2 rounded-full bg-white/20 exp-node-dot transition-all duration-500"></div>
                         <div class="absolute inset-0 rounded-full border border-indigo-500 opacity-0 scale-150 exp-node-ring transition-all duration-700 pointer-events-none"></div>
                     </div>
                     
-                    <div class="md:w-[45%] text-left pl-20 md:pl-16 order-2 md:order-2 mt-8 md:mt-0 transform translate-y-10 exp-step-content transition-all duration-1000">
+                    <div class="md:w-[45%] text-left pl-14 md:pl-16 order-2 md:order-2 mt-8 md:mt-0 transform translate-y-10 exp-step-content transition-all duration-1000">
                         <div class="inline-flex items-center gap-3 mb-4">
                             <span class="h-px w-8 bg-indigo-500/50 hidden md:block"></span>
                             <span class="text-indigo-400 text-sm font-mono tracking-[0.2em] font-bold">02</span>
@@ -1205,8 +1200,8 @@
                 </div>
 
                 <!-- Etapa 03 -->
-                <div class="exp-step relative flex flex-col md:flex-row items-center justify-between w-full opacity-20 transition-all duration-1000" data-color="#22d3ee" data-step="3">
-                    <div class="md:w-[45%] text-left md:text-right pl-20 md:pl-0 pr-0 md:pr-16 order-2 md:order-1 mt-8 md:mt-0 transform translate-y-10 exp-step-content transition-all duration-1000">
+                <div class="exp-step relative flex flex-col md:flex-row items-center justify-between w-full opacity-0 transition-all duration-1000" data-color="#22d3ee" data-step="3">
+                    <div class="md:w-[45%] text-left md:text-right pl-14 md:pl-0 pr-0 md:pr-16 order-2 md:order-1 mt-8 md:mt-0 transform translate-y-10 exp-step-content transition-all duration-1000">
                         <div class="inline-flex items-center gap-3 mb-4">
                             <span class="text-cyan-400 text-sm font-mono tracking-[0.2em] font-bold">03</span>
                             <span class="h-px w-8 bg-cyan-400/50 hidden md:block"></span>
@@ -1217,12 +1212,12 @@
                         </p>
                     </div>
                     
-                    <div class="absolute left-8 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700">
+                    <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700">
                         <div class="w-2 h-2 rounded-full bg-white/20 exp-node-dot transition-all duration-500"></div>
                         <div class="absolute inset-0 rounded-full border border-cyan-400 opacity-0 scale-150 exp-node-ring transition-all duration-700 pointer-events-none"></div>
                     </div>
                     
-                    <div class="md:w-[45%] w-full pl-20 md:pl-16 order-1 md:order-2">
+                    <div class="md:w-[45%] w-full pl-14 md:pl-16 order-1 md:order-2">
                         <div class="exp-visual-card relative w-full h-56 md:h-72 rounded-3xl border border-white/5 bg-[#050505] overflow-hidden transform-gpu perspective-[1000px] cursor-none shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                             <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent z-0"></div>
                             <div class="exp-card-inner w-full h-full p-6 flex items-center justify-center relative z-10 transition-transform duration-300 ease-out transform-gpu">
@@ -1241,8 +1236,8 @@
                 </div>
 
                 <!-- Etapa 04 -->
-                <div class="exp-step relative flex flex-col md:flex-row items-center justify-between w-full opacity-20 transition-all duration-1000" data-color="#fbbf24" data-step="4">
-                    <div class="md:w-[45%] w-full pl-20 md:pl-0 pr-0 md:pr-16 order-1 md:order-1">
+                <div class="exp-step relative flex flex-col md:flex-row items-center justify-between w-full opacity-0 transition-all duration-1000" data-color="#fbbf24" data-step="4">
+                    <div class="md:w-[45%] w-full pl-14 md:pl-0 pr-0 md:pr-16 order-1 md:order-1">
                         <div class="exp-visual-card relative w-full h-56 md:h-72 rounded-3xl border border-white/5 bg-[#050505] overflow-hidden transform-gpu perspective-[1000px] cursor-none shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                             <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent z-0"></div>
                             <div class="exp-card-inner w-full h-full p-6 flex flex-col items-center justify-center relative z-10 transition-transform duration-300 ease-out transform-gpu">
@@ -1259,12 +1254,12 @@
                         </div>
                     </div>
 
-                    <div class="absolute left-8 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700">
+                    <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700">
                         <div class="w-2 h-2 rounded-full bg-white/20 exp-node-dot transition-all duration-500"></div>
                         <div class="absolute inset-0 rounded-full border border-amber-400 opacity-0 scale-150 exp-node-ring transition-all duration-700 pointer-events-none"></div>
                     </div>
                     
-                    <div class="md:w-[45%] text-left pl-20 md:pl-16 order-2 md:order-2 mt-8 md:mt-0 transform translate-y-10 exp-step-content transition-all duration-1000">
+                    <div class="md:w-[45%] text-left pl-14 md:pl-16 order-2 md:order-2 mt-8 md:mt-0 transform translate-y-10 exp-step-content transition-all duration-1000">
                         <div class="inline-flex items-center gap-3 mb-4">
                             <span class="h-px w-8 bg-amber-400/50 hidden md:block"></span>
                             <span class="text-amber-400 text-sm font-mono tracking-[0.2em] font-bold">04</span>
@@ -1277,8 +1272,8 @@
                 </div>
 
                 <!-- Etapa 05 -->
-                <div class="exp-step relative flex flex-col md:flex-row items-center justify-between w-full opacity-20 transition-all duration-1000" data-color="#a855f7" data-step="5">
-                    <div class="md:w-[45%] text-left md:text-right pl-20 md:pl-0 pr-0 md:pr-16 order-2 md:order-1 mt-8 md:mt-0 transform translate-y-10 exp-step-content transition-all duration-1000">
+                <div class="exp-step relative flex flex-col md:flex-row items-center justify-between w-full opacity-0 transition-all duration-1000" data-color="#a855f7" data-step="5">
+                    <div class="md:w-[45%] text-left md:text-right pl-14 md:pl-0 pr-0 md:pr-16 order-2 md:order-1 mt-8 md:mt-0 transform translate-y-10 exp-step-content transition-all duration-1000">
                         <div class="inline-flex items-center gap-3 mb-4">
                             <span class="text-purple-500 text-sm font-mono tracking-[0.2em] font-bold">05</span>
                             <span class="h-px w-8 bg-purple-500/50 hidden md:block"></span>
@@ -1289,12 +1284,12 @@
                         </p>
                     </div>
                     
-                    <div class="absolute left-8 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700">
+                    <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700">
                         <div class="w-2 h-2 rounded-full bg-white/20 exp-node-dot transition-all duration-500"></div>
                         <div class="absolute inset-0 rounded-full border border-purple-500 opacity-0 scale-150 exp-node-ring transition-all duration-700 pointer-events-none"></div>
                     </div>
                     
-                    <div class="md:w-[45%] w-full pl-20 md:pl-16 order-1 md:order-2">
+                    <div class="md:w-[45%] w-full pl-14 md:pl-16 order-1 md:order-2">
                         <div class="exp-visual-card relative w-full h-56 md:h-72 rounded-3xl border border-white/5 bg-[#050505] overflow-hidden transform-gpu perspective-[1000px] cursor-none shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                             <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent z-0"></div>
                             <div class="exp-card-inner w-full h-full p-6 flex items-center justify-center relative z-10 transition-transform duration-300 ease-out transform-gpu">
@@ -1317,8 +1312,8 @@
                 </div>
 
                 <!-- Etapa 06 -->
-                <div class="exp-step relative flex flex-col md:flex-row items-center justify-between w-full opacity-20 transition-all duration-1000" data-color="#10b981" data-step="6">
-                    <div class="md:w-[45%] w-full pl-20 md:pl-0 pr-0 md:pr-16 order-1 md:order-1">
+                <div class="exp-step relative flex flex-col md:flex-row items-center justify-between w-full opacity-0 transition-all duration-1000" data-color="#10b981" data-step="6">
+                    <div class="md:w-[45%] w-full pl-14 md:pl-0 pr-0 md:pr-16 order-1 md:order-1">
                         <div class="exp-visual-card relative w-full h-56 md:h-72 rounded-3xl border border-white/5 bg-[#050505] overflow-hidden transform-gpu perspective-[1000px] cursor-none shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                             <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent z-0"></div>
                             <div class="exp-card-inner w-full h-full p-6 flex flex-col items-center justify-center relative z-10 transition-transform duration-300 ease-out transform-gpu">
@@ -1332,12 +1327,12 @@
                         </div>
                     </div>
 
-                    <div class="absolute left-8 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700">
+                    <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700">
                         <div class="w-2 h-2 rounded-full bg-white/20 exp-node-dot transition-all duration-500"></div>
                         <div class="absolute inset-0 rounded-full border border-emerald-500 opacity-0 scale-150 exp-node-ring transition-all duration-700 pointer-events-none"></div>
                     </div>
                     
-                    <div class="md:w-[45%] text-left pl-20 md:pl-16 order-2 md:order-2 mt-8 md:mt-0 transform translate-y-10 exp-step-content transition-all duration-1000">
+                    <div class="md:w-[45%] text-left pl-14 md:pl-16 order-2 md:order-2 mt-8 md:mt-0 transform translate-y-10 exp-step-content transition-all duration-1000">
                         <div class="inline-flex items-center gap-3 mb-4">
                             <span class="h-px w-8 bg-emerald-500/50 hidden md:block"></span>
                             <span class="text-emerald-400 text-sm font-mono tracking-[0.2em] font-bold">06</span>
@@ -1352,7 +1347,7 @@
                 <!-- Destino Final da Linha e Expansão da Rede -->
                 <div class="relative w-full flex flex-col items-center pt-20 pl-8 md:pl-0 z-20" id="exp-convergence">
                     <!-- Ponto central brilhante de onde a energia divide -->
-                    <div class="absolute top-0 left-8 md:left-1/2 w-4 h-4 rounded-full bg-emerald-400 shadow-[0_0_20px_#10b981,0_0_40px_#fff] -translate-x-1/2 -translate-y-1/2 opacity-0 will-change-[opacity]" id="split-center-node"></div>
+                    <div class="absolute top-0 left-4 md:left-1/2 w-4 h-4 rounded-full bg-emerald-400 shadow-[0_0_20px_#10b981,0_0_40px_#fff] -translate-x-1/2 -translate-y-1/2 opacity-0 will-change-[opacity]" id="split-center-node"></div>
                     
                     <!-- Linhas Horizontais de Expansão (A Rede) -->
                     <div class="absolute w-full h-px top-0 left-0 pointer-events-none z-0" id="horizontal-split-container">
@@ -1363,7 +1358,7 @@
                             <div class="absolute top-0 right-0 h-[2px] w-4 bg-white blur-[1px] shadow-[0_0_10px_#fff] animate-[shoot-left_1.8s_ease-out_infinite_0.5s]"></div>
                         </div>
                         <!-- Direita -->
-                        <div id="split-line-right" class="absolute top-0 left-8 md:left-1/2 h-[2px] w-0 bg-gradient-to-r from-emerald-400 via-emerald-500/50 to-transparent shadow-[0_0_20px_rgba(16,185,129,0.5)] origin-left overflow-hidden will-change-[width]">
+                        <div id="split-line-right" class="absolute top-0 left-4 md:left-1/2 h-[2px] w-0 bg-gradient-to-r from-emerald-400 via-emerald-500/50 to-transparent shadow-[0_0_20px_rgba(16,185,129,0.5)] origin-left overflow-hidden will-change-[width]">
                             <!-- Pulso de Energia (viaja pra direita) -->
                             <div class="absolute top-0 left-0 h-[2px] w-8 bg-white blur-[1px] shadow-[0_0_10px_#fff] animate-[shoot-right_1.5s_ease-out_infinite]"></div>
                             <div class="absolute top-0 left-0 h-[2px] w-4 bg-white blur-[1px] shadow-[0_0_10px_#fff] animate-[shoot-right_1.8s_ease-out_infinite_0.5s]"></div>
@@ -1397,7 +1392,7 @@
                     </div>
 
                     <!-- Logo Final -->
-                    <div class="relative flex items-center justify-center w-20 h-20 sm:w-28 sm:h-28 rounded-full bg-gradient-to-b from-[#111] to-[#000] border border-white/10 shadow-[0_0_50px_rgba(255,255,255,0.05)] transform scale-50 opacity-0 transition-all duration-[1.5s] ease-out will-change-transform cursor-none mt-20 md:mt-32" id="exp-final-node">
+                    <div class="relative flex items-center justify-center w-20 h-20 sm:w-28 sm:h-28 rounded-full bg-gradient-to-b from-[#111] to-[#000] border border-white/10 shadow-[0_0_50px_rgba(255,255,255,0.05)] transform scale-50 opacity-0 transition-all duration-[1.5s] ease-out will-change-transform cursor-none mt-10 md:mt-16" id="exp-final-node">
                         <!-- Ripple Effects -->
                         <div class="absolute inset-0 rounded-full border border-emerald-500/30 animate-[ping_3s_linear_infinite]"></div>
                         <div class="absolute inset-[-20px] rounded-full border border-cyan-500/20 animate-[ping_4s_linear_infinite] delay-700 pointer-events-none"></div>
@@ -1405,6 +1400,64 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+    </section>
+
+    <!-- Quinta Dobra / A Transformação Estratégica -->
+    <section id="soul-transformation" class="relative w-full h-screen bg-[#020202] overflow-hidden flex items-center justify-center">
+        
+        <!-- Vórtice Quântico (Canvas 3D) -->
+        <canvas id="climax-canvas" class="absolute inset-0 z-0 opacity-0 transition-opacity duration-1000 ease-in-out pointer-events-none mix-blend-screen"></canvas>
+
+        <!-- Textos Gigantes -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10 perspective-[1000px]">
+            <h1 class="trans-word absolute text-[12vw] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-gray-100 to-gray-500 opacity-0 transform translate-y-20 scale-90 drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]" style="-webkit-text-stroke: 2px rgba(255,255,255,0.2); font-family: 'Barlow Condensed', Impact, sans-serif;">VISIBILIDADE</h1>
+            <h1 class="trans-word absolute text-[12vw] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-indigo-300 to-purple-600 opacity-0 transform translate-y-20 scale-90 drop-shadow-[0_0_30px_rgba(99,102,241,0.5)]" style="-webkit-text-stroke: 2px rgba(99,102,241,0.3); font-family: 'Barlow Condensed', Impact, sans-serif;">AUTORIDADE</h1>
+            <h1 class="trans-word absolute text-[12vw] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-emerald-300 to-teal-600 opacity-0 transform translate-y-20 scale-90 drop-shadow-[0_0_30px_rgba(16,185,129,0.5)]" style="-webkit-text-stroke: 2px rgba(16,185,129,0.3); font-family: 'Barlow Condensed', Impact, sans-serif;">POSICIONAMENTO</h1>
+            <h1 class="trans-word absolute text-[14vw] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-amber-300 to-orange-600 opacity-0 transform translate-y-20 scale-90 drop-shadow-[0_0_50px_rgba(245,158,11,0.6)]" style="-webkit-text-stroke: 2px rgba(245,158,11,0.4); font-family: 'Barlow Condensed', Impact, sans-serif;">CRESCIMENTO</h1>
+        </div>
+
+        <!-- Subtextos -->
+        <div class="absolute bottom-32 left-0 right-0 flex flex-col items-center justify-center z-20 pointer-events-none">
+            <p class="trans-sub absolute text-white/50 text-xl font-light tracking-wide opacity-0 transform translate-y-5">Ser visto não é suficiente.</p>
+            <p class="trans-sub absolute text-white/50 text-xl font-light tracking-wide opacity-0 transform translate-y-5">Autoridade gera confiança.</p>
+            <p class="trans-sub absolute text-white/50 text-xl font-light tracking-wide opacity-0 transform translate-y-5">Posicionamento gera preferência.</p>
+            <p class="trans-sub absolute text-amber-400/80 text-2xl font-medium tracking-wide opacity-0 transform translate-y-5">Estratégia gera crescimento.</p>
+        </div>
+
+        <!-- Fim: Clímax e CTA -->
+        <div id="trans-climax" class="absolute inset-0 flex flex-col items-center justify-center z-30 opacity-0 pointer-events-none bg-[#020202]">
+            
+            <p class="text-white/60 text-lg md:text-2xl font-light tracking-[0.2em] mb-16 transform translate-y-10" id="climax-text">Resultados são consequência de estratégia.</p>
+            
+            <div class="text-center transform translate-y-10" id="climax-signature">
+                <div class="flex items-center justify-center gap-4 mb-4">
+                    <img src="assets/logo%203.png" alt="Soul" class="w-8 h-8 opacity-80">
+                    <span class="text-white font-mono text-sm tracking-[0.4em] uppercase">Soul Estratégias Digitais</span>
+                </div>
+            </div>
+
+            <div class="mt-24 text-center transform translate-y-10 opacity-0" id="climax-cta-container">
+                <h3 class="text-3xl md:text-5xl font-extrabold text-white mb-12 tracking-tight">Pronto para construir algo<br>que o mercado não consiga <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-300">ignorar?</span></h3>
+                
+                <!-- Botão CTA Premium Magnético -->
+                <a href="#" id="magnetic-cta" class="group relative inline-flex items-center justify-center px-12 py-6 rounded-full overflow-hidden pointer-events-auto transition-transform duration-500 hover:scale-[1.02] border border-white/10 bg-white/5 backdrop-blur-md">
+                    <!-- Glass Background & Hover Color -->
+                    <div class="absolute inset-0 rounded-full transition-colors duration-500 group-hover:bg-white/10 group-hover:border-white/20"></div>
+                    <!-- Hover Glow Sweep -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] skew-x-12"></div>
+                    <!-- Magnetic Cursor Glow -->
+                    <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style="background: radial-gradient(circle 120px at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.15), transparent 100%); mix-blend-mode: overlay;"></div>
+                    <!-- Outer Glow -->
+                    <div class="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 shadow-[0_0_40px_rgba(255,255,255,0.1),inset_0_0_20px_rgba(255,255,255,0.05)]"></div>
+                    
+                    <span class="relative z-10 text-white font-semibold text-sm tracking-[0.2em] uppercase">Iniciar um Projeto</span>
+                    
+                    <div class="relative z-10 ml-4 flex items-center justify-center w-8 h-8 rounded-full bg-white text-black transform group-hover:translate-x-1 transition-transform duration-500">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
@@ -1894,6 +1947,286 @@
                 });
             });
         }
+
+        // --- Lógica da Dobra: O Campo Quântico (Vórtice) ---
+        const canvas = document.getElementById('climax-canvas');
+        const ctx = canvas.getContext('2d');
+        let cWidth, cHeight;
+        let particles = [];
+
+        const vortexState = {
+            r: 255, g: 255, b: 255, // Cor inicial branca
+            speed: 0.1,             // Velocidade de deriva lenta
+            pull: 0,                // Nenhuma atração inicial
+            density: 0.6,
+            coreRadius: 0
+        };
+
+        function initVortex() {
+            cWidth = canvas.width = window.innerWidth;
+            cHeight = canvas.height = window.innerHeight;
+            particles = [];
+            // 500 partículas para um efeito massivo
+            for (let i = 0; i < 500; i++) {
+                particles.push({
+                    x: Math.random() * cWidth,
+                    y: Math.random() * cHeight,
+                    vx: (Math.random() - 0.5) * 1.5,
+                    vy: (Math.random() - 0.5) * 1.5,
+                    size: Math.random() * 1.5 + 0.5,
+                    angle: Math.random() * Math.PI * 2,
+                    dist: Math.random() * (cWidth > cHeight ? cWidth : cHeight)
+                });
+            }
+        }
+        window.addEventListener('resize', initVortex);
+        initVortex();
+
+        function renderVortex() {
+            // Efeito de rastro cinemático
+            ctx.fillStyle = 'rgba(2, 2, 2, 0.15)';
+            ctx.fillRect(0, 0, cWidth, cHeight);
+
+            const centerX = cWidth / 2;
+            const centerY = cHeight / 2;
+
+            ctx.fillStyle = `rgba(${Math.round(vortexState.r)}, ${Math.round(vortexState.g)}, ${Math.round(vortexState.b)}, ${vortexState.density})`;
+
+            particles.forEach(p => {
+                if (vortexState.pull > 0) {
+                    // O Círculo do Infinito (Lemniscata de Bernoulli)
+                    p.angle += 0.02 * vortexState.speed;
+                    p.dist -= vortexState.pull * 2;
+                    
+                    if (p.dist < vortexState.coreRadius) {
+                        p.dist = (cWidth > cHeight ? cWidth : cHeight) * 0.8; // Renasce nas bordas
+                        p.angle = Math.random() * Math.PI * 2;
+                    }
+                    
+                    // Matemática da Lemniscata (Símbolo do Infinito)
+                    const scale = p.dist;
+                    const sinT = Math.sin(p.angle);
+                    const cosT = Math.cos(p.angle);
+                    const denominator = 1 + sinT * sinT;
+                    
+                    p.x = centerX + (scale * cosT) / denominator;
+                    p.y = centerY + (scale * sinT * cosT) / denominator;
+                } else {
+                    // Modo Deriva: flutuação livre
+                    p.x += p.vx * vortexState.speed;
+                    p.y += p.vy * vortexState.speed;
+                    
+                    // Continuidade da tela
+                    if (p.x < 0) p.x = cWidth;
+                    if (p.x > cWidth) p.x = 0;
+                    if (p.y < 0) p.y = cHeight;
+                    if (p.y > cHeight) p.y = 0;
+                }
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Core central brilhante durante o vórtice
+            if (vortexState.pull > 0 && vortexState.coreRadius > 0) {
+                const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, vortexState.coreRadius * 4);
+                gradient.addColorStop(0, `rgba(${Math.round(vortexState.r)}, ${Math.round(vortexState.g)}, ${Math.round(vortexState.b)}, ${vortexState.density})`);
+                gradient.addColorStop(1, 'transparent');
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, vortexState.coreRadius * 4, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            requestAnimationFrame(renderVortex);
+        }
+        renderVortex();
+
+        // --- Lógica da Dobra: Transformação Estratégica Cinematográfica ---
+        const transWords = document.querySelectorAll('.trans-word');
+        const transSubs = document.querySelectorAll('.trans-sub');
+        const climaxEl = document.getElementById('trans-climax');
+
+        // Text Splitting Logic
+        transWords.forEach(word => {
+            const text = word.innerText;
+            word.innerHTML = '';
+            [...text].forEach(char => {
+                const span = document.createElement('span');
+                span.innerText = char;
+                span.style.display = 'inline-block';
+                span.style.opacity = '0';
+                span.style.transform = 'translateY(50px) rotateX(-90deg)';
+                word.appendChild(span);
+            });
+            word.style.opacity = '1'; 
+            word.style.transform = 'translateY(0) scale(1)';
+        });
+
+        // Cores do Vórtice
+        const vortexColors = [
+            { r: 255, g: 255, b: 255 }, // Visibilidade (Branco)
+            { r: 99, g: 102, b: 241 },  // Autoridade (Índigo)
+            { r: 16, g: 185, b: 129 },  // Posicionamento (Esmeralda)
+            { r: 245, g: 158, b: 11 }   // Crescimento (Ambar)
+        ];
+
+        if (transWords.length > 0) {
+            const transTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '#soul-transformation',
+                    pin: true,
+                    scrub: 1,
+                    start: 'top top',
+                    end: '+=5000',
+                }
+            });
+
+            // Fade in do canvas
+            transTl.to(canvas, { opacity: 1, duration: 0.5 }, 'start');
+
+            for (let i = 0; i < 3; i++) {
+                const chars = transWords[i].querySelectorAll('span');
+                
+                // Vórtice suga e muda de cor
+                transTl.to(vortexState, { 
+                    r: vortexColors[i].r, g: vortexColors[i].g, b: vortexColors[i].b, 
+                    speed: 1.5 + (i * 0.5), 
+                    pull: 1 + (i * 0.5), 
+                    coreRadius: 10 + (i * 5),
+                    duration: 1 
+                }, `phase${i}`);
+
+                // Entrada da palavra
+                transTl.to(chars, { 
+                    opacity: 1, y: 0, rotateX: 0, 
+                    duration: 1, stagger: 0.08, ease: 'back.out(1.7)' 
+                }, `phase${i}`)
+                .to(transSubs[i], { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, `phase${i}+=0.5`);
+                
+                transTl.to({}, { duration: 0.8 });
+                
+                // Saída agressiva e vórtice acalma
+                transTl.to(vortexState, { speed: 0.5, pull: 0.2, duration: 0.6 }, `phase${i}_out`);
+                transTl.to(chars, { 
+                    opacity: 0, scale: 1.5, filter: 'blur(15px)', 
+                    duration: 0.6, stagger: 0.04, ease: 'power2.in' 
+                }, `phase${i}_out`)
+                .to(transSubs[i], { opacity: 0, y: -10, filter: 'blur(5px)', duration: 0.5 }, `phase${i}_out`);
+            }
+
+            // Quarta Palavra (Crescimento) - O ápice do reator
+            const chars3 = transWords[3].querySelectorAll('span');
+            transTl.to(vortexState, { 
+                r: vortexColors[3].r, g: vortexColors[3].g, b: vortexColors[3].b, 
+                speed: 4, pull: 3, coreRadius: 50, duration: 1 
+            }, 'phase3');
+
+            transTl.to(chars3, { 
+                opacity: 1, y: 0, rotateX: 0, 
+                duration: 1.5, stagger: 0.1, ease: 'elastic.out(1, 0.5)' 
+            }, 'phase3')
+            .to(transSubs[3], { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }, 'phase3+=0.8');
+            
+            transTl.to({}, { duration: 1.5 });
+            
+            // Explosão e Calmaria (Silêncio Visual)
+            // Vórtice espalha rapidamente e fica em deriva como poeira dourada flutuando devagar
+            transTl.to(vortexState, { speed: 0.05, pull: 0, coreRadius: 0, duration: 2 }, 'phase3_out')
+                   .to(chars3, { opacity: 0, scale: 2, filter: 'blur(30px)', duration: 1, stagger: 0.05, ease: 'power3.in' }, 'phase3_out')
+                   .to(transSubs[3], { opacity: 0, filter: 'blur(10px)', duration: 0.5 }, 'phase3_out');
+
+            // Silêncio e Revelação Final da SOUL e do CTA
+            transTl.to(climaxEl, { opacity: 1, duration: 1, pointerEvents: 'auto' }, 'climax')
+                   .to('#climax-text', { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }, 'climax+=0.5')
+                   .to('#climax-signature', { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }, 'climax+=1')
+                   .to('#climax-cta-container', { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }, 'climax+=1.5');
+        }
+
+        // --- Efeito Magnético do Botão CTA ---
+        const magCta = document.getElementById('magnetic-cta');
+        if (magCta && window.matchMedia("(pointer: fine)").matches) {
+            magCta.addEventListener('mousemove', (e) => {
+                const rect = magCta.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                magCta.style.setProperty('--x', `${x}%`);
+                magCta.style.setProperty('--y', `${y}%`);
+            });
+            // Opcional: resetar a posição quando sair
+            magCta.addEventListener('mouseleave', () => {
+                magCta.style.setProperty('--x', `50%`);
+                magCta.style.setProperty('--y', `50%`);
+            });
+        }
+
+        // --- Lógica de Navegação Completa e Premium ---
+        (function() {
+            // Expõe a função globalmente para ser chamada diretamente no HTML
+            window.premiumScrollTo = function(targetId) {
+                const targetEl = document.querySelector(targetId);
+                if (targetEl) {
+                    targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            };
+
+            // 3. Highlight Ativo no Menu de Navegação (Header)
+            const headerBtns = document.querySelectorAll('header nav .hidden.md\\:flex.gap-6 button');
+            if (headerBtns.length >= 3) {
+                const sectionIds = ['#soul-projetos', '#soul-design-section', '#soul-transformation'];
+                
+                // Usando setTimeout para garantir que o GSAP ScrollTrigger já está carregado
+                setTimeout(() => {
+                    if(typeof ScrollTrigger !== 'undefined') {
+                        sectionIds.forEach((secId, index) => {
+                            const sec = document.querySelector(secId);
+                            if (sec) {
+                                ScrollTrigger.create({
+                                    trigger: sec,
+                                    start: "top 40%", 
+                                    end: "bottom 40%",
+                                    onEnter: () => activateMenu(index),
+                                    onEnterBack: () => activateMenu(index),
+                                    onLeave: () => { if(index === 0) resetMenu(); }, 
+                                    onLeaveBack: () => { if(index === 0) resetMenu(); }
+                                });
+                            }
+                        });
+                    }
+                }, 500);
+
+                function activateMenu(index) {
+                    headerBtns.forEach((btn, i) => {
+                        if (i === index) {
+                            btn.classList.remove('text-zinc-500');
+                            btn.classList.add('text-white');
+                        } else {
+                            btn.classList.add('text-zinc-500');
+                            btn.classList.remove('text-white');
+                        }
+                    });
+                }
+
+                function resetMenu() {
+                    headerBtns.forEach(btn => {
+                        btn.classList.add('text-zinc-500');
+                        btn.classList.remove('text-white');
+                    });
+                }
+            }
+
+            // 4. Clicar na Logo para subir para a Hero (Topo)
+            const headerLogo = document.querySelector('header img');
+            if (headerLogo) {
+                headerLogo.style.cursor = 'pointer'; 
+                headerLogo.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+        })();
+
     </script>
     <script src="sonic-link.aura.build/assets/js/ecosystem-floating.js"></script>
 </body>
