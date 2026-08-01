@@ -50,7 +50,7 @@
         
         @media (pointer: coarse) {
             body { cursor: auto; }
-            #cursor-dot, #cursor-halo, #project-cursor, .cursor-none {
+            #cursor-dot, #cursor-halo, #project-cursor {
                 display: none !important;
                 opacity: 0 !important;
             }
@@ -63,6 +63,16 @@
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
         }
+
+        /* Ocultar barra de rolagem para um visual mais limpo e imersivo (App-like) */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        * {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
         /* --- PREMIUM PRELOADER CINEMATOGRÁFICO --- */
         #black-preloader {
             position: fixed; inset: 0; z-index: 999990;
@@ -229,11 +239,15 @@
                 max-width: 320px !important;
             }
         }
+        /* AJUSTES MOBILE (WebGL ativado a pedido do usuário) */
+        @media (max-width: 768px) {
+            .glow-pulse, .micro-particles { display: none !important; }
+            .titleChunk { font-size: 3rem !important; }
+        }
     </style>
 </head>
 <body class="min-h-screen overflow-x-hidden w-full max-w-[100vw] bg-black antialiased selection:bg-[#f97316]/30 selection:text-white text-zinc-400 relative">
 
-    <!-- CUSTOM CURSOR -->
     <div class="cursor-dot" id="cursor-dot"></div>
     <div class="cursor-halo" id="cursor-halo"></div>
 
@@ -340,11 +354,15 @@
     </div>
 
     <!-- navigation adaptado para Portfólio -->
-    <header class="fixed md:top-8 z-50 flex pointer-events-auto pr-4 pl-4 top-4 right-0 left-0 justify-center">
-        <nav class="flex items-center w-full md:w-auto max-w-4xl justify-between md:justify-center bg-[#18181B]/80 border-white/5 border rounded-full py-2 pr-2 pl-4 md:pl-6 shadow-2xl shadow-black/50 backdrop-blur-xl transition-all">
-            <div class="flex items-center gap-2 pr-2 md:pr-6 md:border-r border-white/10 py-1 cursor-none hover:text-white transition-colors">
-                <img src="assets/logo%203.png" alt="Logo" class="h-10 w-auto" />
+    <header class="fixed md:top-8 z-50 flex pointer-events-auto p-4 md:pr-4 md:pl-4 top-2 right-0 left-0 justify-center w-full">
+        <!-- Barra Desktop / Logo Flutuante Mobile -->
+        <nav class="relative flex items-center w-auto max-w-4xl justify-center md:justify-between bg-transparent md:bg-[#18181B]/80 border-transparent md:border-white/5 border rounded-full py-2 px-0 md:pr-2 md:pl-6 shadow-none md:shadow-2xl md:shadow-black/50 backdrop-blur-none md:backdrop-blur-xl transition-all z-50">
+            <!-- Logo Centralizada no Mobile, Esquerda no Desktop -->
+            <div class="flex items-center justify-center md:pr-6 md:border-r border-white/10 py-1 cursor-none hover:text-white transition-colors">
+                <img src="assets/logo%203.png" alt="Logo" class="h-10 md:h-10 w-auto drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]" />
             </div>
+            
+            <!-- Menu Desktop (Mantido) -->
             <div class="hidden md:flex gap-6 px-6 items-center">
                 <button onclick="window.premiumScrollTo('#soul-projetos')" class="hover:text-white cursor-none transition-colors text-xs text-zinc-500 tracking-widest font-mono">Projetos</button>
                 <button onclick="window.premiumScrollTo('#soul-design-section')" class="hover:text-white cursor-none transition-colors text-xs text-zinc-500 tracking-widest font-mono">Serviços</button>
@@ -371,29 +389,51 @@
             
             <!-- (PRELOADER 1) TEXTO 1 DA TIMELINE GSAP -->
             <div class="absolute inset-x-4 top-[4%] z-10 text-center opacity-0 sm:top-[3%]" id="introWord">
-                <p class="tracking-tight text-white/20 text-[clamp(3.5rem,15vw,11rem)] leading-none" style="font-family: 'Barlow Condensed', Impact, sans-serif; font-weight: 600;">Bem-vindo ao</p>
+                <p class="tracking-tight text-white/20 text-[clamp(2.5rem,10vw,11rem)] md:text-[clamp(3.5rem,15vw,11rem)] leading-none" style="font-family: 'Barlow Condensed', Impact, sans-serif; font-weight: 600;">Bem-vindo ao</p>
             </div>
             
             <!-- (PRELOADER 2) TEXTO 2 DA TIMELINE GSAP -->
             <div class="absolute left-1/2 top-[17%] z-20 flex flex-wrap w-[92%] -translate-x-1/2 items-center justify-center gap-[clamp(.45rem,2vw,2rem)] text-center opacity-0 sm:top-[18%] md:top-[17%]" id="mainTitle">
                 <!-- Mantivemos as 4 chunks originais para garantir que a timeline funcione idêntica! -->
-                <span class="titleChunk inline-block tracking-tight text-white text-[clamp(4rem,12vw,12rem)] sm:text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>Futuro</span>
-                <span class="titleChunk inline-block tracking-tight text-white text-[clamp(4rem,12vw,12rem)] sm:text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>Digital.</span>
-                <span class="titleChunk hidden tracking-tight text-white text-[clamp(4rem,12vw,12rem)] sm:text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>-</span>
-                <span class="titleChunk hidden tracking-tight text-white text-[clamp(4rem,12vw,12rem)] sm:text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>-</span>
+                <span class="titleChunk inline-block tracking-tight text-white text-[clamp(2.8rem,10vw,12rem)] sm:text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>Futuro</span>
+                <span class="titleChunk inline-block tracking-tight text-white text-[clamp(2.8rem,10vw,12rem)] sm:text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>Digital.</span>
+                <span class="titleChunk hidden tracking-tight text-white text-[clamp(2.8rem,10vw,12rem)] sm:text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>-</span>
+                <span class="titleChunk hidden tracking-tight text-white text-[clamp(2.8rem,10vw,12rem)] sm:text-[clamp(4.5rem,12vw,12rem)] leading-[.78]" style='font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 700;'>-</span>
             </div>
             
             <!-- (PRELOADER 3) TEXTO 3 DA TIMELINE GSAP -->
             <div class="absolute left-1/2 top-[14%] z-20 w-[92%] -translate-x-1/2 text-center opacity-0" id="altTitle">
-                <p class="tracking-tight text-white text-[clamp(3.5rem,14vw,12rem)] sm:text-[clamp(4.5rem,14vw,12rem)] leading-[.76]" style="font-family: 'Barlow Condensed', Impact, sans-serif; font-weight: 700;">Alto Impacto</p>
+                <p class="tracking-tight text-white text-[clamp(2.8rem,10vw,12rem)] sm:text-[clamp(4.5rem,14vw,12rem)] leading-[.76]" style="font-family: 'Barlow Condensed', Impact, sans-serif; font-weight: 700;">Alto Impacto</p>
             </div>
             
             <!-- (HERO FINAL) TEXTO DE RESOLUÇÃO FINAL GSAP -->
-            <div class="absolute left-1/2 top-1/2 z-50 w-full px-2 md:px-4 -translate-x-1/2 -translate-y-1/2 text-center opacity-0 flex flex-col items-center" id="resolveTitle">
-                <p class="tracking-tighter text-white text-[clamp(2.5rem,7vw,6.5rem)] leading-[1.1] font-sans font-extrabold" style="text-shadow: 0 15px 50px rgba(0,0,0,0.9), 0 4px 15px rgba(0,0,0,0.8);">Design com Estratégia</p>
-                <p class="mx-auto mt-4 w-full max-w-4xl text-[10px] sm:text-sm font-sans font-normal uppercase tracking-[.25rem] text-white/90 leading-relaxed" style="text-shadow: 0 4px 15px rgba(0,0,0,0.9);">
+            <div class="absolute left-1/2 top-[42%] md:top-[48%] z-50 w-full px-2 md:px-4 -translate-x-1/2 -translate-y-1/2 text-center opacity-0 flex flex-col items-center" id="resolveTitle">
+                <p class="tracking-tighter text-white text-[clamp(2.5rem,8.5vw,6.5rem)] md:text-[clamp(2.5rem,7vw,6.5rem)] leading-[1.05] font-sans font-extrabold" style="text-shadow: 0 15px 50px rgba(0,0,0,0.9), 0 4px 15px rgba(0,0,0,0.8);">Design com Estratégia</p>
+                <p class="mx-auto mt-5 w-full max-w-4xl text-[9px] sm:text-sm font-sans font-normal uppercase tracking-[.15rem] md:tracking-[.25rem] text-white/90 leading-relaxed" style="text-shadow: 0 4px 15px rgba(0,0,0,0.9);">
                     Transformando ideias em experiências digitais que vendem.
                 </p>
+
+                <!-- CTAs Premium -->
+                <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 w-[85%] sm:w-auto mx-auto pointer-events-auto">
+                    <!-- CTA Primário -->
+                    <a href="#contato" class="group relative inline-flex h-12 md:h-14 w-full sm:w-auto items-center justify-center overflow-hidden rounded-full bg-gradient-to-b from-orange-400 to-orange-600 px-8 font-medium text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_10px_20px_-10px_rgba(249,115,22,0.6)] border border-orange-400/50 transition-all duration-500 hover:scale-105 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.5),0_15px_30px_-10px_rgba(249,115,22,0.8)]">
+                        <span class="absolute inset-0 flex h-full w-full justify-center [transform:skew(-13deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-13deg)_translateX(100%)]">
+                            <div class="relative h-full w-8 bg-white/30"></div>
+                        </span>
+                        <span class="relative flex items-center gap-2 uppercase tracking-[0.2em] text-[10px] md:text-xs font-bold text-shadow-sm">
+                            Iniciar Projeto
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 transition-transform group-hover:translate-x-1"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+                        </span>
+                    </a>
+                    
+                    <!-- CTA Secundário -->
+                    <a href="#portfolio" class="group inline-flex h-12 md:h-14 w-full sm:w-auto items-center justify-center overflow-hidden rounded-full bg-white/[0.03] px-8 font-medium text-white backdrop-blur-xl border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] transition-all duration-500 hover:bg-white/[0.08] hover:border-white/20 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_10px_20px_-10px_rgba(0,0,0,0.5)]">
+                        <span class="relative uppercase tracking-[0.2em] text-[10px] md:text-xs font-semibold text-white/70 group-hover:text-white transition-colors">
+                            Ver Portfólio
+                        </span>
+                    </a>
+                </div>
+
                 <!-- Os CTAs exigidos pela agência (escondidos até o fade-in) -->
                 <div class="mt-12 flex flex-col items-center justify-center opacity-70 pointer-events-none animate-[pulse_4s_ease-in-out_infinite]">
                     <p class="text-white/60 uppercase tracking-[0.35em] text-[10px] font-semibold mb-4 text-center font-mono drop-shadow-md">Deslize para a Experiência</p>
@@ -404,7 +444,7 @@
             </div>
 
             <!-- MOCKUP MOBILE (CENTRAL) -->
-            <div class="absolute left-1/2 top-[34%] z-30 h-[49vh] min-h-[20rem] w-[min(25rem,58vw)] -translate-x-1/2 opacity-0 sm:top-[31%] md:w-[min(27rem,30vw)]" id="phoneWrap" style="perspective: 80rem;">
+            <div class="absolute left-1/2 top-[38%] md:top-[34%] z-30 h-[45vh] md:h-[49vh] min-h-[18rem] md:min-h-[20rem] w-[75vw] sm:w-[min(25rem,58vw)] -translate-x-1/2 opacity-0 sm:top-[31%] md:w-[min(27rem,30vw)]" id="phoneWrap" style="perspective: 80rem;">
                 <div class="relative mx-auto h-full w-full overflow-hidden rounded-[2.25rem] border border-white/15 bg-[#050505] shadow-2xl" id="phone" style="box-shadow: rgba(249, 115, 22, 0.45) 0px 0px 0px 0.45rem, rgba(0, 0, 0, 0.68) 0px 2rem 5rem, rgba(249, 115, 22, 0.28) 0px 0px 3rem;">
                     <div class="absolute inset-x-[18%] top-0 z-20 h-6 rounded-b-2xl bg-[#050505]"></div>
                     <div class="absolute inset-0 bg-[#050505]"></div>
@@ -479,12 +519,14 @@
 
             <div aria-hidden="true" class="bg-white opacity-0 z-[70] absolute top-0 right-0 bottom-0 left-0" id="flash"></div>
             
-            <div class="absolute bottom-6 left-1/2 z-[80] flex -translate-x-1/2 items-center gap-4 rounded-full border border-orange-500/20 bg-[#050505]/60 px-6 py-2.5 opacity-0 backdrop-blur-xl shadow-[0_4px_30px_rgba(249,115,22,0.15)] ring-1 ring-white/5 group transition-all hover:scale-105 hover:border-orange-500/40" id="metaRail">
-                <div class="relative flex h-2.5 w-2.5 items-center justify-center">
+            <div class="absolute bottom-[10%] sm:bottom-12 left-1/2 z-[80] flex -translate-x-1/2 items-center gap-3 rounded-full border border-orange-500/30 bg-black/40 px-5 py-2.5 opacity-0 backdrop-blur-2xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_10px_30px_rgba(249,115,22,0.15)] transition-all duration-500 hover:scale-105 hover:border-orange-500/50 w-[max-content] max-w-[90vw]" id="metaRail">
+                <div class="relative flex h-2 w-2 items-center justify-center flex-shrink-0">
                     <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange-400 opacity-75"></span>
                     <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.8)]"></span>
                 </div>
-                <span class="text-[10px] sm:text-xs font-mono uppercase tracking-[.3em] bg-clip-text text-transparent bg-gradient-to-r from-white via-orange-100 to-orange-400 font-semibold">Experiência Digital <span class="text-orange-500/50 mx-1">✦</span> Portfólio</span>
+                <span class="text-[8.5px] sm:text-[11px] font-mono uppercase tracking-[0.15em] sm:tracking-[.3em] bg-clip-text text-transparent bg-gradient-to-r from-white via-orange-100 to-orange-400 font-semibold whitespace-nowrap">
+                    Experiência Digital <span class="text-orange-500/50 mx-1 sm:mx-2 inline-block">✦</span> Portfólio
+                </span>
             </div>
             
             <div class="hidden" style="display: none !important;" id="sequenceLabel">
@@ -493,7 +535,7 @@
             </div>
             
             <!-- ECOSSISTEMA FLUTUANTE (Badges) -->
-            <div id="ecosystem-layer" class="absolute inset-0 z-[60] pointer-events-none perspective-[1200px]">
+            <div id="ecosystem-layer" class="absolute inset-0 z-40 pointer-events-none perspective-[1200px]">
                 
                 <!-- Google Ads (Superior Esquerda, mais ao canto) -->
                 <div class="eco-badge opacity-0 absolute pointer-events-auto group will-change-transform" data-eco="google-ads" style="top: 10%; left: 3%;">
@@ -752,14 +794,14 @@
             </style>
         </div>
 
-        <div class="container mx-auto px-6 lg:px-12 relative z-10 max-w-[1400px]">
-            <div class="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-16 lg:gap-12 items-center">
+        <div class="container mx-auto px-4 md:px-6 lg:px-12 relative z-10 max-w-[1400px]">
+            <div class="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-8 md:gap-16 lg:gap-12 items-center">
                 
                 <!-- COLUNA ESQUERDA: Mockups (55% -> col-span-7) -->
-                <div class="w-full lg:col-span-7 relative soul-mockup-wrapper" style="perspective: 1200px;">
+                <div class="w-full lg:col-span-7 relative soul-mockup-wrapper mt-4 md:mt-0" style="perspective: 1200px;">
                     
                     <!-- Desktop Mockup -->
-                    <div class="soul-mockup-desktop origin-center relative z-10 w-full max-w-[40rem] mx-auto group">
+                    <div class="soul-mockup-desktop origin-center relative z-10 w-[95%] md:w-full max-w-[40rem] mx-auto group">
                         <!-- Blush no Hover -->
                         <div class="absolute inset-4 bg-orange-500/0 blur-[80px] rounded-full transition-all duration-700 ease-out group-hover:bg-orange-500/50 -z-10 group-hover:scale-110 pointer-events-none"></div>
                         
@@ -778,7 +820,7 @@
                     </div>
                     
                     <!-- Mobile Mockup -->
-                    <div class="soul-mockup-mobile origin-center absolute -bottom-8 -right-4 lg:-right-8 z-20 w-28 sm:w-36 md:w-40 group">
+                    <div class="soul-mockup-mobile origin-center absolute -bottom-6 -right-1 md:-bottom-8 md:-right-4 lg:-right-8 z-20 w-24 sm:w-36 md:w-40 group">
                         <!-- Blush no Hover -->
                         <div class="absolute inset-2 bg-orange-500/0 blur-[50px] rounded-full transition-all duration-700 ease-out group-hover:bg-orange-500/50 -z-10 group-hover:scale-110 pointer-events-none"></div>
                         
@@ -794,7 +836,7 @@
                 <div class="w-full lg:col-span-5 flex flex-col justify-center soul-text-content">
                     
                     <!-- Header -->
-                    <div class="mb-10">
+                    <div class="mb-10 text-center">
                         <span class="inline-block text-[10px] md:text-xs font-semibold uppercase tracking-[0.3em] text-orange-400/90 mb-4 soul-stagger">Nossa Abordagem</span>
                         <h2 class="text-4xl md:text-5xl lg:text-5xl font-extrabold text-white leading-[1.1] mb-6 soul-stagger" style="text-shadow: 0 4px 15px rgba(0,0,0,0.5);">
                             Não criamos apenas sites.
@@ -809,34 +851,38 @@
 
                     <!-- Cards 2x2 -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-                        <div class="group p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md cursor-pointer hover:-translate-y-2 hover:bg-gradient-to-br hover:from-white/[0.08] hover:to-white/[0.02] hover:border-orange-500/50 hover:shadow-[0_15px_40px_-10px_rgba(249,115,22,0.4)] transition-all duration-500 ease-out soul-card relative overflow-hidden">
+                        <div class="group p-6 rounded-3xl bg-gradient-to-b from-white/[0.05] to-transparent border border-white/[0.05] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] backdrop-blur-xl cursor-pointer hover:-translate-y-2 hover:from-white/[0.08] hover:border-orange-500/40 hover:shadow-[0_15px_40px_-10px_rgba(249,115,22,0.3),inset_0_1px_1px_rgba(255,255,255,0.1)] transition-all duration-500 ease-out soul-card relative overflow-hidden">
+                            <div class="absolute -top-12 -right-12 w-32 h-32 bg-orange-500/5 rounded-full blur-2xl group-hover:bg-orange-500/20 group-hover:scale-150 transition-all duration-700 pointer-events-none"></div>
                             <div class="absolute inset-0 bg-gradient-to-tr from-orange-500/0 via-orange-500/0 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                             <div class="relative w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center mb-4 group-hover:scale-125 group-hover:-rotate-6 group-hover:bg-orange-500/20 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all duration-500 ease-out">
-                                <span class="text-orange-400 text-base">🎯</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-orange-400"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.82 1.508-2.316a7.5 7.5 0 10-7.516 0c.85.496 1.508 1.333 1.508 2.316V18" /></svg>
                             </div>
                             <h3 class="relative text-white font-semibold text-sm mb-2 group-hover:text-orange-400 transition-colors duration-300">Estratégia Primeiro</h3>
                             <p class="relative text-white/50 text-xs leading-relaxed group-hover:text-white/80 transition-colors duration-300">Antes do design, entendemos seu negócio, mercado e objetivos.</p>
                         </div>
-                        <div class="group p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md cursor-pointer hover:-translate-y-2 hover:bg-gradient-to-br hover:from-white/[0.08] hover:to-white/[0.02] hover:border-orange-500/50 hover:shadow-[0_15px_40px_-10px_rgba(249,115,22,0.4)] transition-all duration-500 ease-out soul-card relative overflow-hidden">
+                        <div class="group p-6 rounded-3xl bg-gradient-to-b from-white/[0.05] to-transparent border border-white/[0.05] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] backdrop-blur-xl cursor-pointer hover:-translate-y-2 hover:from-white/[0.08] hover:border-orange-500/40 hover:shadow-[0_15px_40px_-10px_rgba(249,115,22,0.3),inset_0_1px_1px_rgba(255,255,255,0.1)] transition-all duration-500 ease-out soul-card relative overflow-hidden">
+                            <div class="absolute -top-12 -right-12 w-32 h-32 bg-orange-500/5 rounded-full blur-2xl group-hover:bg-orange-500/20 group-hover:scale-150 transition-all duration-700 pointer-events-none"></div>
                             <div class="absolute inset-0 bg-gradient-to-tr from-orange-500/0 via-orange-500/0 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                             <div class="relative w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center mb-4 group-hover:scale-125 group-hover:rotate-6 group-hover:bg-orange-500/20 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all duration-500 ease-out">
-                                <span class="text-orange-400 text-base">🎨</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-orange-400"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" /></svg>
                             </div>
                             <h3 class="relative text-white font-semibold text-sm mb-2 group-hover:text-orange-400 transition-colors duration-300">Design Exclusivo</h3>
                             <p class="relative text-white/50 text-xs leading-relaxed group-hover:text-white/80 transition-colors duration-300">Interfaces desenvolvidas para refletir a essência da sua marca.</p>
                         </div>
-                        <div class="group p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md cursor-pointer hover:-translate-y-2 hover:bg-gradient-to-br hover:from-white/[0.08] hover:to-white/[0.02] hover:border-orange-500/50 hover:shadow-[0_15px_40px_-10px_rgba(249,115,22,0.4)] transition-all duration-500 ease-out soul-card relative overflow-hidden">
+                        <div class="group p-6 rounded-3xl bg-gradient-to-b from-white/[0.05] to-transparent border border-white/[0.05] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] backdrop-blur-xl cursor-pointer hover:-translate-y-2 hover:from-white/[0.08] hover:border-orange-500/40 hover:shadow-[0_15px_40px_-10px_rgba(249,115,22,0.3),inset_0_1px_1px_rgba(255,255,255,0.1)] transition-all duration-500 ease-out soul-card relative overflow-hidden">
+                            <div class="absolute -top-12 -right-12 w-32 h-32 bg-orange-500/5 rounded-full blur-2xl group-hover:bg-orange-500/20 group-hover:scale-150 transition-all duration-700 pointer-events-none"></div>
                             <div class="absolute inset-0 bg-gradient-to-tr from-orange-500/0 via-orange-500/0 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                             <div class="relative w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center mb-4 group-hover:scale-125 group-hover:-rotate-6 group-hover:bg-orange-500/20 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all duration-500 ease-out">
-                                <span class="text-orange-400 text-base">⚡</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-orange-400"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
                             </div>
                             <h3 class="relative text-white font-semibold text-sm mb-2 group-hover:text-orange-400 transition-colors duration-300">Performance</h3>
                             <p class="relative text-white/50 text-xs leading-relaxed group-hover:text-white/80 transition-colors duration-300">Sites rápidos, responsivos e otimizados para todos os dispositivos.</p>
                         </div>
-                        <div class="group p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md cursor-pointer hover:-translate-y-2 hover:bg-gradient-to-br hover:from-white/[0.08] hover:to-white/[0.02] hover:border-orange-500/50 hover:shadow-[0_15px_40px_-10px_rgba(249,115,22,0.4)] transition-all duration-500 ease-out soul-card relative overflow-hidden">
+                        <div class="group p-6 rounded-3xl bg-gradient-to-b from-white/[0.05] to-transparent border border-white/[0.05] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] backdrop-blur-xl cursor-pointer hover:-translate-y-2 hover:from-white/[0.08] hover:border-orange-500/40 hover:shadow-[0_15px_40px_-10px_rgba(249,115,22,0.3),inset_0_1px_1px_rgba(255,255,255,0.1)] transition-all duration-500 ease-out soul-card relative overflow-hidden">
+                            <div class="absolute -top-12 -right-12 w-32 h-32 bg-orange-500/5 rounded-full blur-2xl group-hover:bg-orange-500/20 group-hover:scale-150 transition-all duration-700 pointer-events-none"></div>
                             <div class="absolute inset-0 bg-gradient-to-tr from-orange-500/0 via-orange-500/0 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                             <div class="relative w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center mb-4 group-hover:scale-125 group-hover:rotate-6 group-hover:bg-orange-500/20 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] transition-all duration-500 ease-out">
-                                <span class="text-orange-400 text-base">📈</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-orange-400"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" /></svg>
                             </div>
                             <h3 class="relative text-white font-semibold text-sm mb-2 group-hover:text-orange-400 transition-colors duration-300">Conversão</h3>
                             <p class="relative text-white/50 text-xs leading-relaxed group-hover:text-white/80 transition-colors duration-300">Cada elemento é pensado para gerar mais contatos e oportunidades.</p>
@@ -846,43 +892,52 @@
                     <!-- Indicadores Animados -->
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6 pt-8 border-t border-white/10 soul-stats">
                         
-                        <div class="group relative flex flex-col justify-center p-5 rounded-2xl bg-[#111]/40 border border-white/5 hover:border-orange-500/30 hover:bg-white/[0.03] transition-all duration-500 overflow-hidden cursor-default">
-                            <!-- Glow pulsante contínuo -->
-                            <div class="absolute -inset-4 bg-gradient-to-r from-orange-500/0 via-orange-500/10 to-orange-500/0 opacity-30 animate-pulse pointer-events-none"></div>
+                        <div class="group relative flex flex-col justify-center p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-white/[0.03] to-transparent border border-white/[0.05] backdrop-blur-2xl hover:border-orange-500/30 hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-700 overflow-hidden cursor-default">
+                            <!-- Ponto de luz ambiente (Neon glow) -->
+                            <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 w-28 h-28 bg-orange-500/20 rounded-full blur-2xl group-hover:bg-orange-500/30 group-hover:scale-150 transition-all duration-700 pointer-events-none"></div>
                             
-                            <div class="relative z-10 flex flex-col items-center sm:items-start">
-                                <p class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-200 drop-shadow-[0_0_12px_rgba(249,115,22,0.2)] mb-1 group-hover:drop-shadow-[0_0_20px_rgba(249,115,22,0.5)] transition-all duration-500">100%</p>
-                                <p class="text-white/50 text-[10px] sm:text-xs uppercase tracking-widest font-medium group-hover:text-white/80 transition-colors duration-500 text-center sm:text-left leading-snug">Projetos Exclusivos</p>
+                            <div class="relative z-10 flex flex-col items-center">
+                                <p class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-orange-300 via-orange-500 to-amber-200 drop-shadow-lg mb-2 group-hover:drop-shadow-2xl transition-all duration-500">100%</p>
+                                <div class="flex items-center gap-2">
+                                    <div class="w-1 h-1 rounded-full bg-orange-500 shadow-sm shadow-orange-500"></div>
+                                    <p class="text-white/60 text-[10px] sm:text-xs uppercase tracking-[0.2em] font-medium group-hover:text-white/90 transition-colors duration-500 text-center leading-snug">Projetos Exclusivos</p>
+                                </div>
                             </div>
                             
                             <!-- Borda animada no hover -->
-                            <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                         </div>
 
-                        <div class="group relative flex flex-col justify-center p-5 rounded-2xl bg-[#111]/40 border border-white/5 hover:border-orange-500/30 hover:bg-white/[0.03] transition-all duration-500 overflow-hidden cursor-default">
-                            <!-- Glow pulsante contínuo -->
-                            <div class="absolute -inset-4 bg-gradient-to-r from-orange-500/0 via-orange-500/10 to-orange-500/0 opacity-30 animate-pulse pointer-events-none" style="animation-delay: 0.2s;"></div>
+                        <div class="group relative flex flex-col justify-center p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-white/[0.03] to-transparent border border-white/[0.05] backdrop-blur-2xl hover:border-orange-500/30 hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-700 overflow-hidden cursor-default">
+                            <!-- Ponto de luz ambiente (Neon glow) -->
+                            <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 w-28 h-28 bg-orange-500/20 rounded-full blur-2xl group-hover:bg-orange-500/30 group-hover:scale-150 transition-all duration-700 pointer-events-none" style="animation-delay: 0.2s;"></div>
                             
-                            <div class="relative z-10 flex flex-col items-center sm:items-start">
-                                <p class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-200 drop-shadow-[0_0_12px_rgba(249,115,22,0.2)] mb-1 group-hover:drop-shadow-[0_0_20px_rgba(249,115,22,0.5)] transition-all duration-500">+20</p>
-                                <p class="text-white/50 text-[10px] sm:text-xs uppercase tracking-widest font-medium group-hover:text-white/80 transition-colors duration-500 text-center sm:text-left leading-snug">Componentes Premium</p>
+                            <div class="relative z-10 flex flex-col items-center">
+                                <p class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-orange-300 via-orange-500 to-amber-200 drop-shadow-lg mb-2 group-hover:drop-shadow-2xl transition-all duration-500">+20</p>
+                                <div class="flex items-center gap-2">
+                                    <div class="w-1 h-1 rounded-full bg-orange-500 shadow-sm shadow-orange-500"></div>
+                                    <p class="text-white/60 text-[10px] sm:text-xs uppercase tracking-[0.2em] font-medium group-hover:text-white/90 transition-colors duration-500 text-center leading-snug">Componentes Premium</p>
+                                </div>
                             </div>
                             
                             <!-- Borda animada no hover -->
-                            <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                         </div>
 
-                        <div class="group relative flex flex-col justify-center p-5 rounded-2xl bg-[#111]/40 border border-white/5 hover:border-orange-500/30 hover:bg-white/[0.03] transition-all duration-500 overflow-hidden cursor-default">
-                            <!-- Glow pulsante contínuo -->
-                            <div class="absolute -inset-4 bg-gradient-to-r from-orange-500/0 via-orange-500/10 to-orange-500/0 opacity-30 animate-pulse pointer-events-none" style="animation-delay: 0.4s;"></div>
+                        <div class="group relative flex flex-col justify-center p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-white/[0.03] to-transparent border border-white/[0.05] backdrop-blur-2xl hover:border-orange-500/30 hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-700 overflow-hidden cursor-default">
+                            <!-- Ponto de luz ambiente (Neon glow) -->
+                            <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 w-28 h-28 bg-orange-500/20 rounded-full blur-2xl group-hover:bg-orange-500/30 group-hover:scale-150 transition-all duration-700 pointer-events-none" style="animation-delay: 0.4s;"></div>
                             
-                            <div class="relative z-10 flex flex-col items-center sm:items-start">
-                                <p class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-200 drop-shadow-[0_0_12px_rgba(249,115,22,0.2)] mb-1 group-hover:drop-shadow-[0_0_20px_rgba(249,115,22,0.5)] transition-all duration-500">∞</p>
-                                <p class="text-white/50 text-[10px] sm:text-xs uppercase tracking-widest font-medium group-hover:text-white/80 transition-colors duration-500 text-center sm:text-left leading-snug">Possibilidades Criativas</p>
+                            <div class="relative z-10 flex flex-col items-center">
+                                <p class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-orange-300 via-orange-500 to-amber-200 drop-shadow-lg mb-2 group-hover:drop-shadow-2xl transition-all duration-500">∞</p>
+                                <div class="flex items-center gap-2">
+                                    <div class="w-1 h-1 rounded-full bg-orange-500 shadow-sm shadow-orange-500"></div>
+                                    <p class="text-white/60 text-[10px] sm:text-xs uppercase tracking-[0.2em] font-medium group-hover:text-white/90 transition-colors duration-500 text-center leading-snug">Possibilidades Criativas</p>
+                                </div>
                             </div>
                             
                             <!-- Borda animada no hover -->
-                            <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-orange-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                         </div>
 
                     </div>
@@ -920,162 +975,189 @@
                         <span id="project-cursor-text" class="text-center leading-tight drop-shadow-md opacity-0">Visualizar<br>Projeto</span>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
                         
                         <!-- Projeto 01: Esports Tournament -->
                         <a href="ASSETSS/esports-tournament-96.aura.build/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-purple-500/30 transition-all duration-700">
-                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
-                                <img src="ASSETSS/gallery-covers/cover_esports_1781138383357.png" alt="Arena Esports" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                            <div class="aspect-video w-full overflow-hidden relative">
+                                <img src="ASSETSS/imagens dobra projeto (1).png" alt="Arena Esports" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
                                 <div class="absolute inset-0 bg-purple-500/0 group-hover:bg-purple-500/10 transition-colors duration-700 mix-blend-overlay"></div>
                             </div>
-                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                <span class="text-purple-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">01</span>
-                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-purple-400 transition-colors duration-500">Arena Esports</h3>
-                                <p class="text-white/50 text-sm font-medium">Plataforma de Torneios Gaming</p>
+                            <div class="absolute bottom-0 left-0 w-full p-3 sm:p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-purple-500 text-[10px] uppercase tracking-widest font-mono mb-0.5 sm:mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">01</span>
+                                <h3 class="text-sm sm:text-2xl font-bold text-white mb-0.5 sm:mb-1 leading-tight sm:leading-normal group-hover:text-purple-400 transition-colors duration-500">Arena Esports</h3>
+                                <p class="text-white/50 text-[9px] sm:text-sm font-medium leading-snug">Plataforma de Torneios Gaming</p>
                             </div>
                         </a>
 
                         <!-- Projeto 02: Cogni -->
                         <a href="ASSETSS/cogni.aura.build/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-blue-500/30 transition-all duration-700">
-                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
-                                <img src="ASSETSS/gallery-covers/cover_cogni_1781138391442.png" alt="Cogni IA" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                            <div class="aspect-video w-full overflow-hidden relative">
+                                <img src="ASSETSS/imagens dobra projeto (2).png" alt="Cogni IA" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
                                 <div class="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-colors duration-700 mix-blend-overlay"></div>
                             </div>
-                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                <span class="text-blue-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">02</span>
-                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-blue-400 transition-colors duration-500">Cogni.IA</h3>
-                                <p class="text-white/50 text-sm font-medium">Dashboard Analítico de Inteligência</p>
+                            <div class="absolute bottom-0 left-0 w-full p-3 sm:p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-blue-500 text-[10px] uppercase tracking-widest font-mono mb-0.5 sm:mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">02</span>
+                                <h3 class="text-sm sm:text-2xl font-bold text-white mb-0.5 sm:mb-1 leading-tight sm:leading-normal group-hover:text-blue-400 transition-colors duration-500">Cogni.IA</h3>
+                                <p class="text-white/50 text-[9px] sm:text-sm font-medium leading-snug">Dashboard Analítico de Inteligência</p>
                             </div>
                         </a>
 
                         <!-- Projeto 03: Parallax Clean -->
                         <a href="ASSETSS/parallax-clean/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-slate-300/30 transition-all duration-700">
-                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
-                                <img src="ASSETSS/gallery-covers/cover_aethereal_1781138401242.png" alt="Aethereal" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                            <div class="aspect-video w-full overflow-hidden relative">
+                                <img src="ASSETSS/imagens dobra projeto (10).png" alt="Aethereal" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
                                 <div class="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-700 mix-blend-overlay"></div>
                             </div>
-                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                <span class="text-slate-300 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">03</span>
-                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-slate-200 transition-colors duration-500">Aethereal</h3>
-                                <p class="text-white/50 text-sm font-medium">Arquitetura Minimalista Limpa</p>
+                            <div class="absolute bottom-0 left-0 w-full p-3 sm:p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-slate-400 text-[10px] uppercase tracking-widest font-mono mb-0.5 sm:mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">03</span>
+                                <h3 class="text-sm sm:text-2xl font-bold text-white mb-0.5 sm:mb-1 leading-tight sm:leading-normal group-hover:text-slate-300 transition-colors duration-500">Aethereal</h3>
+                                <p class="text-white/50 text-[9px] sm:text-sm font-medium leading-snug">Arquitetura Minimalista</p>
                             </div>
                         </a>
 
                         <!-- Projeto 04: Creative Agency -->
                         <a href="ASSETSS/creative-agency-template.aura.build/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-rose-500/30 transition-all duration-700">
-                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
-                                <img src="ASSETSS/gallery-covers/cover_creative_1781138412257.png" alt="Soul Creative" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                            <div class="aspect-video w-full overflow-hidden relative">
+                                <img src="ASSETSS/imagens dobra projeto (3).png" alt="Soul Creative" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
                                 <div class="absolute inset-0 bg-rose-500/0 group-hover:bg-rose-500/10 transition-colors duration-700 mix-blend-overlay"></div>
                             </div>
-                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                <span class="text-rose-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">04</span>
-                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-rose-400 transition-colors duration-500">Soul Creative</h3>
-                                <p class="text-white/50 text-sm font-medium">Portfólio de Agência Digital</p>
+                            <div class="absolute bottom-0 left-0 w-full p-3 sm:p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-rose-500 text-[10px] uppercase tracking-widest font-mono mb-0.5 sm:mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">04</span>
+                                <h3 class="text-sm sm:text-2xl font-bold text-white mb-0.5 sm:mb-1 leading-tight sm:leading-normal group-hover:text-rose-400 transition-colors duration-500">Soul Creative</h3>
+                                <p class="text-white/50 text-[9px] sm:text-sm font-medium leading-snug">Agência Digital Imersiva</p>
                             </div>
                         </a>
 
                         <!-- Projeto 05: Green Site -->
                         <a href="ASSETSS/green-site/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-green-500/30 transition-all duration-700">
-                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
-                                <img src="ASSETSS/gallery-covers/cover_eco_1781138422669.png" alt="Nova Eco" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                            <div class="aspect-video w-full overflow-hidden relative">
+                                <img src="ASSETSS/imagens dobra projeto (4).png" alt="Nova Eco" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
                                 <div class="absolute inset-0 bg-green-500/0 group-hover:bg-green-500/10 transition-colors duration-700 mix-blend-overlay"></div>
                             </div>
-                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                <span class="text-green-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">05</span>
-                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-green-400 transition-colors duration-500">Nova Eco</h3>
-                                <p class="text-white/50 text-sm font-medium">Tecnologia Sustentável & Verde</p>
+                            <div class="absolute bottom-0 left-0 w-full p-3 sm:p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-green-500 text-[10px] uppercase tracking-widest font-mono mb-0.5 sm:mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">05</span>
+                                <h3 class="text-sm sm:text-2xl font-bold text-white mb-0.5 sm:mb-1 leading-tight sm:leading-normal group-hover:text-green-400 transition-colors duration-500">Nova Eco</h3>
+                                <p class="text-white/50 text-[9px] sm:text-sm font-medium leading-snug">Tecnologia Sustentável</p>
                             </div>
                         </a>
 
                         <!-- Projeto 06: Lumina -->
                         <a href="lumina-video/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-orange-500/30 transition-all duration-700">
-                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
-                                <img src="ASSETSS/gallery-covers/cover_lumina_1781138434139.png" alt="Lumina Play" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100">
+                            <div class="aspect-video w-full overflow-hidden relative">
+                                <img src="ASSETSS/imagens dobra projeto (5).png" alt="Lumina Play" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
                                 <div class="absolute inset-0 bg-orange-500/0 group-hover:bg-orange-500/10 transition-colors duration-700 mix-blend-overlay"></div>
                             </div>
-                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                <span class="text-orange-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">06</span>
-                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-orange-400 transition-colors duration-500">Lumina Play</h3>
-                                <p class="text-white/50 text-sm font-medium">Sistema de Plataforma de Vídeo</p>
+                            <div class="absolute bottom-0 left-0 w-full p-3 sm:p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-orange-500 text-[10px] uppercase tracking-widest font-mono mb-0.5 sm:mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">06</span>
+                                <h3 class="text-sm sm:text-2xl font-bold text-white mb-0.5 sm:mb-1 leading-tight sm:leading-normal group-hover:text-orange-400 transition-colors duration-500">Lumina Play</h3>
+                                <p class="text-white/50 text-[9px] sm:text-sm font-medium leading-snug">Plataforma de Streaming Audiovisual</p>
                             </div>
                         </a>
 
                         <!-- Projeto 07: Barbershop -->
                         <a href="ASSETSS/barbershop-landing-51.aura.build/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-amber-500/30 transition-all duration-700">
-                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
-                                <img src="ASSETSS/gallery-covers/cover_corte_1781138454394.png" alt="Corte Clássico" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                            <div class="aspect-video w-full overflow-hidden relative">
+                                <img src="ASSETSS/imagens dobra projeto (6).png" alt="Corte Clássico" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
                                 <div class="absolute inset-0 bg-amber-500/0 group-hover:bg-amber-500/10 transition-colors duration-700 mix-blend-overlay"></div>
                             </div>
-                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                <span class="text-amber-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">07</span>
-                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-amber-400 transition-colors duration-500">Corte Clássico</h3>
-                                <p class="text-white/50 text-sm font-medium">Landing Page Premium Barber</p>
+                            <div class="absolute bottom-0 left-0 w-full p-3 sm:p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-amber-500 text-[10px] uppercase tracking-widest font-mono mb-0.5 sm:mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">07</span>
+                                <h3 class="text-sm sm:text-2xl font-bold text-white mb-0.5 sm:mb-1 leading-tight sm:leading-normal group-hover:text-amber-400 transition-colors duration-500">Corte Clássico</h3>
+                                <p class="text-white/50 text-[9px] sm:text-sm font-medium leading-snug">Barbearia Premium</p>
                             </div>
                         </a>
 
                         <!-- Projeto 08: Aero Drone -->
                         <a href="ASSETSS/autonomous-drone-62.aura.build/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-cyan-500/30 transition-all duration-700">
-                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
-                                <img src="ASSETSS/gallery-covers/cover_drone_1781138465741.png" alt="AeroTech Drones" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                            <div class="aspect-video w-full overflow-hidden relative">
+                                <img src="ASSETSS/imagens dobra projeto (7).png" alt="AeroTech Drones" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
                                 <div class="absolute inset-0 bg-cyan-500/0 group-hover:bg-cyan-500/10 transition-colors duration-700 mix-blend-overlay"></div>
                             </div>
-                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                <span class="text-cyan-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">08</span>
-                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-cyan-400 transition-colors duration-500">AeroTech Drones</h3>
-                                <p class="text-white/50 text-sm font-medium">Tecnologia e Aviação Autônoma</p>
+                            <div class="absolute bottom-0 left-0 w-full p-3 sm:p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-cyan-500 text-[10px] uppercase tracking-widest font-mono mb-0.5 sm:mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">08</span>
+                                <h3 class="text-sm sm:text-2xl font-bold text-white mb-0.5 sm:mb-1 leading-tight sm:leading-normal group-hover:text-cyan-400 transition-colors duration-500">AeroTech Drones</h3>
+                                <p class="text-white/50 text-[9px] sm:text-sm font-medium leading-snug">Tecnologia de Voo Autônomo</p>
                             </div>
                         </a>
 
                         <!-- Projeto 09: ARTools -->
                         <a href="artools_final/artools/index.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-red-500/30 transition-all duration-700">
-                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
-                                <img src="ASSETSS/gallery-covers/cover_artools_pt.png" alt="Artools Inteligência" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                            <div class="aspect-video w-full overflow-hidden relative">
+                                <img src="ASSETSS/imagens dobra projeto (8).png" alt="Artools Inteligência" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
                                 <div class="absolute inset-0 bg-red-500/0 group-hover:bg-red-500/10 transition-colors duration-700 mix-blend-overlay"></div>
                             </div>
-                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                <span class="text-red-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">09</span>
-                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-red-400 transition-colors duration-500">Caneta Tecnológica</h3>
-                                <p class="text-white/50 text-sm font-medium">Escaneamento Inteligente 3D</p>
+                            <div class="absolute bottom-0 left-0 w-full p-3 sm:p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-red-500 text-[10px] uppercase tracking-widest font-mono mb-0.5 sm:mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">09</span>
+                                <h3 class="text-sm sm:text-2xl font-bold text-white mb-0.5 sm:mb-1 leading-tight sm:leading-normal group-hover:text-red-400 transition-colors duration-500">ARTools</h3>
+                                <p class="text-white/50 text-[9px] sm:text-sm font-medium leading-snug">Software para Criativos</p>
                             </div>
                         </a>
 
-                        <!-- Projeto 10: Finex Internet -->
-                        <a href="finex-internet.aura.build/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-indigo-500/30 transition-all duration-700">
-                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
-                                <img src="ASSETSS/gallery-covers/cover_finex_1781138487824.png" alt="Finex Fibra" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
-                                <div class="absolute inset-0 bg-indigo-500/0 group-hover:bg-indigo-500/10 transition-colors duration-700 mix-blend-overlay"></div>
-                            </div>
-                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                <span class="text-indigo-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">10</span>
-                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-indigo-400 transition-colors duration-500">Finex Fibra</h3>
-                                <p class="text-white/50 text-sm font-medium">Provedor ISP de Ultra Velocidade</p>
-                            </div>
-                        </a>
-
-                        <!-- Projeto 11: White Medical -->
+                        <!-- Projeto 10: White Medical -->
                         <a href="ASSETSS/white-medical/design-system.html" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-teal-500/30 transition-all duration-700">
-                            <div class="aspect-w-16 aspect-h-12 w-full h-[350px] sm:h-[400px] overflow-hidden relative">
-                                <img src="ASSETSS/gallery-covers/cover_vitalis_1781138498326.png" alt="Clínica Vitalis" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                            <div class="aspect-video w-full overflow-hidden relative">
+                                <img src="ASSETSS/imagens dobra projeto (9).png" alt="Clínica Vitalis" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
                                 <div class="absolute inset-0 bg-teal-500/0 group-hover:bg-teal-500/10 transition-colors duration-700 mix-blend-overlay"></div>
                             </div>
-                            <div class="absolute bottom-0 left-0 w-full p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                <span class="text-teal-500 text-[10px] uppercase tracking-widest font-mono mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">11</span>
-                                <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-teal-400 transition-colors duration-500">Clínica Vitalis</h3>
-                                <p class="text-white/50 text-sm font-medium">Centro Médico Especializado</p>
+                            <div class="absolute bottom-0 left-0 w-full p-3 sm:p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-teal-500 text-[10px] uppercase tracking-widest font-mono mb-0.5 sm:mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">10</span>
+                                <h3 class="text-sm sm:text-2xl font-bold text-white mb-0.5 sm:mb-1 leading-tight sm:leading-normal group-hover:text-teal-400 transition-colors duration-500">Clínica Vitalis</h3>
+                                <p class="text-white/50 text-[9px] sm:text-sm font-medium leading-snug">Saúde e Bem-estar</p>
                             </div>
                         </a>
 
+                        <!-- Projeto 11: Distribuidora Imperatriz -->
+                        <a href="https://distribuidoraimperatriz.vercel.app/" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-yellow-500/30 transition-all duration-700">
+                            <div class="aspect-video w-full overflow-hidden relative">
+                                <img src="ASSETSS/image.png" alt="Distribuidora Imperatriz" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                                <div class="absolute inset-0 bg-yellow-500/0 group-hover:bg-yellow-500/10 transition-colors duration-700 mix-blend-overlay"></div>
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-3 sm:p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-yellow-500 text-[10px] uppercase tracking-widest font-mono mb-0.5 sm:mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">11</span>
+                                <h3 class="text-sm sm:text-2xl font-bold text-white mb-0.5 sm:mb-1 leading-tight sm:leading-normal group-hover:text-yellow-400 transition-colors duration-500">Distribuidora Imperatriz</h3>
+                                <p class="text-white/50 text-[9px] sm:text-sm font-medium leading-snug">Distribuidora Atacadista</p>
+                            </div>
+                        </a>
+
+                        <!-- Projeto 12: Elienai Imóveis -->
+                        <a href="https://www.elienaiimoveis.com.br/" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-blue-500/30 transition-all duration-700">
+                            <div class="aspect-video w-full overflow-hidden relative">
+                                <img src="ASSETSS/image (2).png" alt="Elienai Imóveis" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                                <div class="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-colors duration-700 mix-blend-overlay"></div>
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-3 sm:p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-blue-500 text-[10px] uppercase tracking-widest font-mono mb-0.5 sm:mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">12</span>
+                                <h3 class="text-sm sm:text-2xl font-bold text-white mb-0.5 sm:mb-1 leading-tight sm:leading-normal group-hover:text-blue-400 transition-colors duration-500">Elienai Imóveis</h3>
+                                <p class="text-white/50 text-[9px] sm:text-sm font-medium leading-snug">Mercado Imobiliário</p>
+                            </div>
+                        </a>
+
+                        <!-- Projeto 13: Ana Gold Spell -->
+                        <a href="https://site-ana-gold-spell.vercel.app/" target="_blank" class="soul-project-card block relative group rounded-3xl overflow-hidden bg-[#050505] border border-white/10 hover:border-pink-500/30 transition-all duration-700">
+                            <div class="aspect-video w-full overflow-hidden relative">
+                                <img src="ASSETSS/image (1).png" alt="Ana Gold Spell" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-60 group-hover:opacity-100 object-center">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                                <div class="absolute inset-0 bg-pink-500/0 group-hover:bg-pink-500/10 transition-colors duration-700 mix-blend-overlay"></div>
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full p-3 sm:p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                <span class="text-pink-500 text-[10px] uppercase tracking-widest font-mono mb-0.5 sm:mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">13</span>
+                                <h3 class="text-sm sm:text-2xl font-bold text-white mb-0.5 sm:mb-1 leading-tight sm:leading-normal group-hover:text-pink-400 transition-colors duration-500">Ana Gold Spell</h3>
+                                <p class="text-white/50 text-[9px] sm:text-sm font-medium leading-snug">Beleza e Estética</p>
+                            </div>
+                        </a>
 
                     </div>
                 </div>
@@ -1141,7 +1223,7 @@
                         </p>
                     </div>
                     
-                    <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700">
+                    <div class="absolute -left-2 md:left-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700" style="transform: translateX(-50%);">
                         <div class="w-2 h-2 rounded-full bg-white/20 exp-node-dot transition-all duration-500"></div>
                         <div class="absolute inset-0 rounded-full border border-orange-500 opacity-0 scale-150 exp-node-ring transition-all duration-700 pointer-events-none"></div>
                     </div>
@@ -1182,7 +1264,7 @@
                         </div>
                     </div>
 
-                    <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700">
+                    <div class="absolute -left-2 md:left-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700" style="transform: translateX(-50%);">
                         <div class="w-2 h-2 rounded-full bg-white/20 exp-node-dot transition-all duration-500"></div>
                         <div class="absolute inset-0 rounded-full border border-indigo-500 opacity-0 scale-150 exp-node-ring transition-all duration-700 pointer-events-none"></div>
                     </div>
@@ -1212,7 +1294,7 @@
                         </p>
                     </div>
                     
-                    <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700">
+                    <div class="absolute -left-2 md:left-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700" style="transform: translateX(-50%);">
                         <div class="w-2 h-2 rounded-full bg-white/20 exp-node-dot transition-all duration-500"></div>
                         <div class="absolute inset-0 rounded-full border border-cyan-400 opacity-0 scale-150 exp-node-ring transition-all duration-700 pointer-events-none"></div>
                     </div>
@@ -1254,7 +1336,7 @@
                         </div>
                     </div>
 
-                    <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700">
+                    <div class="absolute -left-2 md:left-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700" style="transform: translateX(-50%);">
                         <div class="w-2 h-2 rounded-full bg-white/20 exp-node-dot transition-all duration-500"></div>
                         <div class="absolute inset-0 rounded-full border border-amber-400 opacity-0 scale-150 exp-node-ring transition-all duration-700 pointer-events-none"></div>
                     </div>
@@ -1284,7 +1366,7 @@
                         </p>
                     </div>
                     
-                    <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700">
+                    <div class="absolute -left-2 md:left-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700" style="transform: translateX(-50%);">
                         <div class="w-2 h-2 rounded-full bg-white/20 exp-node-dot transition-all duration-500"></div>
                         <div class="absolute inset-0 rounded-full border border-purple-500 opacity-0 scale-150 exp-node-ring transition-all duration-700 pointer-events-none"></div>
                     </div>
@@ -1327,7 +1409,7 @@
                         </div>
                     </div>
 
-                    <div class="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700">
+                    <div class="absolute -left-2 md:left-1/2 flex items-center justify-center w-8 h-8 rounded-full border border-white/10 bg-[#020202] z-20 exp-node transition-all duration-700" style="transform: translateX(-50%);">
                         <div class="w-2 h-2 rounded-full bg-white/20 exp-node-dot transition-all duration-500"></div>
                         <div class="absolute inset-0 rounded-full border border-emerald-500 opacity-0 scale-150 exp-node-ring transition-all duration-700 pointer-events-none"></div>
                     </div>
@@ -1347,18 +1429,18 @@
                 <!-- Destino Final da Linha e Expansão da Rede -->
                 <div class="relative w-full flex flex-col items-center pt-20 pl-8 md:pl-0 z-20" id="exp-convergence">
                     <!-- Ponto central brilhante de onde a energia divide -->
-                    <div class="absolute top-0 left-4 md:left-1/2 w-4 h-4 rounded-full bg-emerald-400 shadow-[0_0_20px_#10b981,0_0_40px_#fff] -translate-x-1/2 -translate-y-1/2 opacity-0 will-change-[opacity]" id="split-center-node"></div>
+                    <div class="absolute top-0 -left-2 md:left-1/2 w-4 h-4 rounded-full bg-emerald-400 shadow-[0_0_20px_#10b981,0_0_40px_#fff] -translate-x-1/2 -translate-y-1/2 opacity-0 will-change-[opacity]" id="split-center-node"></div>
                     
                     <!-- Linhas Horizontais de Expansão (A Rede) -->
                     <div class="absolute w-full h-px top-0 left-0 pointer-events-none z-0" id="horizontal-split-container">
                         <!-- Esquerda -->
-                        <div id="split-line-left" class="absolute top-0 right-[calc(100%-2rem)] md:right-1/2 h-[2px] w-0 bg-gradient-to-l from-emerald-400 via-emerald-500/50 to-transparent shadow-[0_0_20px_rgba(16,185,129,0.5)] origin-right overflow-hidden will-change-[width]">
+                        <div id="split-line-left" class="absolute top-0 right-[calc(100%+8px)] md:right-1/2 h-[2px] w-0 bg-gradient-to-l from-emerald-400 via-emerald-500/50 to-transparent shadow-[0_0_20px_rgba(16,185,129,0.5)] origin-right overflow-hidden will-change-[width]">
                             <!-- Pulso de Energia (viaja pra esquerda) -->
                             <div class="absolute top-0 right-0 h-[2px] w-8 bg-white blur-[1px] shadow-[0_0_10px_#fff] animate-[shoot-left_1.5s_ease-out_infinite]"></div>
                             <div class="absolute top-0 right-0 h-[2px] w-4 bg-white blur-[1px] shadow-[0_0_10px_#fff] animate-[shoot-left_1.8s_ease-out_infinite_0.5s]"></div>
                         </div>
                         <!-- Direita -->
-                        <div id="split-line-right" class="absolute top-0 left-4 md:left-1/2 h-[2px] w-0 bg-gradient-to-r from-emerald-400 via-emerald-500/50 to-transparent shadow-[0_0_20px_rgba(16,185,129,0.5)] origin-left overflow-hidden will-change-[width]">
+                        <div id="split-line-right" class="absolute top-0 -left-2 md:left-1/2 h-[2px] w-0 bg-gradient-to-r from-emerald-400 via-emerald-500/50 to-transparent shadow-[0_0_20px_rgba(16,185,129,0.5)] origin-left overflow-hidden will-change-[width]">
                             <!-- Pulso de Energia (viaja pra direita) -->
                             <div class="absolute top-0 left-0 h-[2px] w-8 bg-white blur-[1px] shadow-[0_0_10px_#fff] animate-[shoot-right_1.5s_ease-out_infinite]"></div>
                             <div class="absolute top-0 left-0 h-[2px] w-4 bg-white blur-[1px] shadow-[0_0_10px_#fff] animate-[shoot-right_1.8s_ease-out_infinite_0.5s]"></div>
@@ -1366,12 +1448,12 @@
                     </div>
 
                     <!-- Bloco de Conteúdo Premium (Reveal Cinematográfico) -->
-                    <div id="final-strategy-content" class="w-full max-w-4xl mx-auto mt-24 md:mt-32 text-center transform translate-y-10 opacity-0 blur-[10px] will-change-transform pr-8 md:pr-0">
+                    <div id="final-strategy-content" class="w-full max-w-4xl mx-auto mt-24 md:mt-32 text-center transform translate-y-10 opacity-0 blur-[10px] will-change-transform px-4 md:px-0">
                         <span class="inline-block py-1.5 px-4 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-300 text-[10px] sm:text-xs font-mono uppercase tracking-[0.3em] mb-6 shadow-[0_0_15px_rgba(16,185,129,0.2)]">O Ecossistema Completo</span>
                         <h3 class="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tighter leading-[1.1]" style="font-family: 'Barlow Condensed', Impact, sans-serif;">
                             Resultados não acontecem por <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-300">acaso.</span>
                         </h3>
-                        <p class="text-white/40 text-base md:text-xl font-light mb-12 max-w-2xl mx-auto leading-relaxed">
+                        <p class="text-white/40 text-sm md:text-xl font-light mb-12 max-w-2xl mx-auto leading-relaxed">
                             A tecnologia, a estratégia e a execução convergem em um fluxo inteligente. Cada decisão é guiada por dados, testes rigorosos e otimizações contínuas para um crescimento sustentável.
                         </p>
                         
@@ -1404,61 +1486,101 @@
         </div>
     </section>
 
-    <!-- Quinta Dobra / A Transformação Estratégica -->
-    <section id="soul-transformation" class="relative w-full h-screen bg-[#020202] overflow-hidden flex items-center justify-center">
+    <!-- Divisor Premium Vivo entre Dobras -->
+    <style>
+        @keyframes divider-breathe {
+            0%, 100% { opacity: 0.3; transform: scaleX(0.9); }
+            50% { opacity: 1; transform: scaleX(1.1); }
+        }
+        @keyframes laser-travel {
+            0% { transform: translateX(-40vw); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateX(40vw); opacity: 0; }
+        }
+    </style>
+    <div class="w-full relative flex items-center justify-center h-px bg-gradient-to-r from-transparent via-white/10 to-transparent z-30 overflow-hidden">
+        <!-- Brilho que pulsa suavemente -->
+        <div class="absolute w-3/4 md:w-1/2 h-[1px] bg-gradient-to-r from-transparent via-orange-500/50 to-transparent blur-[2px]" style="animation: divider-breathe 4s ease-in-out infinite;"></div>
+        <div class="absolute w-1/2 md:w-1/3 h-[1px] bg-gradient-to-r from-transparent via-amber-400/80 to-transparent" style="animation: divider-breathe 4s ease-in-out infinite 0.5s;"></div>
         
-        <!-- Vórtice Quântico (Canvas 3D) -->
-        <canvas id="climax-canvas" class="absolute inset-0 z-0 opacity-0 transition-opacity duration-1000 ease-in-out pointer-events-none mix-blend-screen"></canvas>
+        <!-- Ponto de luz viajante (Laser) -->
+        <div class="absolute w-32 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent rounded-full blur-[1px]" style="animation: laser-travel 5s linear infinite;"></div>
+    </div>
 
-        <!-- Textos Gigantes -->
-        <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10 perspective-[1000px]">
-            <h1 class="trans-word absolute text-[12vw] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-gray-100 to-gray-500 opacity-0 transform translate-y-20 scale-90 drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]" style="-webkit-text-stroke: 2px rgba(255,255,255,0.2); font-family: 'Barlow Condensed', Impact, sans-serif;">VISIBILIDADE</h1>
-            <h1 class="trans-word absolute text-[12vw] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-indigo-300 to-purple-600 opacity-0 transform translate-y-20 scale-90 drop-shadow-[0_0_30px_rgba(99,102,241,0.5)]" style="-webkit-text-stroke: 2px rgba(99,102,241,0.3); font-family: 'Barlow Condensed', Impact, sans-serif;">AUTORIDADE</h1>
-            <h1 class="trans-word absolute text-[12vw] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-emerald-300 to-teal-600 opacity-0 transform translate-y-20 scale-90 drop-shadow-[0_0_30px_rgba(16,185,129,0.5)]" style="-webkit-text-stroke: 2px rgba(16,185,129,0.3); font-family: 'Barlow Condensed', Impact, sans-serif;">POSICIONAMENTO</h1>
-            <h1 class="trans-word absolute text-[14vw] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-amber-300 to-orange-600 opacity-0 transform translate-y-20 scale-90 drop-shadow-[0_0_50px_rgba(245,158,11,0.6)]" style="-webkit-text-stroke: 2px rgba(245,158,11,0.4); font-family: 'Barlow Condensed', Impact, sans-serif;">CRESCIMENTO</h1>
+    <!-- Quinta Dobra / A Transformação Estratégica (Rolagem Livre 3D - Sem Pin) -->
+    <section id="soul-transformation" class="relative w-full bg-[#020202] py-24 md:py-48 flex flex-col items-center justify-center overflow-hidden" style="perspective: 1200px;">
+        
+        <!-- Fundo Escuro com Efeitos Sutis (Luzes Fixas Super Leves) -->
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-900/20 rounded-full blur-[120px] will-change-transform"></div>
+            <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-900/10 rounded-full blur-[120px] will-change-transform"></div>
         </div>
 
-        <!-- Subtextos -->
-        <div class="absolute bottom-32 left-0 right-0 flex flex-col items-center justify-center z-20 pointer-events-none">
-            <p class="trans-sub absolute text-white/50 text-xl font-light tracking-wide opacity-0 transform translate-y-5">Ser visto não é suficiente.</p>
-            <p class="trans-sub absolute text-white/50 text-xl font-light tracking-wide opacity-0 transform translate-y-5">Autoridade gera confiança.</p>
-            <p class="trans-sub absolute text-white/50 text-xl font-light tracking-wide opacity-0 transform translate-y-5">Posicionamento gera preferência.</p>
-            <p class="trans-sub absolute text-amber-400/80 text-2xl font-medium tracking-wide opacity-0 transform translate-y-5">Estratégia gera crescimento.</p>
-        </div>
-
-        <!-- Fim: Clímax e CTA -->
-        <div id="trans-climax" class="absolute inset-0 flex flex-col items-center justify-center z-30 opacity-0 pointer-events-none bg-[#020202]">
+        <!-- Conteúdo em Fluxo Normal (Efeito 3D) -->
+        <div class="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col gap-32 md:gap-48" style="transform-style: preserve-3d;">
             
-            <p class="text-white/60 text-lg md:text-2xl font-light tracking-[0.2em] mb-16 transform translate-y-10" id="climax-text">Resultados são consequência de estratégia.</p>
-            
-            <div class="text-center transform translate-y-10" id="climax-signature">
-                <div class="flex items-center justify-center gap-4 mb-4">
-                    <img src="assets/logo%203.png" alt="Soul" class="w-8 h-8 opacity-80">
-                    <span class="text-white font-mono text-sm tracking-[0.4em] uppercase">Soul Estratégias Digitais</span>
-                </div>
+            <!-- Item 1: Visibilidade -->
+            <div class="trans-item flex flex-col items-center text-center opacity-0 transform-gpu will-change-transform">
+                <h2 class="text-[12vw] md:text-[8vw] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-gray-100 to-gray-500 drop-shadow-[0_0_30px_rgba(255,255,255,0.1)] leading-none mb-4" style="-webkit-text-stroke: 1px rgba(255,255,255,0.1); font-family: 'Barlow Condensed', Impact, sans-serif;">VISIBILIDADE</h2>
+                <p class="text-white/50 text-xl md:text-2xl font-light tracking-wide">Ser visto não é suficiente.</p>
             </div>
 
-            <div class="mt-24 text-center transform translate-y-10 opacity-0" id="climax-cta-container">
-                <h3 class="text-3xl md:text-5xl font-extrabold text-white mb-12 tracking-tight">Pronto para construir algo<br>que o mercado não consiga <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-300">ignorar?</span></h3>
+            <!-- Item 2: Autoridade -->
+            <div class="trans-item flex flex-col items-center text-center opacity-0 transform-gpu will-change-transform">
+                <h2 class="text-[12vw] md:text-[8vw] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-indigo-300 to-purple-600 drop-shadow-[0_0_30px_rgba(99,102,241,0.2)] leading-none mb-4" style="-webkit-text-stroke: 1px rgba(99,102,241,0.2); font-family: 'Barlow Condensed', Impact, sans-serif;">AUTORIDADE</h2>
+                <p class="text-white/50 text-xl md:text-2xl font-light tracking-wide">Autoridade gera confiança.</p>
+            </div>
+
+            <!-- Item 3: Posicionamento -->
+            <div class="trans-item flex flex-col items-center text-center opacity-0 transform-gpu will-change-transform">
+                <h2 class="text-[12vw] md:text-[8vw] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-emerald-300 to-teal-600 drop-shadow-[0_0_30px_rgba(16,185,129,0.2)] leading-none mb-4" style="-webkit-text-stroke: 1px rgba(16,185,129,0.2); font-family: 'Barlow Condensed', Impact, sans-serif;">POSICIONAMENTO</h2>
+                <p class="text-white/50 text-xl md:text-2xl font-light tracking-wide">Posicionamento gera preferência.</p>
+            </div>
+
+            <!-- Item 4: Crescimento -->
+            <div class="trans-item flex flex-col items-center text-center opacity-0 transform-gpu will-change-transform">
+                <h2 class="text-[12vw] md:text-[10vw] font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-amber-300 to-orange-600 drop-shadow-[0_0_50px_rgba(245,158,11,0.4)] leading-none mb-4" style="-webkit-text-stroke: 1px rgba(245,158,11,0.3); font-family: 'Barlow Condensed', Impact, sans-serif;">CRESCIMENTO</h2>
+                <p class="text-amber-400/80 text-2xl md:text-3xl font-medium tracking-wide">Estratégia gera resultados.</p>
+            </div>
+
+        </div>
+
+        <!-- Clímax e Formulário -->
+        <div id="trans-climax" class="relative z-20 mt-24 md:mt-48 w-full max-w-4xl mx-auto px-4 md:px-6 text-center opacity-0 transform-gpu will-change-transform">
+            
+            <h3 class="text-2xl sm:text-4xl md:text-5xl font-extrabold text-white mb-8 md:mb-12 tracking-tight leading-snug md:leading-tight">Pronto para construir algo<br class="hidden md:block"> que o mercado não consiga <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-300">ignorar?</span></h3>
+            
+            <!-- Formulário Premium e Intuitivo (Mobile Otimizado) -->
+            <form action="#" method="POST" class="w-full max-w-xl mx-auto flex flex-col gap-4 md:gap-6 text-left pointer-events-auto">
                 
-                <!-- Botão CTA Premium Magnético -->
-                <a href="#" id="magnetic-cta" class="group relative inline-flex items-center justify-center px-12 py-6 rounded-full overflow-hidden pointer-events-auto transition-transform duration-500 hover:scale-[1.02] border border-white/10 bg-white/5 backdrop-blur-md">
-                    <!-- Glass Background & Hover Color -->
-                    <div class="absolute inset-0 rounded-full transition-colors duration-500 group-hover:bg-white/10 group-hover:border-white/20"></div>
-                    <!-- Hover Glow Sweep -->
+                <div class="flex flex-col gap-1.5 md:gap-2">
+                    <label for="soul_nome" class="text-white/90 text-sm font-semibold pl-2">Nome Completo</label>
+                    <input type="text" id="soul_nome" required class="w-full bg-white/10 border border-white/20 rounded-xl md:rounded-2xl px-5 py-4 text-white placeholder-white/50 focus:bg-white/15 focus:border-orange-500/70 focus:outline-none transition-all duration-300 backdrop-blur-md shadow-lg" placeholder="Digite seu nome completo">
+                </div>
+                
+                <div class="flex flex-col gap-1.5 md:gap-2">
+                    <label for="soul_telefone" class="text-white/90 text-sm font-semibold pl-2">WhatsApp</label>
+                    <input type="tel" id="soul_telefone" required class="w-full bg-white/10 border border-white/20 rounded-xl md:rounded-2xl px-5 py-4 text-white placeholder-white/50 focus:bg-white/15 focus:border-orange-500/70 focus:outline-none transition-all duration-300 backdrop-blur-md shadow-lg" placeholder="(00) 00000-0000">
+                </div>
+
+                <div class="flex flex-col gap-1.5 md:gap-2">
+                    <label for="soul_nicho" class="text-white/90 text-sm font-semibold pl-2">Nicho de Mercado</label>
+                    <input type="text" id="soul_nicho" required class="w-full bg-white/10 border border-white/20 rounded-xl md:rounded-2xl px-5 py-4 text-white placeholder-white/50 focus:bg-white/15 focus:border-orange-500/70 focus:outline-none transition-all duration-300 backdrop-blur-md shadow-lg" placeholder="Ex: Advogado, Estética, Imóveis...">
+                </div>
+
+                <button type="submit" id="magnetic-cta" class="group relative inline-flex items-center justify-center px-6 py-4 md:px-8 md:py-5 rounded-xl md:rounded-2xl overflow-hidden transition-transform duration-500 hover:scale-[1.02] border border-orange-500/50 bg-orange-500/20 backdrop-blur-md w-full shadow-[0_0_20px_rgba(249,115,22,0.2)] transform-gpu mt-4 md:mt-2">
+                    <div class="absolute inset-0 rounded-xl md:rounded-2xl transition-colors duration-500 group-hover:bg-orange-500/30 group-hover:border-orange-500/60"></div>
                     <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] skew-x-12"></div>
-                    <!-- Magnetic Cursor Glow -->
-                    <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style="background: radial-gradient(circle 120px at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.15), transparent 100%); mix-blend-mode: overlay;"></div>
-                    <!-- Outer Glow -->
-                    <div class="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 shadow-[0_0_40px_rgba(255,255,255,0.1),inset_0_0_20px_rgba(255,255,255,0.05)]"></div>
+                    <div class="absolute inset-0 rounded-xl md:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 shadow-[inset_0_0_20px_rgba(249,115,22,0.3)]"></div>
                     
-                    <span class="relative z-10 text-white font-semibold text-sm tracking-[0.2em] uppercase">Iniciar um Projeto</span>
+                    <span class="relative z-10 text-white font-extrabold text-xs sm:text-sm md:text-base tracking-widest uppercase">Solicitar Análise Estratégica</span>
                     
-                    <div class="relative z-10 ml-4 flex items-center justify-center w-8 h-8 rounded-full bg-white text-black transform group-hover:translate-x-1 transition-transform duration-500">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    <div class="relative z-10 ml-3 md:ml-4 flex items-center justify-center w-6 h-6 md:w-8 md:h-8 rounded-full bg-orange-500 text-white transform group-hover:translate-x-1 group-hover:scale-110 transition-all duration-500 flex-shrink-0">
+                        <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                     </div>
-                </a>
-            </div>
+                </button>
+            </form>
         </div>
     </section>
 
@@ -1647,9 +1769,10 @@
                         let overscroll = ((percentage / 100) * rect.height) - splitY;
                         let splitProgress = Math.min(1, Math.max(0, overscroll / 250)); // Completa a expansão em 250px de scroll extras
                         
-                        let widthVal = splitProgress * 45; // Expande até 45vw de cada lado
-                        if(splitLeft) splitLeft.style.width = `${widthVal}vw`;
-                        if(splitRight) splitRight.style.width = `${widthVal}vw`;
+                        let widthValRight = window.innerWidth < 768 ? splitProgress * 95 : splitProgress * 45;
+                        let widthValLeft = window.innerWidth < 768 ? 0 : splitProgress * 45;
+                        if(splitLeft) splitLeft.style.width = `${widthValLeft}vw`;
+                        if(splitRight) splitRight.style.width = `${widthValRight}vw`;
                         if(splitCenterNode) splitCenterNode.style.opacity = splitProgress;
                         
                         if(finalContent) {
@@ -1885,11 +2008,11 @@
 
         // --- GALERIA DE PROJETOS ---
         
-        // Entrada dos Cards da Galeria
+        // Entrada dos Cards da Galeria (Segurança Mobile: sem opacity 0)
+        /* 
         gsap.fromTo(".soul-project-card",
-            { opacity: 0, y: 60, scale: 0.95, rotateX: 10 },
+            { y: 40, scale: 0.98, rotateX: 5 },
             { 
-                opacity: 1, 
                 y: 0, 
                 scale: 1, 
                 rotateX: 0,
@@ -1898,11 +2021,12 @@
                 ease: "expo.out",
                 scrollTrigger: {
                     trigger: "#soul-projetos",
-                    start: "top 75%",
-                    toggleActions: "play none none reverse"
+                    start: "top 85%",
+                    toggleActions: "play none none none"
                 }
             }
-        );
+        ); 
+        */
 
         // Custom Magnetic Cursor (Awwwards Style)
         const projectGallery = document.querySelector('.project-gallery-container');
@@ -1948,200 +2072,47 @@
             });
         }
 
-        // --- Lógica da Dobra: O Campo Quântico (Vórtice) ---
-        const canvas = document.getElementById('climax-canvas');
-        const ctx = canvas.getContext('2d');
-        let cWidth, cHeight;
-        let particles = [];
+        // --- Lógica da Dobra: Efeito 3D Imersivo (Sem Pin) ---
+        const transItems = gsap.utils.toArray('.trans-item');
+        
+        // Estado inicial 3D
+        gsap.set(transItems, { opacity: 0, z: -400, y: 150, rotateX: -25 });
 
-        const vortexState = {
-            r: 255, g: 255, b: 255, // Cor inicial branca
-            speed: 0.1,             // Velocidade de deriva lenta
-            pull: 0,                // Nenhuma atração inicial
-            density: 0.6,
-            coreRadius: 0
-        };
-
-        function initVortex() {
-            cWidth = canvas.width = window.innerWidth;
-            cHeight = canvas.height = window.innerHeight;
-            particles = [];
-            // 500 partículas para um efeito massivo
-            for (let i = 0; i < 500; i++) {
-                particles.push({
-                    x: Math.random() * cWidth,
-                    y: Math.random() * cHeight,
-                    vx: (Math.random() - 0.5) * 1.5,
-                    vy: (Math.random() - 0.5) * 1.5,
-                    size: Math.random() * 1.5 + 0.5,
-                    angle: Math.random() * Math.PI * 2,
-                    dist: Math.random() * (cWidth > cHeight ? cWidth : cHeight)
-                });
-            }
-        }
-        window.addEventListener('resize', initVortex);
-        initVortex();
-
-        function renderVortex() {
-            // Efeito de rastro cinemático
-            ctx.fillStyle = 'rgba(2, 2, 2, 0.15)';
-            ctx.fillRect(0, 0, cWidth, cHeight);
-
-            const centerX = cWidth / 2;
-            const centerY = cHeight / 2;
-
-            ctx.fillStyle = `rgba(${Math.round(vortexState.r)}, ${Math.round(vortexState.g)}, ${Math.round(vortexState.b)}, ${vortexState.density})`;
-
-            particles.forEach(p => {
-                if (vortexState.pull > 0) {
-                    // O Círculo do Infinito (Lemniscata de Bernoulli)
-                    p.angle += 0.02 * vortexState.speed;
-                    p.dist -= vortexState.pull * 2;
-                    
-                    if (p.dist < vortexState.coreRadius) {
-                        p.dist = (cWidth > cHeight ? cWidth : cHeight) * 0.8; // Renasce nas bordas
-                        p.angle = Math.random() * Math.PI * 2;
-                    }
-                    
-                    // Matemática da Lemniscata (Símbolo do Infinito)
-                    const scale = p.dist;
-                    const sinT = Math.sin(p.angle);
-                    const cosT = Math.cos(p.angle);
-                    const denominator = 1 + sinT * sinT;
-                    
-                    p.x = centerX + (scale * cosT) / denominator;
-                    p.y = centerY + (scale * sinT * cosT) / denominator;
-                } else {
-                    // Modo Deriva: flutuação livre
-                    p.x += p.vx * vortexState.speed;
-                    p.y += p.vy * vortexState.speed;
-                    
-                    // Continuidade da tela
-                    if (p.x < 0) p.x = cWidth;
-                    if (p.x > cWidth) p.x = 0;
-                    if (p.y < 0) p.y = cHeight;
-                    if (p.y > cHeight) p.y = 0;
-                }
-
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fill();
+        transItems.forEach(item => {
+            gsap.to(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 85%',
+                    end: 'top 40%',
+                    scrub: 1.5, // Suavidade extrema na rolagem
+                },
+                opacity: 1,
+                z: 0,
+                y: 0,
+                rotateX: 0,
+                ease: 'power2.out',
+                force3D: true
             });
-
-            // Core central brilhante durante o vórtice
-            if (vortexState.pull > 0 && vortexState.coreRadius > 0) {
-                const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, vortexState.coreRadius * 4);
-                gradient.addColorStop(0, `rgba(${Math.round(vortexState.r)}, ${Math.round(vortexState.g)}, ${Math.round(vortexState.b)}, ${vortexState.density})`);
-                gradient.addColorStop(1, 'transparent');
-                ctx.fillStyle = gradient;
-                ctx.beginPath();
-                ctx.arc(centerX, centerY, vortexState.coreRadius * 4, 0, Math.PI * 2);
-                ctx.fill();
-            }
-
-            requestAnimationFrame(renderVortex);
-        }
-        renderVortex();
-
-        // --- Lógica da Dobra: Transformação Estratégica Cinematográfica ---
-        const transWords = document.querySelectorAll('.trans-word');
-        const transSubs = document.querySelectorAll('.trans-sub');
-        const climaxEl = document.getElementById('trans-climax');
-
-        // Text Splitting Logic
-        transWords.forEach(word => {
-            const text = word.innerText;
-            word.innerHTML = '';
-            [...text].forEach(char => {
-                const span = document.createElement('span');
-                span.innerText = char;
-                span.style.display = 'inline-block';
-                span.style.opacity = '0';
-                span.style.transform = 'translateY(50px) rotateX(-90deg)';
-                word.appendChild(span);
-            });
-            word.style.opacity = '1'; 
-            word.style.transform = 'translateY(0) scale(1)';
         });
 
-        // Cores do Vórtice
-        const vortexColors = [
-            { r: 255, g: 255, b: 255 }, // Visibilidade (Branco)
-            { r: 99, g: 102, b: 241 },  // Autoridade (Índigo)
-            { r: 16, g: 185, b: 129 },  // Posicionamento (Esmeralda)
-            { r: 245, g: 158, b: 11 }   // Crescimento (Ambar)
-        ];
-
-        if (transWords.length > 0) {
-            const transTl = gsap.timeline({
+        // Revelação do Clímax e Formulário (Efeito 3D Suave)
+        const transClimax = document.getElementById('trans-climax');
+        if (transClimax) {
+            gsap.set(transClimax, { opacity: 0, z: -200, y: 100, rotateX: -15 });
+            gsap.to(transClimax, {
                 scrollTrigger: {
-                    trigger: '#soul-transformation',
-                    pin: true,
-                    scrub: 1,
-                    start: 'top top',
-                    end: '+=5000',
-                }
+                    trigger: transClimax,
+                    start: 'top 85%',
+                    end: 'top 50%',
+                    scrub: 1.5,
+                },
+                opacity: 1,
+                z: 0,
+                y: 0,
+                rotateX: 0,
+                ease: 'power2.out',
+                force3D: true
             });
-
-            // Fade in do canvas
-            transTl.to(canvas, { opacity: 1, duration: 0.5 }, 'start');
-
-            for (let i = 0; i < 3; i++) {
-                const chars = transWords[i].querySelectorAll('span');
-                
-                // Vórtice suga e muda de cor
-                transTl.to(vortexState, { 
-                    r: vortexColors[i].r, g: vortexColors[i].g, b: vortexColors[i].b, 
-                    speed: 1.5 + (i * 0.5), 
-                    pull: 1 + (i * 0.5), 
-                    coreRadius: 10 + (i * 5),
-                    duration: 1 
-                }, `phase${i}`);
-
-                // Entrada da palavra
-                transTl.to(chars, { 
-                    opacity: 1, y: 0, rotateX: 0, 
-                    duration: 1, stagger: 0.08, ease: 'back.out(1.7)' 
-                }, `phase${i}`)
-                .to(transSubs[i], { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, `phase${i}+=0.5`);
-                
-                transTl.to({}, { duration: 0.8 });
-                
-                // Saída agressiva e vórtice acalma
-                transTl.to(vortexState, { speed: 0.5, pull: 0.2, duration: 0.6 }, `phase${i}_out`);
-                transTl.to(chars, { 
-                    opacity: 0, scale: 1.5, filter: 'blur(15px)', 
-                    duration: 0.6, stagger: 0.04, ease: 'power2.in' 
-                }, `phase${i}_out`)
-                .to(transSubs[i], { opacity: 0, y: -10, filter: 'blur(5px)', duration: 0.5 }, `phase${i}_out`);
-            }
-
-            // Quarta Palavra (Crescimento) - O ápice do reator
-            const chars3 = transWords[3].querySelectorAll('span');
-            transTl.to(vortexState, { 
-                r: vortexColors[3].r, g: vortexColors[3].g, b: vortexColors[3].b, 
-                speed: 4, pull: 3, coreRadius: 50, duration: 1 
-            }, 'phase3');
-
-            transTl.to(chars3, { 
-                opacity: 1, y: 0, rotateX: 0, 
-                duration: 1.5, stagger: 0.1, ease: 'elastic.out(1, 0.5)' 
-            }, 'phase3')
-            .to(transSubs[3], { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }, 'phase3+=0.8');
-            
-            transTl.to({}, { duration: 1.5 });
-            
-            // Explosão e Calmaria (Silêncio Visual)
-            // Vórtice espalha rapidamente e fica em deriva como poeira dourada flutuando devagar
-            transTl.to(vortexState, { speed: 0.05, pull: 0, coreRadius: 0, duration: 2 }, 'phase3_out')
-                   .to(chars3, { opacity: 0, scale: 2, filter: 'blur(30px)', duration: 1, stagger: 0.05, ease: 'power3.in' }, 'phase3_out')
-                   .to(transSubs[3], { opacity: 0, filter: 'blur(10px)', duration: 0.5 }, 'phase3_out');
-
-            // Silêncio e Revelação Final da SOUL e do CTA
-            transTl.to(climaxEl, { opacity: 1, duration: 1, pointerEvents: 'auto' }, 'climax')
-                   .to('#climax-text', { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }, 'climax+=0.5')
-                   .to('#climax-signature', { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }, 'climax+=1')
-                   .to('#climax-cta-container', { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }, 'climax+=1.5');
         }
 
         // --- Efeito Magnético do Botão CTA ---
@@ -2229,5 +2200,6 @@
 
     </script>
     <script src="sonic-link.aura.build/assets/js/ecosystem-floating.js"></script>
+
 </body>
 </html>
