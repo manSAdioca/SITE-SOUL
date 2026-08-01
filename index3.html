@@ -244,6 +244,29 @@
             .glow-pulse, .micro-particles { display: none !important; }
             .titleChunk { font-size: 3rem !important; }
         }
+        /* Otimizações de Performance Mobile */
+        @media (max-width: 768px) {
+            * {
+                -webkit-font-smoothing: antialiased;
+            }
+            .backdrop-blur-md,
+            .backdrop-blur-sm,
+            .backdrop-blur-lg,
+            #phoneWrap,
+            .mediaCard,
+            .soul-mockup-wrapper {
+                will-change: transform, opacity;
+                transform: translateZ(0);
+                backface-visibility: hidden;
+            }
+            img {
+                content-visibility: auto;
+            }
+            /* Ocultar cursor customizado em telas touch para evitar recalculos */
+            #project-cursor {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen overflow-x-hidden w-full max-w-[100vw] bg-black antialiased selection:bg-[#f97316]/30 selection:text-white text-zinc-400 relative">
